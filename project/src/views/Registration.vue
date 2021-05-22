@@ -1,108 +1,143 @@
 <template>
-  <div class="container">
-    <h1 class="h1 mt-5">Registration</h1>
-    <form class="form-regisrtation" @submit.prevent="submit">
-      <div
-        class="mb-3 animate__animated"
-        :class="{ animate__shakeX: $v.login.$error }"
-      >
-        <label for="reg-login" class="form-label">Login</label>
-        <input
-          type="text"
-          class="form-control"
-          id="reg-login"
-          v-model.trim="$v.login.$model"
-          :class="{ error: $v.login.$error }"
+  <div :class="$style['container-new-account']">
+    <div :class="$style.content">
+      <div :class="$style.left">
+        <img
+          src="@/assets/images/new-account/background.svg"
+          alt=""
+          width="295"
+          height="451"
         />
-        <div class="form-text" v-if="!$v.login.required && $v.login.$error">
-          Login can't be empty.
-        </div>
-        <div
-          class="form-text"
-          v-if="$v.login.required && !$v.login.minLength && $v.login.$error"
-        >
-          This field can't be shorter 2 symbols
-        </div>
       </div>
-      <div
-        class="mb-3 animate__animated"
-        :class="{ animate__shakeX: $v.email.$error }"
-      >
-        <label for="reg-email" class="form-label">Email address</label>
-        <input
-          type="email"
-          class="form-control"
-          id="reg-email"
-          v-model.trim="$v.email.$model"
-          :class="{ error: $v.email.$error }"
-        />
-        <div class="form-text" v-if="!$v.email.required && $v.email.$error">
-          Email can't be empty.
-        </div>
-        <div
-          class="form-text"
-          v-if="$v.email.required && !$v.email.minLength && $v.email.$error"
-        >
-          This field has an invalid value !!!
-        </div>
+      <div :class="$style.right">
+        <p :class="$style['h-small']">Sign UP</p>
+        <h1 :class="$style['h1']">new ACCOUNT</h1>
+        <form :class="$style['form-regisrtation']" @submit.prevent="submit">
+          <!--  Emale -->
+          <div
+            class="animate__animated"
+            :class="[$style.field, { animate__shakeX: $v.email.$error }]"
+          >
+            <label for="reg-email" :class="$style['form-label']"
+              >Email address</label
+            >
+            <input
+              type="email"
+              id="reg-email"
+              v-model.trim="$v.email.$model"
+              :class="[$style.input, { error_input: $v.email.$error }]"
+              placeholder="Your email"
+            />
+            <small :class="$style['form-text']" v-if="!$v.email.required && $v.email.$error">
+              Email can't be empty.
+            </small>
+            <small
+              :class="$style['form-text']"
+              v-if="$v.email.required && !$v.email.minLength && $v.email.$error"
+            >
+              This field has an invalid value !!!
+            </small>
+          </div>
+          <!--  Your name -->
+          <div
+            class="animate__animated"
+            :class="[$style.field, { animate__shakeX: $v.login.$error }]"
+          >
+            <label for="reg-login" :class="$style['form-label']">Login</label>
+            <input
+              type="text"
+              id="reg-login"
+              v-model.trim="$v.login.$model"
+              :class="[$style.input, { error_input: $v.login.$error }]"
+              placeholder="Your name"
+            />
+            <small
+              :class="$style['form-text']"
+              v-if="!$v.login.required && $v.login.$error"
+            >
+              Login can't be empty.
+            </small>
+            <small
+              :class="$style['form-text']"
+              v-if="$v.login.required && !$v.login.minLength && $v.login.$error"
+            >
+              This field can't be shorter 2 symbols
+            </small>
+          </div>
+          <!-- password -->
+          <div
+            class="animate__animated"
+            :class="[$style.field, { animate__shakeX: $v.password_1.$error }]"
+          >
+            <label for="reg-pass1" :class="$style['form-label']"
+              >Password</label
+            >
+            <input
+              type="password"
+              if="reg-pass1"
+              v-model.trim="$v.password_1.$model"
+              :class="[$style.input, { error_input: $v.password_1.$error }]"
+              placeholder="Your password"
+            />
+            <small
+              :class="$style['form-text']"
+              v-if="!$v.password_1.required && $v.password_1.$error"
+            >
+              Password can't be empty.
+            </small>
+            <small
+              :class="$style['form-text']"
+              v-if="
+                $v.password_1.required &&
+                !$v.password_1.minLength &&
+                $v.password_1.$error
+              "
+            >
+              This field can't be shorter 8 symbols
+            </small>
+          </div>
+          <!-- repeat password -->
+          <div
+            class="animate__animated"
+            :class="[$style.field, { animate__shakeX: $v.password_2.$error }]"
+          >
+            <label for="reg-pass2" :class="$style['form-label']"
+              >Password</label
+            >
+            <input
+              type="password"
+              for="reg-pass2"
+              v-model.trim="$v.password_2.$model"
+              :class="[$style.input, { error_input: $v.password_2.$error }]"
+              placeholder="repeat password"
+            />
+            <small
+              :class="$style['form-text']"
+              v-if="!$v.password_2.required && $v.password_2.$error"
+            >
+              Password can't be empty.
+            </small>
+            <small
+              :class="$style['form-text']"
+              v-if="
+                $v.password_2.required &&
+                !$v.password_2.sameAs &&
+                $v.password_2.$error
+              "
+            >
+              Passwords aren't the same...
+            </small>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary mt-3"
+            :disabled="$v.$invalid"
+          >
+            Registration
+          </button>
+        </form>
       </div>
-
-      <div
-        class="mb-3 animate__animated"
-        :class="{ animate__shakeX: $v.password_1.$error }"
-      >
-        <label for="reg-pass1" class="form-label">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          if="reg-pass1"
-          v-model.trim="$v.password_1.$model"
-          :class="{ error: $v.password_1.$error }"
-        />
-        <div class="form-text" v-if="!$v.password_1.required && $v.password_1.$error ">
-          Password can't be empty.
-        </div>
-        <div
-          class="form-text"
-          v-if="
-            $v.password_1.required && !$v.password_1.minLength && $v.password_1.$error 
-          "
-        >
-          This field can't be shorter 8 symbols
-        </div>
-      </div>
-      <div
-        class="mb-3 animate__animated"
-        :class="{ animate__shakeX: $v.password_2.$error }"
-      >
-        <label for="reg-pass2" class="form-label">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          for="reg-pass2"
-          v-model.trim="$v.password_2.$model"
-          :class="{ error: $v.password_2.$error }"
-        />
-        <div class="form-text" v-if="!$v.password_2.required && $v.password_2.$error">
-          Password can't be empty.
-        </div>
-        <div
-          class="form-text"
-          v-if="
-            $v.password_2.required && !$v.password_2.sameAs && $v.password_2.$error
-          "
-        >
-          Passwords aren't the same...
-        </div>
-      </div>
-      <button
-        type="submit"
-        class="btn btn-primary mt-3"
-        :disabled="$v.$invalid"
-      >
-        Registration
-      </button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -157,9 +192,65 @@ export default {
   },
 };
 </script>
+<style lang="scss" module>
+.container-new-account {
+  width: 100%;
+  background-color: $color-background;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
 
+.content {
+  width: 100%;
+  max-width: $max-width;
+  padding: 49px 139px 48px 217px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
 
-<style lang="scss" scoped>
+.left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & > img {
+    margin: auto;
+  }
+}
+.right {
+  width: 100%;
+  max-width: 407px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.h-small {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  text-transform: uppercase;
+  color: $color-font-dark;
+  text-align: left;
+  margin-bottom: 5px;
+}
+.h1 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  text-transform: uppercase;
+  color: $color-font-dark;
+  margin: 0 0 36px 0;
+}
+
 .form-regisrtation {
   margin: 0 auto;
   display: flex;
@@ -167,6 +258,46 @@ export default {
   width: 100%;
   max-width: 500px;
 }
+
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.form-label {
+  margin-bottom: 10px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: $color-font-dark;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  background-color: transparent;
+  color: $color-font-dark;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #a9acbf;
+  margin-bottom: 5px;
+}
+
+.form-text {
+  color: red;
+}
+
 .form-check {
   display: flex;
   justify-content: center;
@@ -174,18 +305,15 @@ export default {
     margin-left: 10px;
   }
 }
-.form-text {
-  color: red;
-}
 
 .error {
-  color: #495057;
-  background-color: #fff;
   border-color: #f66262 !important;
-  outline: 0;
-  -webkit-box-shadow: 0px 0px 8px 1px rgba(247, 3, 3, 1) !important;
-  -moz-box-shadow: 0px 0px 8px 1px rgba(247, 3, 3, 1) !important;
-  box-shadow: 0px 0px 8px 1px rgba(247, 3, 3, 1) !important;
+}
+</style>
+
+<style lang="scss" >
+.error_input {
+  border-color: red;
 }
 </style>
 

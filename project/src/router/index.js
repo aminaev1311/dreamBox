@@ -1,7 +1,7 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
-import Auth from "@/views/Auth.vue"
-import Registration from "@/views/Registration.vue"
+import Auth from "@p/Auth.vue"
+import Registration from "@p/Registration.vue"
 
 Vue.use(VueRouter)
 
