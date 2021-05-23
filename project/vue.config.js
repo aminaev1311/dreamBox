@@ -9,11 +9,12 @@ module.exports = {
       },
     },
   },
+
   configureWebpack: (config) => {
     return {
       devServer: {
         proxy: {
-          '/rout': {
+          '/api/': {
             target: 'http://0.0.0.0:3000',
             secure: false,
             changeOrigin: true,
@@ -22,6 +23,7 @@ module.exports = {
       },
     }
   },
+
   chainWebpack: config => {
     config.resolve.alias
       .set('@c', path.resolve(__dirname, 'src/components'))
@@ -29,5 +31,6 @@ module.exports = {
       .set('@r', path.resolve(__dirname, 'src/router'))
       .set('@p', path.resolve(__dirname, 'src/views'))
       .set('@api', path.resolve(__dirname, 'src/api'))
+      .set('@i', path.resolve(__dirname, 'src/assets/images'))
   }
 }

@@ -1,8 +1,19 @@
 <template>
   <div id="app">
+    <app-alert />
     <router-view />
   </div>
 </template>
+
+<script>
+import AppAlert from "@c/alerts";
+export default {
+  components: {
+    AppAlert,
+  },
+};
+</script>
+
 
 <style lang="scss">
 #app {

@@ -5,13 +5,15 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "server-dev": "set NODE_ENV=development && set NODE_PORT=3000 && nodemon server"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
     "bootstrap": "^5.0.0-alpha1",
     "core-js": "^3.6.5",
     "font-awesome": "^4.7.0",
+    "mongoose": "^5.12.10",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

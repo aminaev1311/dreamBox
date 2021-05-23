@@ -12,7 +12,11 @@
       <div :class="$style.right">
         <p :class="$style['h-small']">Sign UP</p>
         <h1 :class="$style['h1']">new ACCOUNT</h1>
-        <form :class="$style['form-regisrtation']" @submit.prevent="submit">
+        <form
+          :class="$style['form-regisrtation']"
+          @submit.prevent="submit"
+          ref="reg"
+        >
           <!--  Emale -->
           <div
             class="animate__animated"
@@ -22,13 +26,17 @@
               >Email address</label
             >
             <input
+              name="email"
               type="email"
               id="reg-email"
               v-model.trim="$v.email.$model"
               :class="[$style.input, { error_input: $v.email.$error }]"
               placeholder="Your email"
             />
-            <small :class="$style['form-text']" v-if="!$v.email.required && $v.email.$error">
+            <small
+              :class="$style['form-text']"
+              v-if="!$v.email.required && $v.email.$error"
+            >
               Email can't be empty.
             </small>
             <small
@@ -45,6 +53,7 @@
           >
             <label for="reg-login" :class="$style['form-label']">Login</label>
             <input
+              name="name"
               type="text"
               id="reg-login"
               v-model.trim="$v.login.$model"
@@ -73,6 +82,7 @@
               >Password</label
             >
             <input
+              name="password1"
               type="password"
               if="reg-pass1"
               v-model.trim="$v.password_1.$model"
@@ -105,6 +115,7 @@
               >Password</label
             >
             <input
+              name="password2"
               type="password"
               for="reg-pass2"
               v-model.trim="$v.password_2.$model"
@@ -128,13 +139,64 @@
               Passwords aren't the same...
             </small>
           </div>
-          <button
-            type="submit"
-            class="btn btn-primary mt-3"
-            :disabled="$v.$invalid"
+          <div
+            class="animate__animated"
+            :class="[$style.field, { animate__shakeX: $v.db.$error }]"
           >
-            Registration
-          </button>
+            <label for="db" :class="$style['form-label']">Date of birth:</label>
+            <input
+              name="db"
+              type="text"
+              id="db"
+              v-model.trim="$v.db.$model"
+              :class="[$style.input, { error_input: $v.db.$error }]"
+              placeholder="31.12.2000"
+              @input="autoDot($event)"
+            />
+
+            <small :class="$style['form-text']" v-if="$v.db.$error">
+              This field has an invalid value !!!.
+            </small>
+          </div>
+          <!-- buttons -->
+          <div :class="$style.buttons">
+            <button
+              type="submit"
+              :class="$style['batton-create']"
+              :disabled="$v.$invalid || craeteDisabled"
+            >
+              <span v-if="!craeteDisabled">Create</span>
+              <div
+                v-else
+                class="spinner-border"
+                style="width: 1.5rem; height: 1.5rem; color: lightBlue;"
+                role="status"
+              >
+                <span class="sr-only"></span>
+              </div>
+            </button>
+            <span :class="$style.or">or</span>
+            <div :class="$style['sosial-networks']">
+              <button
+                :class="$style['button-network']"
+                @click.prevent="() => {}"
+              >
+                <img src="@/assets/images/new-account/google.png" alt="icon" />
+              </button>
+              <button
+                :class="$style['button-network']"
+                @click.prevent="() => {}"
+              >
+                <img src="@/assets/images/new-account/vk.png" alt="icon" />
+              </button>
+              <button
+                :class="$style['button-network']"
+                @click.prevent="() => {}"
+              >
+                <img src="@/assets/images/new-account/fb.png" alt="icon" />
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -143,7 +205,8 @@
 
 <script>
 import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
-
+import { sentForm, activate } from "@api/auth/reg";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -152,6 +215,9 @@ export default {
       password_1: "",
       password_2: "",
       submitStatus: null,
+      db: "",
+      dbValue: "",
+      craeteDisabled: false,
     };
   },
   validations: {
@@ -172,21 +238,71 @@ export default {
       minLength: minLength(7),
       sameAs: sameAs("password_1"),
     },
+    db: {
+      required: false,
+      db: (value) =>
+        value ? /^[1-3][0-9]\.[01][0-9]\.[0-9]{4}$/.test(value) : true,
+    },
   },
-  mounted() {
-    console.log(this.$v);
+  async mounted() {
+    console.log(window.protocol);
+    const getParams = this.$router.currentRoute.fullPath.split("/?")[1];
+    if (getParams) {
+      try {
+        await activate({
+          id: getParams.split("=")[1].trim(),
+        });
+        this.setAlert({
+          status: "success",
+          message: "You account get activeted successfully!!!",
+          daley: 4000,
+        });
+      } catch (e) {
+        this.setAlert({
+          status: "error",
+          message: "Error by ctivete!!! Try leter...",
+          daley: 4000,
+        });
+      }
+    }
   },
   methods: {
-    submit() {
-      console.log("submit!");
+    ...mapActions({
+      setAlert: "alert/setAlert",
+    }),
+
+    autoDot() {
+      if (this.$v.db.$model.length === 2 || this.$v.db.$model.length === 5) {
+        this.$v.db.$model += ".";
+      }
+    },
+
+    async submit() {
       this.$v.$touch();
-      if (this.$v.$invalid) {
-        this.submitStatus = "ERROR";
-      } else {
-        this.submitStatus = "PENDING";
-        setTimeout(() => {
-          this.submitStatus = "OK";
-        }, 500);
+      if (!this.$v.$invalid) {
+        const form = new FormData(this.$refs.reg);
+        form.append("currentURL", this.$router.currentRoute.path);
+        try {
+          this.craeteDisabled = true;
+          await sentForm(form);
+          this.craeteDisabled = false;
+          this.setAlert({
+            status: "info",
+            message:
+              "You registered successfully. We have sent you an email with a link to complete the registration.",
+            daley: 10000,
+            buttonTitle: "X",
+            cb: () => this.setAlert(null),
+          });
+          this.$router.push({ name: "auth" });
+        } catch (e) {
+          this.setAlert({
+            status: "error",
+            message: "Error by registration...Try later...",
+            daley: 4000,
+          });
+          console.log("Error by registration....");
+        }
       }
     },
   },
@@ -296,6 +412,76 @@ export default {
 
 .form-text {
   color: red;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.batton-create {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  width: 132px;
+  min-height: 43px;
+  background-color: $color-buttons;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  text-transform: uppercase;
+  color: $color-font-light;
+}
+.batton-create:hover {
+  background-color: darken($color-buttons, 20%);
+}
+.batton-create:active {
+  transform: scale(0.99);
+}
+
+.batton-create:disabled {
+  cursor: not-allowed;
+  background-color: $color-buttons-disabled;
+  color: $color-font-disabled;
+}
+
+.or {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.1px;
+  color: #a9acbf;
+}
+
+.sosial-networks {
+  display: flex;
+  align-items: center;
+}
+
+.button-network {
+  background-color: transparent;
+  width: 43px;
+  height: 43px;
+  border: 1px solid #a9acbf;
+  outline: none;
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button-network:hover {
+  border-color: #5464bb;
+}
+.button-network:active {
+  border-color: #8a91b9;
+  transform: scale(0.95);
 }
 
 .form-check {
