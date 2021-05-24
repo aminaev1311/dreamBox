@@ -22,7 +22,7 @@ const User = new Schema({
     type: String,
     required: true
   },
-  birthDay: {
+  birthday: {
     type: String,
     default: null
   },

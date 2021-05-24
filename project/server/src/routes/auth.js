@@ -7,7 +7,34 @@ const router = Router()
 const baseURL = require('../config/baseURL')
 const email = require('../lib/email')
 
-console.log(baseURL);
+
+
+router.get('/api/checkLogin/:login', async (req, res) => {
+  try {
+    let user = await User.findOne({ login: req.params.login })
+    if (user) {
+      res.status(200).send({ result: true })
+    } else {
+      res.status(200).send({ result: false })
+    }
+  } catch (e) {
+    res.status(501).send({ result: false })
+  }
+})
+
+router.get('/api/checkEmail/:email', async (req, res) => {
+  try {
+    let user = await User.findOne({ email: req.params.email })
+    if (user) {
+      res.status(200).send({ result: true })
+    } else {
+      res.status(200).send({ result: false })
+    }
+  } catch (e) {
+    res.status(501).send({ result: false })
+  }
+})
+
 
 router.post('/api/activate', async (req, res) => {
   try {
@@ -38,11 +65,10 @@ router.post('/api/registration', async (req, res) => {
     const isUser = await User.findOne({ email: req.body.email })
 
     if (!isUser) {
-      const { password1, password2, ...user } = req.body
-      const newUser = new User({ ...user, password: password1 })
+      const { password_1, password_2, ...user } = req.body
+      const newUser = new User({ ...user, password: password_1 })
       await newUser.save()
       const url = baseURL + currentURL + `/?id=${newUser._id}`
-      console.log(baseURL)
       const letter = {
         from: 'lotostoii@gmail.com',
         to: req.body.email,
@@ -63,6 +89,7 @@ router.post('/api/registration', async (req, res) => {
       res.status(409).end()
     }
   } catch (e) {
+    console.log(e)
     res.status(501).end()
   }
 })

@@ -7,7 +7,7 @@ export default {
     alert: state => state.alert
   },
   mutations: {
-    setAlert (state, alert) {
+    setAlert(state, alert) {
       state.alert = alert
       if (alert && alert.daley) {
         setTimeout(() => (state.alert = null), alert.daley)
@@ -15,8 +15,11 @@ export default {
     }
   },
   actions: {
-    setAlert ({ commit }, alert) {
+    setAlert({ commit }, alert) {
       commit('setAlert', alert)
+    },
+    close({ commit }) {
+      commit('setAlert', null)
     }
   }
 }

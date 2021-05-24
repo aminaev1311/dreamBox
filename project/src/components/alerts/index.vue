@@ -3,7 +3,11 @@
     <div v-if="alert" class="alert" :class="[alert.status, { active: alert }]">
       <div class="alert-container">
         <p class="message">{{ alert.message }}</p>
-        <button class="alert-button" v-if="alert.cb" @click="() => alert.cb()">
+        <button
+          class="alert-button"
+          v-if="alert.buttonTitle"
+          @click="closeAlert"
+        >
           {{ alert.buttonTitle }}
         </button>
       </div>
@@ -12,12 +16,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
+  methods: {
+    ...mapActions({
+      closeAlert: "alert/close",
+    }),
+  },
   computed: {
     ...mapGetters({ alert: ["alert/alert"] }),
   },
-  mounted() {},
 };
 </script>
 

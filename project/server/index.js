@@ -3,7 +3,7 @@ const isDevelopment = process.env.NODE_ENV
 const path = require('path')
 const multer = require('multer')
 
-console.log(isDevelopment);
+console.log(isDevelopment)
 
 const express = require('express')
 const app = express()
