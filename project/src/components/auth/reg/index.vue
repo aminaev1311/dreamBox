@@ -129,7 +129,8 @@ export default {
         form.append("currentURL", ''/* this.$router.currentRoute.path */);
         const reg = await this.register(form);
         if (reg) {
-          this.$router.push({ name: "auth" });
+            this.$refs.reg.reset()
+          //this.$router.push({ name: "auth" });
         }
       }
     },
