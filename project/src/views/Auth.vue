@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {},
   async mounted() {
@@ -44,6 +45,11 @@ export default {
         id: getParams.split("=")[1].trim(),
       });
     }
+  },
+  methods: {
+    ...mapActions({
+      activate: "auth/activate",
+    }),
   },
 };
 </script>
