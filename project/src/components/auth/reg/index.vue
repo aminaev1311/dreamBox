@@ -126,7 +126,7 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         const form = new FormData(this.$refs.reg);
-        form.append("currentURL", this.$router.currentRoute.path);
+        form.append("currentURL", ''/* this.$router.currentRoute.path */);
         const reg = await this.register(form);
         if (reg) {
           this.$router.push({ name: "auth" });
