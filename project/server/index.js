@@ -1,5 +1,5 @@
 const PORT = process.env.NODE_PORT || 3000
-const isDevelopment = process.env.NODE_ENV.trim() === 'development'
+const isDevelopment = process.env.NODE_ENV === 'development'
 const path = require('path')
 const multer = require('multer')
 
