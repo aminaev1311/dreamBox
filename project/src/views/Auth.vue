@@ -18,7 +18,7 @@
         <label for="exampleInputPassword1" class="form-label">Password</label>
         <input
           type="password"
-          class="form-control" 
+          class="form-control"
           id="exampleInputPassword1"
         />
       </div>
@@ -37,6 +37,14 @@
 <script>
 export default {
   components: {},
+  async mounted() {
+    const getParams = this.$router.currentRoute.fullPath.split("/?")[1];
+    if (getParams) {
+      await this.activate({
+        id: getParams.split("=")[1].trim(),
+      });
+    }
+  },
 };
 </script>
 
