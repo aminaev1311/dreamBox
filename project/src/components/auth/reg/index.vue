@@ -41,7 +41,7 @@ import RegField from "@c/auth/reg/field";
 export default {
   data() {
     return {
-      login: "",
+      name: "",
       email: "",
       password_1: "",
       password_2: "",
@@ -54,7 +54,7 @@ export default {
     RegField,
   },
   validations: {
-    login: {
+    name: {
       required,
       minLength: minLength(2),
       isBusy: async function (value) {

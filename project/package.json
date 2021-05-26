@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "server-dev": "set NODE_ENV=development && set NODE_PORT=3000 && nodemon server"
+    "server-dev": "set NODE_ENV=development && set NODE_PORT=3000 && nodemon server",
+    "server-start": "set NODE_ENV=production && set NODE_PORT=3000 && nodemon server"
   },
   "dependencies": {
     "animate.css": "^4.1.1",

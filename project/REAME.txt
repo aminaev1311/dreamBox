@@ -1,2 +1,4 @@
 Link to layout - https://www.figma.com/file/DARBFliVUoVG4wazY4d9vI/Personal-timing-(Copy)-(Copy)?node-id=672%3A10335
 Link to repo - https://github.com/aminaev1311/dreamBox.git
+
+Nginx customization - https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04-ru
