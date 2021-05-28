@@ -1,7 +1,13 @@
 <template>
   <div id="app">
     <app-alert />
-    <router-view />
+    <transition
+      enter-active-class="enter-page"
+      leave-active-class="leave-page"
+      mode="out-in"
+    >
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -16,6 +22,34 @@ export default {
 
 
 <style lang="scss">
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes leave {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+.enter-page {
+  animation: enter 0.3s linear forwards;
+}
+.leave-page {
+  animation: leave 0.3s linear forwards;
+}
+
 #app {
   font-family: $base-ff;
   -webkit-font-smoothing: antialiased;
