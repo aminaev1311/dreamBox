@@ -3,33 +3,13 @@
     <div v-for="field in fields" :key="field.id">
       <RegField :$v="$v" :field="field" />
     </div>
-    <div :class="$style.buttons">
-      <button
-        type="submit"
-        :class="$style['batton-create']"
-        :disabled="$v.$invalid || isLoadReg"
-      >
-        <span v-if="!isLoadReg">Create</span>
-        <div
-          v-else
-          class="spin primary"
-          style="width: 1.5rem; height: 1.5rem"
-        >
-        </div>
-      </button>
-      <span :class="$style.or">or</span>
-      <div :class="$style['sosial-networks']">
-        <button :class="$style['button-network']" @click.prevent="() => {}">
-          <img src="@/assets/images/new-account/google.png" alt="icon" />
-        </button>
-        <button :class="$style['button-network']" @click.prevent="() => {}">
-          <img src="@/assets/images/new-account/vk.png" alt="icon" />
-        </button>
-        <button :class="$style['button-network']" @click.prevent="() => {}">
-          <img src="@/assets/images/new-account/fb.png" alt="icon" />
-        </button>
-      </div>
-    </div>
+    <Buttons :isLoad="!isLoadReg" :isDisabled="isLoadReg" />
+    <ToPage
+      :class="$style['to-page']"
+      message="Already a user? "
+      :rout="{ name: 'auth' }"
+      name-link="Sign in!"
+    />
   </form>
 </template>
 
@@ -37,12 +17,14 @@
 import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
 import { mapActions, mapGetters } from "vuex";
 import fields from "./reg-form";
-import RegField from "@c/auth/reg/field";
+import Buttons from "@c/auth/buttons";
+import RegField from "./field";
+import ToPage from "@c/auth/to-page";
 
 export default {
   data() {
     return {
-      login: "",
+      name: "",
       email: "",
       password_1: "",
       password_2: "",
@@ -53,9 +35,11 @@ export default {
   },
   components: {
     RegField,
+    Buttons,
+    ToPage,
   },
   validations: {
-    login: {
+    name: {
       required,
       minLength: minLength(2),
       isBusy: async function (value) {
@@ -85,11 +69,13 @@ export default {
     birthday: {
       required: false,
       birthday: (value) => {
+        const newValue = value.split('.')[1]+ "."+value.split('.')[0]+ "."+value.split('.')[2]
         const myIf =
-          /^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/.test(value.trim()) &&
-          new Date(value) > new Date("01.01.1900") &&
-          new Date(value) < new Date();
-        return value ? myIf : true;
+          /^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/.test(newValue.trim()) &&
+          new Date(newValue) > new Date("01.01.1900") &&
+          new Date(newValue) < new Date();
+
+        return newValue ? myIf : true;
       },
       autoDot() {
         if (
@@ -126,10 +112,11 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         const form = new FormData(this.$refs.reg);
-        form.append("currentURL", '/'/* this.$router.currentRoute.path */);
+        form.append("currentURL", "" /* this.$router.currentRoute.path */);
         const reg = await this.register(form);
         if (reg) {
-          this.$router.push({ name: "auth" });
+          this.$refs.reg.reset();
+          //this.$router.push({ name: "auth" });
         }
       }
     },
@@ -218,5 +205,8 @@ export default {
 .button-network:active {
   border-color: #8a91b9;
   transform: scale(0.95);
+}
+.to-page {
+  margin-top: 30px;
 }
 </style>

@@ -19,20 +19,16 @@ export default [
         ],
     },
     {
-        name: "login",
+        name: "name",
         type: "text",
         id: "user-login",
-        title: "Login:",
-        placeholder: "your login",
+        title: "Name:",
+        placeholder: "your name",
         errors: [
             { type: "required", message: "Login can't be empty." },
             {
                 type: "minLength",
                 message: "This field can't be shorter 2 symbols",
-            },
-            {
-                type: "isBusy",
-                message: "This login already busy",
             },
         ],
     },

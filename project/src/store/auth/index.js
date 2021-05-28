@@ -3,18 +3,17 @@ import * as authApi from "@api/auth"
 export default {
     namespaced: true,
     state: {
-        User: null,
-        isLoadReg: false
+        user: null,
+        isLoadReg: false,
     },
     getters: {
-        alert: state => state.User,
+        user: state => state.user,
         isLoadReg: state => state.isLoadReg
     },
     mutations: {
         setIsLoadReg(state, val) {
             state.isLoadReg = val
         }
-
     },
     actions: {
         async register({ commit, dispatch }, data) {
