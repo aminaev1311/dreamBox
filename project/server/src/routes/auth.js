@@ -3,7 +3,6 @@ const User = require('@m/user')
 const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
 const router = Router()
-
 const baseURL = require('@c/baseURL')
 const email = require('@lib/email')
 const TOKEN_SECRET_KEY = require('@c/secret')
@@ -37,7 +36,6 @@ router.get('/api/checkEmail/:email', async (req, res) => {
 router.get('/api/check-user', async (req, res) => {
   try {
     const { user } = req
-    console.log(user)
     if (user) {
       res.status(200).send({ result: true, user })
     } else {

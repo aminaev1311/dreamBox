@@ -80,7 +80,7 @@ export default {
           new Date(newValue) > new Date("01.01.1900") &&
           new Date(newValue) < new Date();
 
-        return newValue ? myIf : true;
+        return value ? myIf : true;
       },
       autoDot() {
         if (
@@ -117,7 +117,7 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         const form = new FormData(this.$refs.reg);
-        form.append("currentURL", "auth" /* this.$router.currentRoute.path */);
+        form.append("currentURL", "auth");
         const reg = await this.register(form);
         if (reg) {
           this.$refs.reg.reset();
