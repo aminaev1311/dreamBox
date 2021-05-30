@@ -1,9 +1,11 @@
+require('module-alias/register')
+
 const PORT = process.env.NODE_PORT || 3888
 const isDevelopment = process.env.NODE_ENV === 'development'
+const TOKEN_SECRET_KEY = require('@c/secret')
 const path = require('path')
 const multer = require('multer')
-
-
+const jwt = require('jsonwebtoken')
 
 const express = require('express')
 const app = express()
@@ -17,10 +19,22 @@ const history = require('connect-history-api-fallback')
 
 // need only in production
 
-
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(multer().array())
+
+app.use('**', (req, res, next) => {
+  const { token } = req.headers
+  if (token) {
+    jwt.verify(token, TOKEN_SECRET_KEY, (err, data) => {
+      if (err) return next()
+      req.user = data
+      next()
+    })
+  } else {
+    next()
+  }
+})
 
 app.use('/', authRout)
 

@@ -1,9 +1,15 @@
 <template>
   <div class="sing-in-container">
+
     <form class="sing-in" ref="form-sing-in" @submit.prevent="sentForm">
       <p class="action">Sing in</p>
       <h1 class="h1">Your account</h1>
-      <div class="field">
+      <div
+        class="field animate__animated"
+        :class="{
+          animate__shakeX: error,
+        }"
+      >
         <label for="emali">E-mail:</label>
         <div class="email">
           <div class="before">
@@ -12,8 +18,14 @@
           <input type="text" v-model="email" id="email" name="email" />
         </div>
         <small v-if="!email && sent">This field can't be empty!</small>
+        <small v-if="error">Email or password aren't correct!</small>
       </div>
-      <div class="field">
+      <div
+        class="field animate__animated"
+        :class="{
+          animate__shakeX: error,
+        }"
+      >
         <label for="password">Password</label>
         <div class="password">
           <div class="before">
@@ -39,8 +51,13 @@
           </div>
         </div>
         <small v-if="!password && sent">This field can't be empty!</small>
+        <small v-if="error">Email or password aren't correct!</small>
       </div>
-      <Buttons :isLoad="!false" :isDisabled="false" titleMainButton="Log In" />
+      <Buttons
+        :isLoad="!isLoad"
+        :isDisabled="isLoad"
+        titleMainButton="Log In"
+      />
       <ToPage
         class="to-page"
         message="Don’t have an account?"
@@ -55,6 +72,7 @@
 import { mapActions, mapGetters } from "vuex";
 import Buttons from "@c/auth/buttons";
 import ToPage from "@c/auth/to-page";
+
 export default {
   data() {
     return {
@@ -62,11 +80,13 @@ export default {
       password: "",
       sent: false,
       isShowPassword: false,
+      error: false,
     };
   },
   components: {
     Buttons,
     ToPage,
+
   },
   async mounted() {
     const getParams = this.$router.currentRoute.fullPath.split("/?")[1];
@@ -79,17 +99,37 @@ export default {
   methods: {
     ...mapActions({
       activate: "auth/activate",
+      getUser: "auth/getUser",
     }),
-    sentForm() {
+    async sentForm() {
       this.sent = true;
       if (this.sent && this.email && this.password) {
-        console.log("to server");
-        this.sent = false;
-        this.email = "";
-        this.password = "";
+        const { email, password } = this;
+        const isLogIn = await this.getUser({ email, password });
+        if (isLogIn) {
+          this.sent = false;
+          this.email = "";
+          this.password = "";
+          this.$router.push({ name: "start" });
+        } else {
+          this.error = true;
+        }
       } else {
         return false;
       }
+    },
+  },
+  computed: {
+    ...mapGetters({
+      isLoad: ["auth/isLoad"],
+    }),
+  },
+  watch: {
+    email: function () {
+      this.error = false;
+    },
+    password: function () {
+      this.error = false;
     },
   },
 };

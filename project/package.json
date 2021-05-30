@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "server-dev": "set NODE_ENV=development && set NODE_PORT=3000 && nodemon server",
-    "server-start": "set NODE_ENV=production && set NODE_PORT=3888 && nodemon server"
+    "server-dev": "set NODE_ENV=development&& set NODE_PORT=3000&& nodemon server",
+    "server-start": "set NODE_ENV=production&& set NODE_PORT=3888&& nodemon server"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
@@ -17,6 +17,8 @@
     "core-js": "^3.6.5",
     "css-spinners": "^1.0.1",
     "font-awesome": "^4.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongoose": "^5.12.10",
     "multer": "^1.4.2",
     "nodemailer": "^6.6.1",
@@ -58,6 +60,16 @@
     },
     "rules": {}
   },
+  "_moduleAliases": {
+    "@": "./server/src",
+    "@c": "./server/src/config",
+    "@lib": "./server/src/lib",
+    "@m": "./server/src/models",
+    "@r": "./server/src/routes"
+  },
+  "_moduleDirectories": [
+    "node_modules_custom"
+  ],
   "browserslist": [
     "> 1%",
     "last 2 versions",

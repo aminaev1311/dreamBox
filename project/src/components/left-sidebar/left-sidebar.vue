@@ -2,11 +2,13 @@
   <div class="left-sidebar">
     <div class="user-info">
       <div class="logo">
-        <img src="@i/auth/daefault-avatar.png" alt="logo" />
+        <img src="@i/auth/default-avatar.png" alt="logo" />
       </div>
       <div class="description">
-        <span class="name">{{ user ? user.name : "Guest" }}</span>
-        <span class="role">{{ user ? user.role : "me" }}</span>
+        <router-link :to="{ name: 'person-area' }" class="name">{{
+          userName
+        }} </router-link>
+        <span class="role">{{ user && user.role ? user.role : "me" }}</span>
       </div>
     </div>
   </div>
@@ -22,6 +24,14 @@ export default {
     ...mapGetters({
       user: ["auth/user"],
     }),
+    userName() {
+      const { user } = this;
+      return user && user.name ? user.name.split(" ")[0] : "Guest";
+    },
+    userRole() {
+      const { user } = this;
+      return user && user.role ? user.role : "me";
+    },
   },
 };
 </script>
@@ -32,7 +42,7 @@ export default {
   max-width: 237px;
   height: 100vh;
   box-sizing: border-box;
-  background-color: $color-base-grey;
+  background-color: $color-base-gray;
 }
 .user-info {
   background: $color-base-blue;
@@ -57,6 +67,7 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   & > .name {
+    text-decoration: none;
     font-weight: bold;
     font-size: 16px;
     line-height: 20px;

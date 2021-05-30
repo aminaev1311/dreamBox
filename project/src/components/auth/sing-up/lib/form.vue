@@ -3,7 +3,7 @@
     <div v-for="field in fields" :key="field.id">
       <RegField :$v="$v" :field="field" />
     </div>
-    <Buttons :isLoad="!isLoadReg" :isDisabled="isLoadReg" />
+    <Buttons :isLoad="!isLoad" :isDisabled="isLoad" />
     <ToPage
       :class="$style['to-page']"
       message="Already a user? "
@@ -69,7 +69,12 @@ export default {
     birthday: {
       required: false,
       birthday: (value) => {
-        const newValue = value.split('.')[1]+ "."+value.split('.')[0]+ "."+value.split('.')[2]
+        const newValue =
+          value.split(".")[1] +
+          "." +
+          value.split(".")[0] +
+          "." +
+          value.split(".")[2];
         const myIf =
           /^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/.test(newValue.trim()) &&
           new Date(newValue) > new Date("01.01.1900") &&
@@ -112,18 +117,17 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         const form = new FormData(this.$refs.reg);
-        form.append("currentURL", "" /* this.$router.currentRoute.path */);
+        form.append("currentURL", "auth" /* this.$router.currentRoute.path */);
         const reg = await this.register(form);
         if (reg) {
           this.$refs.reg.reset();
-          //this.$router.push({ name: "auth" });
         }
       }
     },
   },
   computed: {
     ...mapGetters({
-      isLoadReg: ["auth/isLoadReg"],
+      isLoad: ["auth/isLoad"],
     }),
   },
 };
@@ -143,7 +147,7 @@ export default {
   align-items: center;
 }
 
-.batton-create {
+.button-create {
   cursor: pointer;
   outline: none;
   border: none;
@@ -158,14 +162,14 @@ export default {
   text-transform: uppercase;
   color: $color-font-light;
 }
-.batton-create:hover {
+.button-create:hover {
   background-color: darken($color-buttons, 20%);
 }
-.batton-create:active {
+.button-create:active {
   transform: scale(0.99);
 }
 
-.batton-create:disabled {
+.button-create:disabled {
   cursor: not-allowed;
   background-color: $color-buttons-disabled;
   color: $color-font-disabled;

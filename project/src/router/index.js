@@ -1,42 +1,50 @@
-import Vue from "vue"
-import VueRouter from "vue-router"
-import Auth from "@p/Auth.vue"
-import Registration from "@p/Registration.vue"
-import StartPage from "@p/Start.vue"
-import store from "@s"
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Auth from '@p/Auth.vue'
+import Registration from '@p/Registration.vue'
+import StartPage from '@p/Start.vue'
+import PersonArea from '@p/PersonArea.vue'
+import store from '@s'
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "start",
-    component: StartPage,
+    path: '/',
+    name: 'start',
+    component: StartPage
   },
   {
-    path: "/auth",
-    name: "auth",
-    component: Auth,
+    path: '/person-area',
+    name: 'person-area',
+    component: PersonArea
   },
   {
-    path: "/registration",
-    name: "registration",
-    component: Registration,
+    path: '/auth',
+    name: 'auth',
+    component: Auth
   },
+  {
+    path: '/registration',
+    name: 'registration',
+    component: Registration
+  }
 ]
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes
 })
-/* 
-router.beforeEach((to, from, next) => {
+
+router.beforeEach(async (to, from, next) => {
+  await store.getters['auth/isChecked']
   if (to.name === 'auth' || to.name === 'registration') {
     next()
-  }
-  else if (!store.getters['auth/user']) {
+  } else if (!store.getters['auth/user']) {
     next({ name: 'auth' })
+  } else {
+    next()
   }
-}) */
+})
 
 export default router

@@ -1,13 +1,12 @@
 const { Router } = require('express')
-const User = require('../models/user')
+const User = require('@m/user')
 const nodemailer = require('nodemailer')
-//const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const router = Router()
 
-const baseURL = require('../config/baseURL')
-const email = require('../lib/email')
-
-
+const baseURL = require('@c/baseURL')
+const email = require('@lib/email')
+const TOKEN_SECRET_KEY = require('@c/secret')
 
 router.get('/api/checkLogin/:login', async (req, res) => {
   try {
@@ -35,6 +34,43 @@ router.get('/api/checkEmail/:email', async (req, res) => {
   }
 })
 
+router.get('/api/check-user', async (req, res) => {
+  try {
+    const { user } = req
+    console.log(user)
+    if (user) {
+      res.status(200).send({ result: true, user })
+    } else {
+      res.status(200).send({ result: false })
+    }
+  } catch (e) {
+    res.status(501).send({ result: false })
+  }
+})
+
+router.post('/api/log-in', async (req, res) => {
+  try {
+    let user = await User.findOne({ email: req.body.email })
+
+    if (!user) {
+      return res.status(200).json({ reasult: false })
+    }
+
+    if (!user.validatePassword(req.body.password)) {
+      return res.status(200).json({ result: false })
+    }
+
+    user = JSON.parse(JSON.stringify(user))
+    delete user.password
+
+    res
+      .status(200)
+      .json({ user, result: true, token: jwt.sign(user, TOKEN_SECRET_KEY) })
+  } catch (e) {
+    console.log(e)
+    res.status(501).end()
+  }
+})
 
 router.post('/api/activate', async (req, res) => {
   try {
@@ -91,6 +127,20 @@ router.post('/api/registration', async (req, res) => {
   } catch (e) {
     console.log(e)
     res.status(501).end()
+  }
+})
+
+router.delete('/api/remove-user', async (req, res) => {
+  try {
+    const user = await User.deleteOne({ _id: req.user._id })
+    if (user) {
+      res.status(200).send({ result: true })
+    } else {
+      res.status(501).send({ result: false })
+    }
+  } catch (e) {
+    console.error(e)
+    res.status(501).send({ result: false })
   }
 })
 

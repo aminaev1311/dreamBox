@@ -1,17 +1,8 @@
 <template>
   <div :class="$style.buttons">
-    <button
-      type="submit"
-      :class="$style['batton-create']"
-      :disabled="isDisabled"
-    >
-      <span v-if="isLoad">{{ titleMainButton }}</span>
-      <div
-        v-else
-        class="spin primary"
-        style="width: 1.5rem; height: 1.5rem"
-      ></div>
-    </button>
+    <BaseButton :disabled="isDisabled" :isLoad="!isLoad">{{
+      titleMainButton
+    }}</BaseButton>
     <span :class="$style.or">or</span>
     <div :class="$style['sosial-networks']">
       <button
@@ -37,7 +28,13 @@
 </template>
 
 <script>
+import BaseButton from "@c/common/base-button";
+
 export default {
+  components: {
+    BaseButton,
+  },
+
   props: {
     isDisabled: {
       type: Boolean,
@@ -62,7 +59,7 @@ export default {
   align-items: center;
 }
 
-.batton-create {
+.button-create {
   cursor: pointer;
   outline: none;
   border: none;
@@ -77,14 +74,14 @@ export default {
   text-transform: uppercase;
   color: $color-font-light;
 }
-.batton-create:hover {
+.button-create:hover {
   background-color: darken($color-buttons, 20%);
 }
-.batton-create:active {
+.button-create:active {
   transform: scale(0.99);
 }
 
-.batton-create:disabled {
+.button-create:disabled {
   cursor: not-allowed;
   background-color: $color-buttons-disabled;
   color: $color-font-disabled;
