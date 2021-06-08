@@ -1,6 +1,7 @@
 <template>
   <div
-    :class="[$style.field, { animate__shakeX: $v[field.name].$error }]"
+    v-if="v$ && field?.name"
+    :class="[$style.field, { animate__shakeX: v$[field.name].$error }]"
     class="animate__animated"
   >
     <label :for="field.id" :class="$style['form-label']">{{
@@ -10,15 +11,16 @@
       :name="field.name"
       :type="field.type"
       :id="field.id"
-      v-model.trim="$v[field.name].$model"
-      :class="[$style.input, { error_input: $v[field.name].$error }]"
+      v-model.trim="v$[field.name].$model"
+      :class="[$style.input, { error_input: v$[field.name].$error }]"
       :placeholder="field.placeholder"
       :autocomplete="field.type === 'password' ? 'on' : 'off'"
     />
     <div v-for="error in field.errors" :key="error.type">
+      <!-- {{ v$[field.name][error.type] }} -->
       <small
         :class="$style['form-text']"
-        v-if="!$v[field.name][error.type] && $v[field.name].$error"
+        v-if="v$[field.name][error.type].$invalid && v$[field.name].$error"
       >
         {{ error.message }}
       </small>
@@ -33,10 +35,13 @@ export default {
       type: Object,
       required: true,
     },
-    $v: {
+    v$: {
       type: Object,
       required: true,
     },
+  },
+  mounted() {
+   
   },
 };
 </script>

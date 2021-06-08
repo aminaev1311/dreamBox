@@ -1,7 +1,7 @@
 <template>
   <form :class="$style['form-regisrtation']" @submit.prevent="submit" ref="reg">
     <div v-for="field in fields" :key="field.id">
-      <RegField :$v="$v" :field="field" />
+      <RegField :v$="v$" :field="field" />
     </div>
     <Buttons :isLoad="!isLoad" :isDisabled="isLoad" />
     <ToPage
@@ -14,7 +14,16 @@
 </template>
 
 <script>
-/* import { required, minLength, email, sameAs } from "vuelidate/lib/validators"; */
+import useVuelidate from "@vuelidate/core";
+import {
+  required,
+  minLength,
+  email,
+  sameAs,
+  helpers,
+} from "@vuelidate/validators";
+const { withAsync } = helpers;
+
 import { mapActions, mapGetters } from "vuex";
 import fields from "./reg-form";
 import Buttons from "@c/auth/buttons";
@@ -22,6 +31,9 @@ import RegField from "./field";
 import ToPage from "@c/auth/to-page";
 
 export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       name: "",
@@ -38,65 +50,61 @@ export default {
     Buttons,
     ToPage,
   },
-/*   validations: {
-    name: {
-      required,
-      minLength: minLength(2),
-      isBusy: async function (value) {
-        if (value === "") return true;
-        const res = await this.checkLogin(value);
-        return res;
+  validations() {
+    return {
+      name: {
+        required,
+        minLength: minLength(2),
       },
-    },
-    email: {
-      required,
-      email,
-      isBusy: async function (value) {
-        if (value === "") return true;
-        const res = await this.checkEmail(value);
-        return res;
+      email: {
+        required,
+        email,
+        isBusy: withAsync(async function (value) {
+          if (value === "") return true;
+          const res = await this.checkEmail(value);
+          return res;
+        }),
       },
-    },
-    password_1: {
-      required,
-      minLength: minLength(7),
-    },
-    password_2: {
-      required,
-      minLength: minLength(7),
-      sameAs: sameAs("password_1"),
-    },
-    birthday: {
-      required: false,
-      birthday: (value) => {
-        const newValue =
-          value.split(".")[1] +
-          "." +
-          value.split(".")[0] +
-          "." +
-          value.split(".")[2];
-        const myIf =
-          /^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/.test(newValue.trim()) &&
-          new Date(newValue) > new Date("01.01.1900") &&
-          new Date(newValue) < new Date();
+      password_1: {
+        required,
+        minLength: minLength(7),
+      },
+      password_2: {
+        required,
+        sameAs: sameAs(this.password_1),
+      },
+      birthday: {
+        birthday: (value) => {
+          if (!value) return true;
+          const newValue =
+            value.split(".")[1] +
+            "." +
+            value.split(".")[0] +
+            "." +
+            value.split(".")[2];
+          const myIf =
+            /^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/.test(newValue.trim()) &&
+            new Date(newValue) > new Date("01.01.1900") &&
+            new Date(newValue) < new Date();
 
-        return value ? myIf : true;
+          return myIf;
+        },
+        /*       autoDot() {
+          if (
+            this.v$.birthday.$model.length === 2 ||
+            this.v$.birthday.$model.length === 5
+          ) {
+            this.v$.birthday.$model += ".";
+          } else if (this.v$.birthday.$model.length === 11) {
+            this.v$.birthday.$model.length === "";
+          }
+          return true;
+        }, */
       },
-      autoDot() {
-        if (
-          this.$v.birthday.$model.length === 2 ||
-          this.$v.birthday.$model.length === 5
-        ) {
-          this.$v.birthday.$model += ".";
-        } else if (this.$v.birthday.$model.length === 11) {
-          this.$v.birthday.$model.length === "";
-        }
-        return true;
-      },
-    },
+    };
   },
   async mounted() {
-    const getParams = this.$router.currentRoute.fullPath.split("/?")[1];
+    const getParams = this.$router.currentRoute.value.fullPath.split("/?")[1];
     if (getParams) {
       await this.activate({
         id: getParams.split("=")[1].trim(),
@@ -114,13 +122,20 @@ export default {
     }),
 
     async submit() {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        const form = new FormData(this.$refs.reg);
-        form.append("currentURL", "auth");
-        const reg = await this.register(form);
-        if (reg) {
-          this.$refs.reg.reset();
+      console.log(1);
+      this.v$.$touch();
+      console.log(this.v$);
+      if (!this.v$.$invalid) {
+        try {
+          const form = new FormData(this.$refs.reg);
+          form.append("currentURL", "auth");
+          await this.register(form);
+          let { name, email, password_1, password_2, submitStatus, birthday } =
+            this;
+          name = email = password_1 = password_2 = submitStatus = birthday = "";
+          console.log(this.$refs.reg.reset())
+        } catch (e) {
+          console.log(e);
         }
       }
     },
@@ -129,7 +144,7 @@ export default {
     ...mapGetters({
       isLoad: ["auth/isLoad"],
     }),
-  }, */
+  },
 };
 </script>
 <style lang="scss" module>

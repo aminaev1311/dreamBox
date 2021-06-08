@@ -10,6 +10,8 @@
     "server-start": "set NODE_ENV=production&& set NODE_PORT=3888&& nodemon server"
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.0-alpha.19",
+    "@vuelidate/validators": "^2.0.0-alpha.17",
     "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
@@ -24,7 +26,7 @@
     "nodemailer": "^6.6.1",
     "normalize.css": "^8.0.1",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0",
+    "vue-router": "^4.0.8",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {

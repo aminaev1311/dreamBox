@@ -3,8 +3,8 @@ import router from '@r'
 
 let resolve
 const isChecked = () =>
-  new Promise(async res => {
-    resolve = () => res()
+  new Promise(res => {
+    resolve = () => res(true)
   })
 
 export default {
@@ -19,15 +19,15 @@ export default {
     isChecked: state => isChecked()
   },
   mutations: {
-    setIsLoad (state, val) {
+    setIsLoad(state, val) {
       state.isLoad = val
     },
-    setUser (state, user) {
+    setUser(state, user) {
       state.user = user
     }
   },
   actions: {
-    async register ({ commit, dispatch }, data) {
+    async register({ commit, dispatch }, data) {
       commit('setIsLoad', true)
       try {
         await authApi.sentFormForReg(data)
@@ -55,9 +55,8 @@ export default {
       }
       commit('setIsLoad', false)
 
-      return result
     },
-    async activate ({ commit, dispatch }, id) {
+    async activate({ commit, dispatch }, id) {
       let result = false
       commit('setIsLoad', true)
       try {
@@ -86,7 +85,7 @@ export default {
       commit('setIsLoad', false)
       return result
     },
-    async checkLogin ({ dispatch }, login) {
+    async checkLogin({ dispatch }, login) {
       try {
         const { result } = await authApi.checkLogin(login)
         return !result
@@ -103,7 +102,7 @@ export default {
         return false
       }
     },
-    async checkEmail ({ dispatch }, email) {
+    async checkEmail({ dispatch }, email) {
       try {
         const { result } = await authApi.checkEmail(email)
         return !result
@@ -120,7 +119,7 @@ export default {
         return false
       }
     },
-    async getUser ({ commit, dispatch }, user) {
+    async getUser({ commit, dispatch }, user) {
       commit('setIsLoad', true)
       try {
         const { user: newUser, result, token } = await authApi.logIn(user)
@@ -147,7 +146,7 @@ export default {
       }
       commit('setIsLoad', false)
     },
-    async checkUser ({ commit, dispatch }) {
+    async checkUser({ commit, dispatch }) {
       try {
         const { result, user } = await authApi.checkUser()
         if (result) {
@@ -169,13 +168,13 @@ export default {
       }
       resolve()
     },
-    async logOut ({ commit }) {
+    async logOut({ commit }) {
       await router.push({ name: 'auth' })
       localStorage.removeItem('TOKEN')
       commit('setUser', null)
       console.log(1)
     },
-    async removeAccount ({ commit, dispatch }) {
+    async removeAccount({ commit, dispatch }) {
       commit('setIsLoad', true)
       try {
         await authApi.removeAccount()

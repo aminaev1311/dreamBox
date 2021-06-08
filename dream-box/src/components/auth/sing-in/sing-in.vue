@@ -89,7 +89,7 @@ export default {
 
   },
   async mounted() {
-    const getParams = this.$router.currentRoute.fullPath.split("/?")[1];
+    const getParams = this.$router.currentRoute.value.fullPath.split("/?")[1];
     if (getParams) {
       await this.activate({
         id: getParams.split("=")[1].trim(),

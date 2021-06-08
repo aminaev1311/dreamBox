@@ -54,10 +54,7 @@ export default [
         placeholder: "password",
         errors: [
             { type: "required", message: "Password can't be empty." },
-            {
-                type: "minLength",
-                message: "This field can't be shorter 7 symbols",
-            },
+
             {
                 type: "sameAs",
                 message: "Passwords aren't the same...",
@@ -71,7 +68,6 @@ export default [
         title: "Birthday",
         placeholder: "01.12.2000",
         errors: [
-            { type: "required", message: "Birthday can't be empty." },
             {
                 type: "birthday",
                 message: "This field has an invalid value !!!(from 01.01.1900  to today)",

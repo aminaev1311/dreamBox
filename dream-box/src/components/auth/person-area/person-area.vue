@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style['container']">
+  <div v-if="user" :class="$style['container']">
     <h1>Hello {{ user.name }}!!!</h1>
     <img :src="logo" alt="avatar" width="200" height="200" />
     <p :class="$style.field"><strong>Birthday:</strong> {{ user.birthday }}</p>
