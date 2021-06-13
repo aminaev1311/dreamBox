@@ -5,6 +5,7 @@ import Registration from '@p/Registration.vue'
 import StartPage from '@p/Start.vue'
 import PersonArea from '@p/PersonArea.vue'
 import store from '@s'
+import Test from '@p/Test.vue'
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     path: '/registration',
     name: 'registration',
     component: Registration
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: Test
   }
 ]
 
@@ -40,7 +46,7 @@ router.beforeEach(async (to, from, next) => {
   if (!flag) {
     flag = await store.getters['auth/isChecked']
   }
-  if (to.name === 'auth' || to.name === 'registration') {
+  if (to.name === 'auth' || to.name === 'registration' || to.name === 'test') {
     next()
   } else if (!store.getters['auth/user']) {
     next({ name: 'auth' })

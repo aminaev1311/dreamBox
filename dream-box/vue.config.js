@@ -27,6 +27,7 @@ module.exports = {
   chainWebpack: config => {
     config.resolve.alias
       .set('@c', path.resolve(__dirname, 'src/components'))
+      .set('@ca', path.resolve(__dirname, 'src/components/auth'))
       .set('@s', path.resolve(__dirname, 'src/store'))
       .set('@r', path.resolve(__dirname, 'src/router'))
       .set('@p', path.resolve(__dirname, 'src/views'))

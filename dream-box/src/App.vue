@@ -23,7 +23,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style >
 @keyframes enter {
   from {
     opacity: 0;
