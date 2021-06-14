@@ -10,7 +10,4 @@ import SingIn from "@c/auth/sing-in";
 export default {
   components: { FullScreenPage, SingIn },
 };
-</script>
-
-
-
+</script>                                

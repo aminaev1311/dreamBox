@@ -1,12 +1,18 @@
 <template>
   <div class="header-lk">
     <h1 class="title">Личный кабинет</h1>
-    <button class="show-menu-lk"></button>
+    <AppPersonAreaMenu />
   </div>
 </template>
 
 <script>
-export default {};
+import AppPersonAreaMenu from "@ca/person-account/menu";
+
+export default {
+  components: {
+    AppPersonAreaMenu,
+  },
+};
 </script>
 
 <style lang = "scss" scoped>
