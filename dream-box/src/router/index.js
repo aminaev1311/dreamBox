@@ -6,17 +6,25 @@ import StartPage from '@p/Start.vue'
 import PersonArea from '@p/PersonArea.vue'
 import store from '@s'
 import Test from '@p/Test.vue'
+import MainPage from '@p/MainPage.vue'
 
 const routes = [
   {
     path: '/',
     name: 'start',
-    component: StartPage
-  },
-  {
-    path: '/person-area',
-    name: 'person-area',
-    component: PersonArea
+    component: StartPage,
+    children: [
+      {
+        path: '',
+        name: 'MainPage',
+        component: MainPage
+      },
+      {
+        path: '/person-area',
+        name: 'person-area',
+        component: PersonArea
+      }
+    ]
   },
   {
     path: '/auth',

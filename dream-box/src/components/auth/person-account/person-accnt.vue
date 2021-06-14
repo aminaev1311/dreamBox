@@ -1,14 +1,13 @@
 <template>
   <div class="frame_lk">
-
     <div class="photo_frame_lk">
       <h3 class="h_frame_lk">Your Profile</h3>
-      <img src="@i/auth/Photo_lk.jpg" alt="" class="round">
+      <img :src="logo" alt="avatar" class="round" />
     </div>
     <div class="contact_frame_lk">
-      <inputs-labels></inputs-labels>
-      <inputs-labels></inputs-labels>
-      <inputs-labels></inputs-labels>
+      <inputs-labels title="First name" :value="firstName"></inputs-labels>
+      <inputs-labels title="Last name" :value="lastName"></inputs-labels>
+      <inputs-labels title="Birthday" :value="birthday"></inputs-labels>
       <radios-lk></radios-lk>
       <button-dream></button-dream>
     </div>
@@ -19,9 +18,39 @@
 import ButtonDream from "@ca/buttons/button-dream";
 import InputsLabels from "@c/auth/person-account/inputs-labels";
 import RadiosLk from "@c/auth/person-account/radios_lk";
+
+import { mapGetters, mapActions } from "vuex";
+
 export default {
-  components: { ButtonDream, InputsLabels, RadiosLk }
-}
+  components: { ButtonDream, InputsLabels, RadiosLk },
+  methods: {
+    ...mapActions({
+      logOut: "auth/logOut",
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      user: ["auth/user"],
+      isLoad: ["auth/isLoad"],
+    }),
+    logo() {
+      return require("@i/auth/" + this.user?.logo);
+    },
+    firstName() {
+      return this.user.name.split(" ")[0].trim();
+    },
+    lastName() {
+      return this.user.name.split(" ")[1]
+        ? this.user.name.split(" ")[1]
+        : "No filled";
+    },
+    birthday() {
+      return this.user.birthday
+        ? this.user.birthday
+        : "No filled";
+    },
+  },
+};
 </script>
 
 <style  lang="scss">
@@ -32,8 +61,7 @@ export default {
   width: 618px;
   border-radius: 8px;
   padding: 20px;
-  margin-left: 20px;
-  background: #F0F3FC;
+  background: #f0f3fc;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -41,7 +69,7 @@ export default {
   .photo_frame_lk {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     border: none;
     border-radius: 8px;
 
@@ -56,8 +84,8 @@ export default {
     }
     .round {
       border-radius: 100px;
-      width: 191, 97px;
-      height: 183, 58px;
+      width: 190px;
+      height: 190px;
     }
   }
 
@@ -68,8 +96,6 @@ export default {
     justify-content: flex-end;
     padding-left: 20%;
     padding-bottom: 30px;
-
   }
 }
-
 </style>

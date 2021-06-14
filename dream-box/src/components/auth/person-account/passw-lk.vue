@@ -6,7 +6,6 @@
     <inputs-labels></inputs-labels>
     <button-dream></button-dream>
   </div>
-
 </template>
 
 <script>
@@ -14,12 +13,12 @@ import ButtonDream from "@ca/buttons/button-dream";
 import InputsLabels from "@c/auth/person-account/inputs-labels";
 export default {
   name: "passw-lk",
-  components: { InputsLabels, ButtonDream }
-}
+  components: { InputsLabels, ButtonDream },
+};
 </script>
 
 <style lang="scss">
-.passw_lk{
+.passw_lk {
   min-height: 100%;
   height: 432px;
   max-width: 618px;
@@ -27,10 +26,10 @@ export default {
   border-radius: 8px;
   padding: 20px;
   margin-left: 20px;
-  background: #F0F3FC;
+  background: #f0f3fc;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   .h_frame_lk {
     margin-bottom: 15px;
     font-family: $base-ff;

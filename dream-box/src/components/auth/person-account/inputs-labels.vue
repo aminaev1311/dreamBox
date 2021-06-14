@@ -1,13 +1,30 @@
 <template>
   <div class="inputs_labels">
-    <input class=input_dream-box type="text"><label class="label_frame_lk">Имя</label>
+    <input class="input_dream-box" type="text" v-model="value" /><label
+      class="label_frame_lk"
+      >{{ title }}</label
+    >
   </div>
 </template>
 
 <script>
 export default {
-name: "inputs-labels"
-}
+  name: "inputs-labels",
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      default: "text",
+    },
+    value: {
+      type: String,
+      default: "No filled",
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -48,5 +65,4 @@ name: "inputs-labels"
     margin: 10px 0 0 19px;
   }
 }
-
 </style>
