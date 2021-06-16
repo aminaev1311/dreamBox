@@ -1,9 +1,9 @@
 <template>
   <div class="passw_lk">
     <h3 class="h_frame_lk">Изменение пароля</h3>
-    <inputs-labels></inputs-labels>
-    <inputs-labels></inputs-labels>
-    <inputs-labels></inputs-labels>
+    <inputs-labels type="password"></inputs-labels>
+    <inputs-labels type="password"></inputs-labels>
+    <inputs-labels type="password"></inputs-labels>
     <button-dream></button-dream>
   </div>
 </template>

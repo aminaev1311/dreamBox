@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, './../../files'))
   },
   filename: function (req, file, cb) {
-    req.fileName = req.user._id + path.extname(file.originalname) + 'hash_' + createHash(4)
+    req.fileName = req.user._id + '_hash_' + createHash(4) + path.extname(file.originalname)
     cb(null, req.fileName)
   }
 })

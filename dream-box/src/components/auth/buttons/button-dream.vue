@@ -15,15 +15,14 @@ export default {
   align-items: center;
   margin: 20px 0;
   padding: 15px 19px;
-  outline-width: 0px;
   border-radius: 8px;
+  border: none;
   position: static;
   width: 134px;
   height: 39px;
   left: 0px;
   top: 280px;
   background: $color-buttons ;
-  /*background: $color-buttons-lk; -- disabled*/
   cursor: pointer;
   font-family: $base-ff;
   font-style: normal;

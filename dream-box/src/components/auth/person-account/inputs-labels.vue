@@ -1,16 +1,21 @@
 <template>
   <div class="inputs_labels">
-    <input class="input_dream-box" type="text" v-model="value" /><label
-      class="label_frame_lk"
-      >{{ title }}</label>
+    <input
+      class="input_dream-box"
+      :type="!isShow ? type : 'text'"
+      v-model="value"
+    /><label class="label_frame_lk">{{ title }}</label>
     <div class="cursor after">
-        <img :src="
-                !isShow
-                  ? require('@i/auth/eye-close.png')
-                  : require('@i/auth/eye-open.png')
-              "
-             alt="eye-close"
-             @click="isShow = !isShow">
+      <img
+        v-if="type === 'password'"
+        :src="
+          !isShow
+            ? require('@i/auth/eye-close.png')
+            : require('@i/auth/eye-open.png')
+        "
+        alt="eye-close"
+        @click="isShow = !isShow"
+      />
     </div>
   </div>
 </template>
@@ -19,8 +24,8 @@
 export default {
   data() {
     return {
-      isShow: false
-    }
+      isShow: false,
+    };
   },
   name: "inputs-labels",
   props: {
@@ -76,7 +81,6 @@ export default {
     color: $color-gray-lk;
     margin: 10px 0 0 19px;
   }
-
 }
 .cursor {
   cursor: pointer;
