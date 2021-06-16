@@ -2,8 +2,25 @@
   <div class="frame_lk">
     <div class="photo_frame_lk">
       <h3 class="h_frame_lk">Your Profile</h3>
-      <img :src="logo" alt="avatar" class="round" />
+      <my-upload
+        :langExt="langExt"
+        field="img"
+        @crop-success="cropSuccess"
+        @crop-upload-success="cropUploadSuccess"
+        @crop-upload-fail="cropUploadFail"
+        v-model="show"
+        :width="300"
+        :height="300"
+        url="/api/upload"
+        :headers="headers"
+        img-format="png"
+      ></my-upload>
+      <div class="round">
+        <div class="chage-image" @click="toggleShow">Change logo</div>
+        <img :src="logo" alt="avatar" />
+      </div>
     </div>
+
     <div class="contact_frame_lk">
       <inputs-labels title="First name" :value="firstName"></inputs-labels>
       <inputs-labels title="Last name" :value="lastName"></inputs-labels>
@@ -19,14 +36,64 @@ import ButtonDream from "@ca/buttons/button-dream";
 import InputsLabels from "@c/auth/person-account/inputs-labels";
 import RadiosLk from "@c/auth/person-account/radios_lk";
 
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import MyUpload from "vue-image-crop-upload";
+import config from "@config";
 
+function addToken() {
+  return {
+    headers: localStorage.getItem("TOKEN")
+      ? { token: localStorage.getItem("TOKEN") }
+      : "",
+  };
+}
+console.log(addToken());
 export default {
-  components: { ButtonDream, InputsLabels, RadiosLk },
+  components: { ButtonDream, InputsLabels, RadiosLk, MyUpload },
+  data() {
+    return {
+      show: false,
+      imgDataUrl: "",
+      headers: addToken().headers,
+      langExt: {
+        hint: "Click or drag the file here to upload",
+        loading: "Uploading…",
+        noSupported:
+          "Browser is not supported, please use IE10+ or other browsers",
+        success: "Upload success",
+        fail: "Upload failed",
+        preview: "Preview",
+        btn: {
+          off: "Cancel",
+          close: "Close",
+          back: "Back",
+          save: "Save",
+        },
+        error: {
+          onlyImg: "Image only",
+          outOfSize: "Image exceeds size limit: ",
+          lowestPx: "Image's size is too low. Expected at least: ",
+        },
+      },
+    };
+  },
   methods: {
     ...mapActions({
       logOut: "auth/logOut",
     }),
+    ...mapMutations({
+      setUser: "auth/SETUSER",
+    }),
+    cropSuccess(imgDataUrl, field) {},
+    cropUploadSuccess(jsonData, field) {
+      if (jsonData?.user) {
+        this.setUser(jsonData.user);
+      }
+    },
+    cropUploadFail(status, field) {},
+    toggleShow() {
+      this.show = !this.show;
+    },
   },
   computed: {
     ...mapGetters({
@@ -34,7 +101,7 @@ export default {
       isLoad: ["auth/isLoad"],
     }),
     logo() {
-      return require("@i/auth/" + this.user?.logo);
+      return config.linkToImg(this.user?.logo).trim();
     },
     firstName() {
       return this.user.name.split(" ")[0].trim();
@@ -45,9 +112,7 @@ export default {
         : "No filled";
     },
     birthday() {
-      return this.user.birthday
-        ? this.user.birthday
-        : "No filled";
+      return this.user.birthday ? this.user.birthday : "No filled";
     },
   },
 };
@@ -83,9 +148,40 @@ export default {
       color: #000000;
     }
     .round {
-      border-radius: 100px;
+      border-radius: 100%;
       width: 190px;
       height: 190px;
+      position: relative;
+      & > img {
+        border-radius: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+      }
+      & > .chage-image {
+        cursor: pointer;
+        display: none;
+        background-color: rgba(255, 255, 255, 0.794);
+        backdrop-filter: blur(2px);
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        z-index: 30;
+        top: 0;
+        left: 0;
+        color: $color-base-blue;
+        border-radius: 50%;
+      }
+    }
+    .round:hover {
+      & > .chage-image {
+        display: flex;
+      }
     }
   }
 

@@ -19,6 +19,7 @@
     "core-js": "^3.6.5",
     "css-spinners": "^1.0.1",
     "font-awesome": "^4.7.0",
+    "hash-generator": "^0.1.0",
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "mongoose": "^5.12.10",
@@ -26,6 +27,7 @@
     "nodemailer": "^6.6.1",
     "normalize.css": "^8.0.1",
     "vue": "^3.0.0",
+    "vue-image-crop-upload": "^3.0.3",
     "vue-router": "^4.0.8",
     "vuex": "^4.0.0-0"
   },
@@ -67,7 +69,8 @@
     "@c": "./server/src/config",
     "@lib": "./server/src/lib",
     "@m": "./server/src/models",
-    "@r": "./server/src/routes"
+    "@r": "./server/src/routes",
+    "root": "./"
   },
   "_moduleDirectories": [
     "node_modules_custom"

@@ -2,7 +2,7 @@
   <div class="left-sidebar">
     <div class="user-info">
       <div class="logo">
-        <img src="@i/auth/default-avatar.png" alt="logo" />
+        <img :src="logo" alt="logo" />
       </div>
       <div class="description">
         <router-link to="/person-area" class="name"
@@ -16,10 +16,9 @@
 
 <script>
 import { mapGetters } from "vuex";
+import config from "@config";
+console.log(config);
 export default {
-  data() {
-    return {};
-  },
   computed: {
     ...mapGetters({
       user: ["auth/user"],
@@ -31,6 +30,9 @@ export default {
     userRole() {
       const { user } = this;
       return user && user.role ? user.role : "me";
+    },
+    logo() {
+      return config.linkToImg(this.user?.logo).trim();
     },
   },
 };

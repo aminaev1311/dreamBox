@@ -4,7 +4,7 @@ const PORT = process.env.NODE_PORT || 3888
 const isDevelopment = process.env.NODE_ENV === 'development'
 const TOKEN_SECRET_KEY = require('@c/secret')
 const path = require('path')
-const multer = require('multer')
+
 const jwt = require('jsonwebtoken')
 
 const express = require('express')
@@ -21,7 +21,10 @@ const history = require('connect-history-api-fallback')
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(multer().array())
+
+app.get('/api/files/:img', (req, res) => {
+  res.sendFile(path.join(__dirname, 'files', req.params.img))
+})
 
 app.use('**', (req, res, next) => {
   const { token } = req.headers
@@ -37,6 +40,9 @@ app.use('**', (req, res, next) => {
 })
 
 app.use('/', authRout)
+
+
+
 
 if (!isDevelopment) {
   app.use(history())

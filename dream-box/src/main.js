@@ -6,6 +6,7 @@ import 'normalize.css'
 import 'css-spinners/dist/all.min.css'
 import 'font-awesome/scss/font-awesome.scss'
 import 'animate.css'
+console.log(process.env.NODE_ENV);
 
 store.dispatch('auth/checkUser')
 

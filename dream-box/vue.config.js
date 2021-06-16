@@ -34,5 +34,6 @@ module.exports = {
       .set('@api', path.resolve(__dirname, 'src/api'))
       .set('@i', path.resolve(__dirname, 'src/assets/images'))
       .set('@a', path.resolve(__dirname, 'src/assets'))
+      .set('@config', path.resolve(__dirname, 'src/config'))
   }
 }

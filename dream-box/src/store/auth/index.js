@@ -19,16 +19,16 @@ export default {
     isChecked: state => isChecked()
   },
   mutations: {
-    setIsLoad(state, val) {
+    SETISLOAD(state, val) {
       state.isLoad = val
     },
-    setUser(state, user) {
+    SETUSER(state, user) {
       state.user = user
     }
   },
   actions: {
     async register({ commit, dispatch }, data) {
-      commit('setIsLoad', true)
+      commit('SETISLOAD', true)
       try {
         await authApi.sentFormForReg(data)
         dispatch(
@@ -53,12 +53,12 @@ export default {
           { root: true }
         )
       }
-      commit('setIsLoad', false)
+      commit('SETISLOAD', false)
 
     },
     async activate({ commit, dispatch }, id) {
       let result = false
-      commit('setIsLoad', true)
+      commit('SETISLOAD', true)
       try {
         await authApi.activate(id)
         dispatch(
@@ -82,7 +82,7 @@ export default {
           { root: true }
         )
       }
-      commit('setIsLoad', false)
+      commit('SETISLOAD', false)
       return result
     },
     async checkLogin({ dispatch }, login) {
@@ -120,16 +120,16 @@ export default {
       }
     },
     async getUser({ commit, dispatch }, user) {
-      commit('setIsLoad', true)
+      commit('SETISLOAD', true)
       try {
         const { user: newUser, result, token } = await authApi.logIn(user)
         if (result) {
-          commit('setUser', newUser)
+          commit('SETUSER', newUser)
           localStorage.setItem('TOKEN', token)
-          commit('setIsLoad', false)
+          commit('SETISLOAD', false)
           return true
         } else {
-          commit('setIsLoad', false)
+          commit('SETISLOAD', false)
           return false
         }
       } catch (e) {
@@ -144,15 +144,15 @@ export default {
           { root: true }
         )
       }
-      commit('setIsLoad', false)
+      commit('SETISLOAD', false)
     },
     async checkUser({ commit, dispatch }) {
       try {
         const { result, user } = await authApi.checkUser()
         if (result) {
-          commit('setUser', user)
+          commit('SETUSER', user)
         } else {
-          commit('setUser', null)
+          commit('SETUSER', null)
         }
       } catch (e) {
         console.log(e)
@@ -171,11 +171,11 @@ export default {
     async logOut({ commit }) {
       await router.push({ name: 'auth' })
       localStorage.removeItem('TOKEN')
-      commit('setUser', null)
+      commit('SETUSER', null)
       console.log(1)
     },
     async removeAccount({ commit, dispatch }) {
-      commit('setIsLoad', true)
+      commit('SETISLOAD', true)
       try {
         await authApi.removeAccount()
         localStorage.removeItem('TOKEN')
@@ -201,7 +201,7 @@ export default {
           { root: true }
         )
       }
-      commit('setIsLoad', false)
+      commit('SETISLOAD', false)
     }
   }
 }

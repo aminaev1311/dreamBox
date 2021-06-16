@@ -1,11 +1,43 @@
 const { Router } = require('express')
 const User = require('@m/user')
-const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
 const router = Router()
 const baseURL = require('@c/baseURL')
 const email = require('@lib/email')
 const TOKEN_SECRET_KEY = require('@c/secret')
+const multer = require('multer')
+const path = require('path')
+const createHash = require('hash-generator')
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, './../../files'))
+  },
+  filename: function (req, file, cb) {
+    req.fileName = req.user._id + path.extname(file.originalname) + 'hash_' + createHash(4)
+    cb(null, req.fileName)
+  }
+})
+let upload = multer({ storage: storage })
+
+
+router.post('/api/upload', upload.single('img'), async (req, res) => {
+  try {
+    const id = req.user._id
+    await User.findByIdAndUpdate(
+      id,
+      { $set: { logo: req.fileName } },
+      { new: true }
+    )
+    let user = await User.findById(id)
+    res.status(200).send({ user, result: true })
+  } catch (e) {
+    res.status(501).send({ result: false })
+  }
+})
+
+
+router.use(multer().array())
 
 router.get('/api/checkLogin/:login', async (req, res) => {
   try {
