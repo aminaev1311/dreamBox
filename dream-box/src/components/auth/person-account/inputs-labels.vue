@@ -2,13 +2,26 @@
   <div class="inputs_labels">
     <input class="input_dream-box" type="text" v-model="value" /><label
       class="label_frame_lk"
-      >{{ title }}</label
-    >
+      >{{ title }}</label>
+    <div class="cursor after">
+        <img :src="
+                !isShow
+                  ? require('@i/auth/eye-close.png')
+                  : require('@i/auth/eye-open.png')
+              "
+             alt="eye-close"
+             @click="isShow = !isShow">
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      isShow: false
+    }
+  },
   name: "inputs-labels",
   props: {
     title: {
@@ -63,5 +76,19 @@ export default {
     color: $color-gray-lk;
     margin: 10px 0 0 19px;
   }
+
+}
+.cursor {
+  cursor: pointer;
+}
+.after {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 0;
+  top: -5px;
 }
 </style>

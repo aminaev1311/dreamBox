@@ -15,7 +15,7 @@ export default {
   align-items: center;
   margin: 20px 0;
   padding: 15px 19px;
-  border: none;
+  outline-width: 0px;
   border-radius: 8px;
   position: static;
   width: 134px;
@@ -24,7 +24,7 @@ export default {
   top: 280px;
   background: $color-buttons ;
   /*background: $color-buttons-lk; -- disabled*/
-
+  cursor: pointer;
   font-family: $base-ff;
   font-style: normal;
   font-weight: normal;
@@ -37,7 +37,7 @@ export default {
 .button_dream-box:hover{
   background: #87C8F3;
 }
-.button_dream-box:visited{
+.button_dream-box:active{
   background: #1880DB;
 }
 </style>
