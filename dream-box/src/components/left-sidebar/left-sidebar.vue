@@ -17,7 +17,7 @@
 <script>
 import { mapGetters } from "vuex";
 import config from "@config";
-console.log(config);
+
 export default {
   computed: {
     ...mapGetters({

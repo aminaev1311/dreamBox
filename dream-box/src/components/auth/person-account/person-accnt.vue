@@ -47,7 +47,7 @@ function addToken() {
       : "",
   };
 }
-console.log(addToken());
+
 export default {
   components: { ButtonDream, InputsLabels, RadiosLk, MyUpload },
   data() {
@@ -88,6 +88,9 @@ export default {
     cropUploadSuccess(jsonData, field) {
       if (jsonData?.user) {
         this.setUser(jsonData.user);
+      }
+      if (jsonData?.token) {
+        localStorage.setItem("TOKEN", jsonData.token);
       }
     },
     cropUploadFail(status, field) {},
