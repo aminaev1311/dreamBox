@@ -30,6 +30,7 @@ router.post('/api/upload', upload.single('img'), async (req, res) => {
       { new: true }
     )
     let user = await User.findById(id)
+    user.logo = req.fileName
     res.status(200).send({ user, result: true })
   } catch (e) {
     res.status(501).send({ result: false })
