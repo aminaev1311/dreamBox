@@ -14,6 +14,7 @@
         url="/api/upload"
         :headers="headers"
         img-format="png"
+        :noSquare="true"
       ></my-upload>
       <div class="round">
         <div class="chage-image" @click="toggleShow">Change logo</div>
@@ -196,5 +197,52 @@ export default {
     padding-left: 20%;
     padding-bottom: 30px;
   }
+}
+
+.vue-image-crop-upload .vicp-wrap .vicp-close {
+  display: none;
+}
+
+.vue-image-crop-upload .vicp-wrap {
+  border-radius: 10px;
+  width: 450px;
+}
+.vue-image-crop-upload .vicp-wrap .vicp-operate a {
+  color: $color-base-blue;
+}
+
+.vue-image-crop-upload
+  .vicp-wrap
+  .vicp-step2
+  .vicp-crop
+  .vicp-crop-left
+  .vicp-range
+  input[type="range"]::-webkit-slider-runnable-track {
+  // box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%);
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  border-radius: 2px;
+  border: none;
+  background-color: rgba(68, 107, 170, 0.3);
+}
+.vue-image-crop-upload
+  .vicp-wrap
+  .vicp-step2
+  .vicp-crop
+  .vicp-crop-left
+  .vicp-range
+  input[type="range"]::-webkit-slider-thumb {
+ // box-shadow: 0 2px 6px 0 rgb(0 0 0 / 18%);
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -3px;
+  width: 12px;
+  height: 12px;
+  background-color: #4189db;
+  border-radius: 100%;
+  border: none;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 </style>

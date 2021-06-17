@@ -8,6 +8,17 @@
       field.title
     }}</label>
     <input
+      v-if="field.lazy"
+      :name="field.name"
+      :type="field.type"
+      :id="field.id"
+      v-model.trim.lazy="v$[field.name].$model"
+      :class="[$style.input, { error_input: v$[field.name].$error }]"
+      :placeholder="field.placeholder"
+      :autocomplete="field.type === 'password' ? 'on' : 'off'"
+    />
+    <input
+      v-if="!field.lazy"
       :name="field.name"
       :type="field.type"
       :id="field.id"
@@ -17,7 +28,6 @@
       :autocomplete="field.type === 'password' ? 'on' : 'off'"
     />
     <div v-for="error in field.errors" :key="error.type">
-      <!-- {{ v$[field.name][error.type] }} -->
       <small
         :class="$style['form-text']"
         v-if="v$[field.name][error.type].$invalid && v$[field.name].$error"
@@ -29,7 +39,9 @@
 </template>
 
 <script>
+import { maska } from 'maska'
 export default {
+   directives: { maska },
   props: {
     field: {
       type: Object,
@@ -40,9 +52,7 @@ export default {
       required: true,
     },
   },
-  mounted() {
-   
-  },
+  mounted() {},
 };
 </script>
 

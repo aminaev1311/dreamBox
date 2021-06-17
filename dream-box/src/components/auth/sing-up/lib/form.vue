@@ -89,17 +89,22 @@ export default {
 
           return myIf;
         },
-        /*       autoDot() {
-          if (
-            this.v$.birthday.$model.length === 2 ||
-            this.v$.birthday.$model.length === 5
-          ) {
-            this.v$.birthday.$model += ".";
-          } else if (this.v$.birthday.$model.length === 11) {
-            this.v$.birthday.$model.length === "";
-          }
+        autoDot: function (value) {
+          /*       const mask = "dd.mm.yyyy";
+  
+          mask.split("").forEach((symbol, i) => {
+            if (i === 2 || i === 5) {
+              console.log(symbol);
+              this.birthday[i] =  !this.birthday[i]  ? symbol:  ;
+            } else if (!/[0-9]/.test(this.birthday[i]) || !this.birthday[i] && i !== 2 || i !== 5) {
+              this.birthday[i] = symbol;
+            } else {
+              this.birthday[i] = value[i];
+            }
+          }); */
+
           return true;
-        }, */
+        },
       },
     };
   },
@@ -133,7 +138,8 @@ export default {
           let { name, email, password_1, password_2, submitStatus, birthday } =
             this;
           name = email = password_1 = password_2 = submitStatus = birthday = "";
-          console.log(this.$refs.reg.reset())
+          this.$refs.reg.reset();
+          this.$router.push({ name: "auth" });
         } catch (e) {
           console.log(e);
         }

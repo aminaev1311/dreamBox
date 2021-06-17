@@ -56,6 +56,7 @@ export default {
     border: none;
     border-radius: 8px;
     margin-bottom: 20px;
+    outline: none;;
     padding-left: 19px;
     padding-right: 19px;
     padding-top: 30px;
