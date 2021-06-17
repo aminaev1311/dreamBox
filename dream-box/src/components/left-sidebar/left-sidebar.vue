@@ -2,7 +2,7 @@
   <div class="left-sidebar">
     <div class="user-info">
       <div class="logo">
-        <img :src="logo" alt="logo" />
+        <img :src="newImage ? newImage : logo" alt="logo" />
       </div>
       <div class="description">
         <router-link to="/person-area" class="name"
@@ -19,6 +19,11 @@ import { mapGetters } from "vuex";
 import config from "@config";
 
 export default {
+  data() {
+    return {
+      newImage: null,
+    };
+  },
   computed: {
     ...mapGetters({
       user: ["auth/user"],
@@ -34,6 +39,12 @@ export default {
     logo() {
       return config.linkToImg(this.user?.logo).trim();
     },
+  },
+  mounted() {
+    this.emitts.on("send-img", ({ img }) => {
+      console.log(img);
+      this.newImage = img;
+    });
   },
 };
 </script>

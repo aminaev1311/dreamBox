@@ -18,7 +18,7 @@
       ></my-upload>
       <div class="round">
         <div class="chage-image" @click="toggleShow">Change logo</div>
-        <img :src="logo" alt="avatar" />
+        <img :src="newImage ? newImage : logo" alt="avatar" />
       </div>
     </div>
 
@@ -55,6 +55,7 @@ export default {
     return {
       show: false,
       imgDataUrl: "",
+      newImage: null,
       headers: addToken().headers,
       langExt: {
         hint: "Click or drag the file here to upload",
@@ -85,7 +86,10 @@ export default {
     ...mapMutations({
       setUser: "auth/SETUSER",
     }),
-    cropSuccess(imgDataUrl, field) {},
+    cropSuccess(imgDataUrl, field) {
+      this.newImage = imgDataUrl;
+      this.$emitter.emit("send-img", { img: imgDataUrl });
+    },
     cropUploadSuccess(jsonData, field) {
       if (jsonData?.user) {
         this.setUser(jsonData.user);
@@ -233,7 +237,7 @@ export default {
   .vicp-crop-left
   .vicp-range
   input[type="range"]::-webkit-slider-thumb {
- // box-shadow: 0 2px 6px 0 rgb(0 0 0 / 18%);
+  // box-shadow: 0 2px 6px 0 rgb(0 0 0 / 18%);
   -webkit-appearance: none;
   appearance: none;
   margin-top: -3px;
