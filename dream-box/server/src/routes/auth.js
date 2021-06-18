@@ -9,6 +9,8 @@ const multer = require('multer')
 const path = require('path')
 const createHash = require('hash-generator')
 
+const fs = require('fs')
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(__dirname, './../../files'))
@@ -20,7 +22,7 @@ const storage = multer.diskStorage({
 })
 let upload = multer({ storage: storage })
 
-
+// edit/change logo
 router.post('/api/upload', upload.single('img'), async (req, res) => {
   try {
     const id = req.user._id
@@ -33,7 +35,21 @@ router.post('/api/upload', upload.single('img'), async (req, res) => {
     user = JSON.parse(JSON.stringify(user))
     user.logo = req.fileName
 
+    // clearing old files
+    const linkToFiles = path.join(__dirname, "../../files")
+
+    fs.readdir(linkToFiles, (err, files) => {
+      if (err) return console.log(err)
+      files.forEach(fileName => {
+        if (fileName.includes(id) && fileName !== req.fileName) {
+          const file = path.join(linkToFiles, fileName)
+          fs.unlink(file, err => err && console.log(err))
+        }
+      })
+    })
+
     res.status(200).send({ user, token: jwt.sign(user, TOKEN_SECRET_KEY), result: true })
+
   } catch (e) {
     console.log(e)
     res.status(501).send({ result: false })

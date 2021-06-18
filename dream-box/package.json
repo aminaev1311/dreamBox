@@ -71,7 +71,8 @@
     "@lib": "./server/src/lib",
     "@m": "./server/src/models",
     "@r": "./server/src/routes",
-    "root": "./"
+    "@root": "./",
+    "@files": "./files"
   },
   "_moduleDirectories": [
     "node_modules_custom"
