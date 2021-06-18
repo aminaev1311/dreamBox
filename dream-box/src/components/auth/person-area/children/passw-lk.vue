@@ -10,7 +10,7 @@
 
 <script>
 import ButtonDream from "@ca/buttons/button-dream";
-import InputsLabels from "@c/auth/person-account/inputs-labels";
+import InputsLabels from "@ca/person-area/children/inputs-labels";
 export default {
   name: "passw-lk",
   components: { InputsLabels, ButtonDream },

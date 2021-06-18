@@ -1,7 +1,7 @@
 <template>
   <button class="menu" @click.self="show = !show">
     <div v-if="show" class="menu-nav">
-      <ModelWin >Remove account</ModelWin>
+      <ModelWin>Remove account</ModelWin>
       <button class="menu-links" @click="logOut">Log out</button>
       <router-link class="menu-links" to="/">Back to App</router-link>
       <button class="menu-links" @click.self="show = !show">Close</button>
@@ -11,7 +11,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import ModelWin from "@ca/person-account/model-win";
+import ModelWin from "@ca/person-area/children/model-win";
 export default {
   data() {
     return {

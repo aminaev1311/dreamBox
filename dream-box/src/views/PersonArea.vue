@@ -1,21 +1,11 @@
 <template>
-  <div>
-    <PersonAreaHeader />
-    <div class="lk">
-      <person-account />
-      <passw-lk />
-    </div>
-    <buddy-lk />
-  </div>
+  <PersonArea />
 </template>
 
 <script>
-import PersonAreaHeader from "@ca/person-account/header-lk";
-import PersonAccount from "@ca/person-account/person-accnt";
-import BuddyLk from "@ca/person-account/buddy-lk";
-import PasswLk from "@ca/person-account/passw-lk";
+import PersonArea from "@ca/person-area";
 
 export default {
-  components: { PersonAccount, BuddyLk, PasswLk, PersonAreaHeader },
+  components: { PersonArea },
 };
 </script>

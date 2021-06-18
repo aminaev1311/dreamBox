@@ -77,9 +77,6 @@ export default {
     },
     cropUploadFail(status, field) {},
   },
-  mounted() {
-      console.log(this.$refs.upload);
-  }
 };
 </script>
 

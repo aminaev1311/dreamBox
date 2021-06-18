@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import AppPersonAreaMenu from "@ca/person-account/menu";
+import AppPersonAreaMenu from "@ca/person-area/children/menu";
 
 export default {
   components: {

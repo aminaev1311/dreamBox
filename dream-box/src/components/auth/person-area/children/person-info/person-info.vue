@@ -23,11 +23,11 @@
 
 <script>
 import ButtonDream from "@ca/buttons/button-dream";
-import InputsLabels from "@c/auth/person-account/inputs-labels";
-import RadiosLk from "@c/auth/person-account/radios_lk";
+import InputsLabels from "@c/auth/person-area/children/inputs-labels";
+import RadiosLk from "./children/radios_lk";
+import ChangeImage from "./children/image-crop-upload";
 
 import { mapGetters } from "vuex";
-import ChangeImage from "@ca/person-account/image-crop-upload";
 import config from "@config";
 
 export default {
