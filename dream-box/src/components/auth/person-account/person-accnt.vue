@@ -44,15 +44,15 @@ export default {
       return config.linkToImg(this.user?.logo).trim();
     },
     firstName() {
-      return this.user.name.split(" ")[0].trim();
+      return this.user?.name.split(" ")[0].trim();
     },
     lastName() {
-      return this.user.name.split(" ")[1]
+      return this.user?.name.split(" ")[1]
         ? this.user.name.split(" ")[1]
         : "No filled";
     },
     birthday() {
-      return this.user.birthday ? this.user.birthday : "No filled";
+      return this.user?.birthday ? this.user.birthday : "No filled";
     },
   },
 };

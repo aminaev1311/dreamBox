@@ -169,10 +169,9 @@ export default {
       resolve()
     },
     async logOut({ commit }) {
-      await router.push({ name: 'auth' })
       localStorage.removeItem('TOKEN')
       commit('SETUSER', null)
-      console.log(1)
+      router.push({ name: 'auth' })
     },
     async removeAccount({ commit, dispatch }) {
       commit('SETISLOAD', true)

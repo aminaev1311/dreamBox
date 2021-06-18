@@ -54,9 +54,18 @@ router.beforeEach(async (to, from, next) => {
   if (!flag) {
     flag = await store.getters['auth/isChecked']
   }
-  if (to.name === 'auth' || to.name === 'registration' || to.name === 'test') {
+
+  const condition = to.name === 'auth' || to.name === 'registration' || to.name === 'test'
+  const isUser = store.getters['auth/user']
+
+  if (condition && !isUser) {
+    console.log(1001);
     next()
-  } else if (!store.getters['auth/user']) {
+  } else if (condition && isUser) {
+    console.log(1000);
+    next({ path: '/person-area' })
+  }
+  else if (!store.getters['auth/user']) {
     next({ name: 'auth' })
   } else {
     next()
