@@ -1,5 +1,6 @@
 <template>
   <my-upload
+    ref = "upload"
     :langExt="langExt"
     field="img"
     @crop-success="cropSuccess"
@@ -66,6 +67,8 @@ export default {
     cropUploadSuccess(jsonData, field) {
       if (jsonData?.user) {
         this.setUser(jsonData.user);
+        this.$emit('hide')
+        this.$refs.upload.off()
       }
       if (jsonData?.token) {
         localStorage.setItem("TOKEN", jsonData.token);
@@ -74,6 +77,9 @@ export default {
     },
     cropUploadFail(status, field) {},
   },
+  mounted() {
+      console.log(this.$refs.upload);
+  }
 };
 </script>
 
