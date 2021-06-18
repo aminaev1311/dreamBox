@@ -2,9 +2,11 @@
   <div class="frame_lk">
     <div class="photo_frame_lk">
       <h3 class="h_frame_lk">Your Profile</h3>
-      <ChangeImage :show="show"  />
+      <ChangeImage :show="show" />
       <div class="round">
-        <div class="chage-image" @click="show = !show">Change logo</div>
+        <div class="chage-image" @click="show = !show">
+          <img src="@i/auth/camera-plus.png" alt="icon-camera-plus" />
+        </div>
         <img :src="logo" alt="avatar" />
       </div>
     </div>
@@ -104,7 +106,7 @@ export default {
       & > .chage-image {
         cursor: pointer;
         display: none;
-        background-color: rgba(255, 255, 255, 0.794);
+        background-color: rgba(255, 255, 255, 0.479);
         backdrop-filter: blur(2px);
         position: absolute;
         justify-content: center;
