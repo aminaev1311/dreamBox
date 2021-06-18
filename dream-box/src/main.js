@@ -9,5 +9,8 @@ import 'animate.css'
 import Maska from 'maska'
 
 store.dispatch('auth/checkUser')
-createApp(App).use(Maska).use(store).use(router).mount('#app')
-
+createApp(App)
+  .use(Maska)
+  .use(store)
+  .use(router)
+  .mount('#app')
