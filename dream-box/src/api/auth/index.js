@@ -33,7 +33,7 @@ export const removeAccount = async () => {
   return data
 }
 
-function addToken () {
+export function addToken () {
   return {
     headers: localStorage.getItem('TOKEN')
       ? { token: localStorage.getItem('TOKEN') }

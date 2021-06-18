@@ -2,22 +2,9 @@
   <div class="frame_lk">
     <div class="photo_frame_lk">
       <h3 class="h_frame_lk">Your Profile</h3>
-      <my-upload
-        :langExt="langExt"
-        field="img"
-        @crop-success="cropSuccess"
-        @crop-upload-success="cropUploadSuccess"
-        @crop-upload-fail="cropUploadFail"
-        v-model="show"
-        :width="300"
-        :height="300"
-        url="/api/upload"
-        :headers="headers"
-        img-format="png"
-        :noSquare="true"
-      ></my-upload>
+      <ChangeImage :show="show" @hide="show = !show" />
       <div class="round">
-        <div class="chage-image" @click="toggleShow">Change logo</div>
+        <div class="chage-image" @click="show = !show">Change logo</div>
         <img :src="logo" alt="avatar" />
       </div>
     </div>
@@ -37,69 +24,16 @@ import ButtonDream from "@ca/buttons/button-dream";
 import InputsLabels from "@c/auth/person-account/inputs-labels";
 import RadiosLk from "@c/auth/person-account/radios_lk";
 
-import { mapGetters, mapActions, mapMutations } from "vuex";
-import MyUpload from "vue-image-crop-upload";
+import { mapGetters } from "vuex";
+import ChangeImage from "@ca/person-account/image-crop-upload";
 import config from "@config";
 
-function addToken() {
-  return {
-    headers: localStorage.getItem("TOKEN")
-      ? { token: localStorage.getItem("TOKEN") }
-      : "",
-  };
-}
-
 export default {
-  components: { ButtonDream, InputsLabels, RadiosLk, MyUpload },
+  components: { ButtonDream, InputsLabels, RadiosLk, ChangeImage },
   data() {
     return {
       show: false,
-      imgDataUrl: "",
-      headers: addToken().headers,
-      langExt: {
-        hint: "Click or drag the file here to upload",
-        loading: "Uploading…",
-        noSupported:
-          "Browser is not supported, please use IE10+ or other browsers",
-        success: "Upload success",
-        fail: "Upload failed",
-        preview: "Preview",
-        btn: {
-          off: "Cancel",
-          close: "Close",
-          back: "Back",
-          save: "Save",
-        },
-        error: {
-          onlyImg: "Image only",
-          outOfSize: "Image exceeds size limit: ",
-          lowestPx: "Image's size is too low. Expected at least: ",
-        },
-      },
     };
-  },
-  methods: {
-    ...mapActions({
-      logOut: "auth/logOut",
-    }),
-    ...mapMutations({
-      setUser: "auth/SETUSER",
-    }),
-    cropSuccess(imgDataUrl, field) {
-    },
-    cropUploadSuccess(jsonData, field) {
-      if (jsonData?.user) {
-        this.setUser(jsonData.user);
-        console.log(jsonData.user);
-      }
-      if (jsonData?.token) {
-        localStorage.setItem("TOKEN", jsonData.token);
-      }
-    },
-    cropUploadFail(status, field) {},
-    toggleShow() {
-      this.show = !this.show;
-    },
   },
   computed: {
     ...mapGetters({
@@ -107,7 +41,6 @@ export default {
       isLoad: ["auth/isLoad"],
     }),
     logo() {
-      console.log(this.user?.logo);
       return config.linkToImg(this.user?.logo).trim();
     },
     firstName() {
@@ -200,52 +133,5 @@ export default {
     padding-left: 20%;
     padding-bottom: 30px;
   }
-}
-
-.vue-image-crop-upload .vicp-wrap .vicp-close {
-  display: none;
-}
-
-.vue-image-crop-upload .vicp-wrap {
-  border-radius: 10px;
-  width: 450px;
-}
-.vue-image-crop-upload .vicp-wrap .vicp-operate a {
-  color: $color-base-blue;
-}
-
-.vue-image-crop-upload
-  .vicp-wrap
-  .vicp-step2
-  .vicp-crop
-  .vicp-crop-left
-  .vicp-range
-  input[type="range"]::-webkit-slider-runnable-track {
-  // box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%);
-  width: 100%;
-  height: 6px;
-  cursor: pointer;
-  border-radius: 2px;
-  border: none;
-  background-color: rgba(68, 107, 170, 0.3);
-}
-.vue-image-crop-upload
-  .vicp-wrap
-  .vicp-step2
-  .vicp-crop
-  .vicp-crop-left
-  .vicp-range
-  input[type="range"]::-webkit-slider-thumb {
-  // box-shadow: 0 2px 6px 0 rgb(0 0 0 / 18%);
-  -webkit-appearance: none;
-  appearance: none;
-  margin-top: -3px;
-  width: 12px;
-  height: 12px;
-  background-color: #4189db;
-  border-radius: 100%;
-  border: none;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
 }
 </style>
