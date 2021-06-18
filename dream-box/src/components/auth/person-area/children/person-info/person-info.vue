@@ -60,7 +60,7 @@ export default {
 };
 </script>
 
-<style  lang="scss">
+<style  lang="scss"  scoped>
 .frame_lk {
   min-height: 100%;
   height: 432px;

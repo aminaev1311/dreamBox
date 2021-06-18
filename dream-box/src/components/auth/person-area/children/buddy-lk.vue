@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .buddy_lk {
   margin-top: 25px;
   min-height: 206px;
