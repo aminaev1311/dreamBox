@@ -18,7 +18,7 @@
       ></my-upload>
       <div class="round">
         <div class="chage-image" @click="toggleShow">Change logo</div>
-        <img :src="newImage ? newImage : logo" alt="avatar" />
+        <img :src="logo" alt="avatar" />
       </div>
     </div>
 
@@ -55,7 +55,6 @@ export default {
     return {
       show: false,
       imgDataUrl: "",
-      newImage: null,
       headers: addToken().headers,
       langExt: {
         hint: "Click or drag the file here to upload",
@@ -87,12 +86,11 @@ export default {
       setUser: "auth/SETUSER",
     }),
     cropSuccess(imgDataUrl, field) {
-      this.newImage = imgDataUrl;
-      this.$emitter.emit("send-img", { img: imgDataUrl });
     },
     cropUploadSuccess(jsonData, field) {
       if (jsonData?.user) {
         this.setUser(jsonData.user);
+        console.log(jsonData.user);
       }
       if (jsonData?.token) {
         localStorage.setItem("TOKEN", jsonData.token);
@@ -109,6 +107,7 @@ export default {
       isLoad: ["auth/isLoad"],
     }),
     logo() {
+      console.log(this.user?.logo);
       return config.linkToImg(this.user?.logo).trim();
     },
     firstName() {
