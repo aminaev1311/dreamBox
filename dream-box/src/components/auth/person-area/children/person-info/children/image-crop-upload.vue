@@ -68,7 +68,6 @@ export default {
       if (jsonData?.user) {
         this.setUser(jsonData.user);
         this.$emit('hide')
-        console.log(33);
         this.$refs.upload.off()
       }
       if (jsonData?.token) {
