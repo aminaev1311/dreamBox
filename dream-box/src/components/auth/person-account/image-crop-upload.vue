@@ -70,7 +70,7 @@ export default {
       if (jsonData?.token) {
         localStorage.setItem("TOKEN", jsonData.token);
       }
-      this.$emit("hide");
+ 
     },
     cropUploadFail(status, field) {},
   },
