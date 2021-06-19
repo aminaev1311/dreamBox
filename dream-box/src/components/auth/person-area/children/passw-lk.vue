@@ -1,10 +1,18 @@
 <template>
   <div class="passw_lk">
+    <form >
     <h3 class="h_frame_lk">Изменение пароля</h3>
-    <inputs-labels type="password"></inputs-labels>
-    <inputs-labels type="password"></inputs-labels>
-    <inputs-labels type="password"></inputs-labels>
-    <button-dream></button-dream>
+    <inputs-labels type="password"
+    v-for="(input,i) of inputs"
+    :key="i"
+    :input="input"
+    :title="input.name"
+    :errorInp="errorInp"
+    @remuve-input="checkInput"></inputs-labels>
+
+      <small v-show="mess">Проверте павильность заполения формы</small>
+    <button-dream :isDisabled="metodDis" @click="ChangeButton"></button-dream>
+    </form>
   </div>
 </template>
 
@@ -14,7 +22,45 @@ import InputsLabels from "@ca/person-area/children/inputs-labels";
 export default {
   name: "passw-lk",
   components: { InputsLabels, ButtonDream },
-};
+  data() {
+    return {
+      ChangeButton: false,
+      metodDis: true,
+      passwd: /D$/,
+      mess: false,
+      errorInp: false,
+      inputs:[
+        {value:'', name:'old password', flag: false},
+        {value:'', name:'new password', flag: false},
+        {value:'', name:'repl_new password', flag: false}
+        ],
+    }
+  },
+  methods: {
+    metodDis(){
+        this.inputs.some(function(input) {
+          return !(input.value != 0)
+          })
+    },
+    ChangeButton(){
+        this.inputs.every(function(input){
+          return input.flag
+        })
+    },
+    checkInput(inp){
+      console.log(inp)
+      this.inputs.forEach(input => {
+        if(input.name == inp){
+          input.flag = true
+        }  else {
+          this.errorInp = true
+          this.mess = true
+        }
+      })
+
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

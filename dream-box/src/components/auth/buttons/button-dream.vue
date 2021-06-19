@@ -1,9 +1,16 @@
 <template>
-  <button class="button_dream-box">Сохранить</button>
+  <button class="button_dream-box "
+          :class="className"
+          :disabled="isDisabled" >Сохранить</button>
 </template>
 
 <script>
 export default {
+  props: {
+    isDisabled: {
+      default: true,
+    }
+  }
 }
 </script>
 
@@ -38,5 +45,10 @@ export default {
 }
 .button_dream-box:active{
   background: #1880DB;
+}
+.disabl{
+  cursor: not-allowed;
+  background-color: $color-buttons-disabled;
+  color: $color-font-disabled;
 }
 </style>
