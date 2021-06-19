@@ -39,7 +39,7 @@ export default {
   methods: {
     metodDis(){
         this.inputs.some(function(input) {
-          return !(input.value != 0)
+          return input.value
           })
     },
     ChangeButton(){

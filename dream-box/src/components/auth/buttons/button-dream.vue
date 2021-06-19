@@ -1,7 +1,7 @@
 <template>
-  <button class="button_dream-box "
-          :class="className"
-          :disabled="isDisabled" >Сохранить</button>
+  <button :class="$style['button_dream-box', 'button_dream-disabl']"
+          :disabled="isDisabled"
+          @click="$emit('event-fb')">Сохранить</button>
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style  lang="scss" scoped>
+<style  lang="scss" module>
 .button_dream-box{
   display: flex;
   flex-direction: row;
@@ -46,9 +46,30 @@ export default {
 .button_dream-box:active{
   background: #1880DB;
 }
-.disabl{
+.button_dream-disabl{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  padding: 15px 19px;
+  border-radius: 8px;
+  border: none;
+  position: static;
+  width: 134px;
+  height: 39px;
+  left: 0px;
+  top: 280px;
+  font-family: $base-ff;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.1px;
+  color: $color-font-light;
   cursor: not-allowed;
   background-color: $color-buttons-disabled;
-  color: $color-font-disabled;
+
 }
 </style>
