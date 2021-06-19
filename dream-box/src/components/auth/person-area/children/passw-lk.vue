@@ -26,7 +26,7 @@ export default {
     return {
       ChangeButton: false,
       metodDis: true,
-      passwd: /D$/,
+      passwd: /D/,
       mess: false,
       errorInp: false,
       inputs:[

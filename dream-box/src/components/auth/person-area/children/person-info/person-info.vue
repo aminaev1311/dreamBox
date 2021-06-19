@@ -15,7 +15,8 @@
       <inputs-labels title="First name" :value="firstName"></inputs-labels>
       <inputs-labels title="Last name" :value="lastName"></inputs-labels>
       <inputs-labels title="Birthday" :value="birthday"></inputs-labels>
-      <radios-lk></radios-lk>
+      <radios-lk
+      :isActive="isActive"></radios-lk>
       <button-dream></button-dream>
     </div>
   </div>
