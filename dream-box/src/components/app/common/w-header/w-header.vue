@@ -1,12 +1,19 @@
 <template>
   <div class="week-header">
-    <p class="title">{{ "January, 12" }}</p>
+    <p class="title">{{ currentDate }}</p>
     <p class="events-amount">{{ 5 }} events for today</p>
   </div>
 </template>
 
 <script>
-export default {};
+import moment from "moment";
+export default {
+  data() {
+    return {
+      currentDate: moment().format('MMMM, D')
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -29,10 +36,11 @@ export default {};
   color: $color-font-dark;
 }
 .events-amount {
+  margin-top: 4px;
   font-family: $base-ff;
   font-weight: bold;
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 16px;
+  line-height: 24px;
   color: $color-font-blue;
 }
 </style>
