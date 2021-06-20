@@ -1,0 +1,79 @@
+// center - center
+@mixin  fc-c-c {
+        & {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;  
+        }
+}
+@mixin  fr-c-c {
+        & {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;  
+        }
+}
+
+@mixin  fc-c-c-b {
+        & {
+           @include fc-c-c;
+           box-sizing: border-box;
+        }
+}
+@mixin  fr-c-c-b {
+        & {
+            @include fr-c-c;
+            box-sizing: border-box;
+        }
+}
+
+// start - center
+
+@mixin  fc-s-c {
+        & {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;  
+        }
+}
+@mixin  fr-s-c {
+        & {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;  
+        }
+}
+
+@mixin  fc-s-c-b {
+        & {
+           @include fc-s-c;
+           box-sizing: border-box;
+        }
+}
+@mixin  fr-s-c-b {
+        & {
+            @include fr-s-c;
+            box-sizing: border-box;
+        }
+}
+
+// buttons config
+
+@mixin o-b-none {
+       & {
+           outline: none;
+           border: none;
+           cursor: pointer;
+       } 
+}
+
+// fonts 
+
+
+
+
+
