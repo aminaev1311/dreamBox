@@ -11,14 +11,24 @@
       <button class="menu"></button>
       <button class="close"></button>
     </div>
+    <div class="details">
+      <input type="text" name="datails" placeholder="Details" />
+    </div>
+    <div class="metrics">
+      <span class="title">Metrics</span>
+      <MetricsQuantity />
+      <input type="text" class="units" name="units" placeholder="units" />
+    </div>
   </form>
 </template>
 
 <script>
 import ChooseTheme from "@c/app/goals/add-goal/choose-theme";
+import MetricsQuantity from "@c/app/goals/add-goal/metrics-quantity";
 export default {
   components: {
     ChooseTheme,
+    MetricsQuantity,
   },
 };
 </script>
@@ -87,5 +97,70 @@ export default {
 .menu:active,
 .close:active {
   background-color: lighten($color-base-blue, 40%);
+}
+
+.details {
+  margin-top: 16px;
+  width: 100%;
+  border-bottom: 2px solid #e6e9f8;
+  padding-bottom: 15px;
+  box-sizing: border-box;
+  & > input {
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+    height: 28px;
+    border-radius: 8px;
+    background-color: $color-base-light;
+    @include o-b-none;
+    padding: 4px 20px;
+    box-sizing: border-box;
+    @include placeholder {
+      font-family: $base-ff;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 20px;
+      letter-spacing: 0.1px;
+      color: #a9acbf;
+    }
+  }
+}
+.metrics {
+  width: 100%;
+  justify-content: flex-start;
+  margin-top: 18px;
+  display: flex;
+  box-sizing: border-box;
+  & > .title {
+    font-family: $base-ff;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+    color: $color-font-dark;
+    margin-right: 8px;
+  }
+  & > .units {
+    @include o-b-none;
+    width: 100%;
+    max-width: 350px;
+    height: 18px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-family: $base-ff;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0.1px;
+    margin-left: 8px;
+    @include placeholder {
+      font-family: $base-ff;
+      font-size: 14px;
+      line-height: 14px;
+      letter-spacing: 0.1px;
+      color: #a9acbf;
+    }
+  }
 }
 </style>

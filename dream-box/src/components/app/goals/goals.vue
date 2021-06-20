@@ -22,6 +22,9 @@ export default {
 </script>
 
 <style lang ="scss" scoped>
+.wrapper-goals {
+  margin-top: 15px;
+}
 h1 {
   margin: 32px 0 10px;
   display: flex;

@@ -77,10 +77,8 @@ router.beforeEach(async (to, from, next) => {
   const isUser = store.getters['auth/user']
 
   if (condition && !isUser) {
-    console.log(1001);
     next()
   } else if (condition && isUser) {
-    console.log(1000);
     next({ path: '/person-area' })
   }
   else if (!store.getters['auth/user']) {
