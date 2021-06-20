@@ -55,6 +55,7 @@ export default {
         theme.length > this.$options.MAX_LENGTH
           ? theme.slice(0, this.$options.MAX_LENGTH) + "..."
           : theme;
+			this.toggleOnOff()
       this.$emit("sent-current-value", theme);
     },
   },
