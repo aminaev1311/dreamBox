@@ -11,14 +11,28 @@
       </div>
     </div>
 
-    <div class="contact_frame_lk">
-      <inputs-labels title="First name" :value="firstName"></inputs-labels>
-      <inputs-labels title="Last name" :value="lastName"></inputs-labels>
-      <inputs-labels title="Birthday" :value="birthday"></inputs-labels>
-      <radios-lk
-      :isActive="isActive"></radios-lk>
-      <button-dream></button-dream>
-    </div>
+    <form class="contact_frame_lk" @submit.prevent="() => {}">
+      <inputs-labels
+        title="First name"
+        :value="fields.firstName"
+        v-model="fields.firstName"
+        @input="changeControl()"
+      ></inputs-labels>
+      <inputs-labels
+        title="Last name"
+        :value="fields.firstName"
+        v-model="fields.firstName"
+        @input="changeControl()"
+      ></inputs-labels>
+      <inputs-labels
+        title="Birthday"
+        :value="fields.firstName"
+        v-model="fields.firstName"
+        @input="changeControl()"
+      ></inputs-labels>
+      <radios-lk :isActive="isActive"></radios-lk>
+      <button-dream :isDisabled="!isChenged"></button-dream>
+    </form>
   </div>
 </template>
 
@@ -36,7 +50,13 @@ export default {
   data() {
     return {
       show: false,
+      isChenged: false,
     };
+  },
+  methods: {
+    changeControl() {
+      this.isChenged = true;
+    },
   },
   computed: {
     ...mapGetters({
@@ -57,6 +77,16 @@ export default {
     birthday() {
       return this.user?.birthday ? this.user.birthday : "No filled";
     },
+    fields() {
+      return {
+        lastName: this.lastName,
+        firstName: this.firstName,
+        birthday: this.birthday,
+      };
+    },
+  },
+  mounted() {
+    console.log(this.feilds);
   },
 };
 </script>

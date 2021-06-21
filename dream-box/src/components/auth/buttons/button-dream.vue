@@ -1,21 +1,29 @@
 <template>
-  <button :class="$style['button_dream-box', 'button_dream-disabl']"
-          :disabled="isDisabled"
-          @click="$emit('event-fb')">Сохранить</button>
+  <button
+    class="button_dream-box"
+    :disabled="isDisabled"
+    @click="$emit('event-fb',)"
+  >
+    Сохранить
+  </button>
 </template>
 
 <script>
 export default {
   props: {
     isDisabled: {
-      default: true,
-    }
-  }
-}
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: {
+    "event-fb": null,
+  },
+};
 </script>
 
-<style  lang="scss" module>
-.button_dream-box{
+<style  lang="scss" scoped>
+.button_dream-box {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -29,7 +37,7 @@ export default {
   height: 39px;
   left: 0px;
   top: 280px;
-  background: $color-buttons ;
+  background: $color-buttons;
   cursor: pointer;
   font-family: $base-ff;
   font-style: normal;
@@ -40,36 +48,16 @@ export default {
   letter-spacing: 0.1px;
   color: $color-font-light;
 }
-.button_dream-box:hover{
-  background: #87C8F3;
+.button_dream-box:hover {
+  background: #87c8f3;
 }
-.button_dream-box:active{
-  background: #1880DB;
+.button_dream-box:active {
+  background: #1880db;
 }
-.button_dream-disabl{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-  padding: 15px 19px;
-  border-radius: 8px;
-  border: none;
-  position: static;
-  width: 134px;
-  height: 39px;
-  left: 0px;
-  top: 280px;
-  font-family: $base-ff;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  letter-spacing: 0.1px;
+
+.button_dream-box:disabled {
   color: $color-font-light;
   cursor: not-allowed;
   background-color: $color-buttons-disabled;
-
 }
 </style>
