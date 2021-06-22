@@ -6,8 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "server-dev": "export NODE_ENV=development&& export NODE_PORT=3000&& nodemon server",
-    "server-start": "export NODE_ENV=production && export NODE_PORT=3888 && nodemon server"
+    "server-dev": "set NODE_ENV=development&& set NODE_PORT=3000&& nodemon server",
+    "server-start": "export NODE_ENV=production && export NODE_PORT=3888 && nodemon server",
+    "server-start-l": "export NODE_ENV=production && export NODE_PORT=3888 && nodemon server"
   },
   "dependencies": {
     "@vuelidate/core": "^2.0.0-alpha.19",
