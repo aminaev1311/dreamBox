@@ -16,19 +16,50 @@
     </div>
     <div class="metrics">
       <span class="title">Metrics</span>
-      <MetricsQuantity />
+      <!--   <MetricsQuantity /> -->
       <input type="text" class="units" name="units" placeholder="units" />
+    </div>
+    <div class="tactits-wrapper">
+      <span class="title">Tactics</span>
+      <div class="tactics">
+        <p v-for="(tactic, i) in goal.tactics" :key="tactic.id">
+          {{ i + 1 }}. {{ tactic.name.toUpperCase() }}
+        </p>
+      </div>
+      <AddMore @add-tactic="add($event)" />
     </div>
   </form>
 </template>
 
 <script>
 import ChooseTheme from "@c/app/goals/add-goal/choose-theme";
-import MetricsQuantity from "@c/app/goals/add-goal/metrics-quantity";
+import AddMore from "@c/app/goals/add-goal/add-more";
+import uid from "uniqid";
+/* import MetricsQuantity from "@c/app/goals/add-goal/metrics-quantity"; */
 export default {
   components: {
     ChooseTheme,
-    MetricsQuantity,
+    AddMore,
+    /* MetricsQuantity, */
+  },
+  data() {
+    return {
+      goal: {
+        id: null,
+        theme: "",
+        name: "",
+        metrics: {
+          number: 0,
+          units: "",
+        },
+        tactics: [],
+      },
+    };
+  },
+  methods: {
+    add(tactic) {
+      this.goal.tactics.push({ id: uid(), name: tactic });
+    },
   },
 };
 </script>
@@ -37,7 +68,7 @@ export default {
 .add-goal {
   @include fc-c-c-b;
   background-color: $color-base-gray;
-  padding: 12px 16px;
+  padding: 12px 16px 18px;
   border-radius: 8px;
   margin-bottom: 18px;
 }
@@ -160,6 +191,43 @@ export default {
       line-height: 14px;
       letter-spacing: 0.1px;
       color: #a9acbf;
+    }
+  }
+}
+
+.tactits-wrapper {
+  margin-top: 18px;
+  width: 100%;
+  min-height: 180px;
+  background-color: $color-base-light;
+  @include fc-s-s-b;
+  padding: 15px;
+  border-radius: 8px;
+  & > .title {
+    font-family: $base-ff;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+    color: #2d3446;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0 0 13px;
+  }
+  & > .tactics {
+    @include fc-c-c-b;
+    & > p {
+      font-family: $base-ff;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.1px;
+      text-transform: uppercase;
+      color: #a9acbf;
+      margin-bottom: 14px;
     }
   }
 }
