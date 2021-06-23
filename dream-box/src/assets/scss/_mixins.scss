@@ -61,6 +61,69 @@
         }
 }
 
+// start - start
+
+@mixin  fc-s-s {
+        & {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;  
+        }
+}
+@mixin  fr-s-s {
+        & {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;  
+        }
+}
+
+@mixin  fc-s-s-b {
+        & {
+           @include fc-s-s;
+           box-sizing: border-box;
+        }
+}
+@mixin  fr-s-s-b {
+        & {
+            @include fr-s-s;
+            box-sizing: border-box;
+        }
+}
+// center - end
+
+@mixin  fc-c-e {
+        & {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;  
+        }
+}
+@mixin  fr-c-e {
+        & {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end;  
+        }
+}
+
+@mixin  fc-c-e-b {
+        & {
+           @include fc-c-e;
+           box-sizing: border-box;
+        }
+}
+@mixin  fr-c-e-b {
+        & {
+            @include fr-s-e;
+            box-sizing: border-box;
+        }
+}
+
 // buttons config
 
 @mixin o-b-none {

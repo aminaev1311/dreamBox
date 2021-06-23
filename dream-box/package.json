@@ -6,8 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "server-dev": "export NODE_ENV=development&& export NODE_PORT=3000&& nodemon server",
-    "server-start": "export NODE_ENV=production && export NODE_PORT=3888 && nodemon server"
+    "server-dev": "set NODE_ENV=development&& set NODE_PORT=3000&& nodemon server",
+    "server-start": "export NODE_ENV=production && export NODE_PORT=3888 && nodemon server",
+    "server-start-l": "export NODE_ENV=production && export NODE_PORT=3888 && nodemon server"
   },
   "dependencies": {
     "@vuelidate/core": "^2.0.0-alpha.19",
@@ -29,6 +30,7 @@
     "nodemailer": "^6.6.1",
     "nodemon": "^2.0.7",
     "normalize.css": "^8.0.1",
+    "uniqid": "^5.3.0",
     "vue": "^3.0.0",
     "vue-image-crop-upload": "^3.0.3",
     "vue-router": "^4.0.8",
