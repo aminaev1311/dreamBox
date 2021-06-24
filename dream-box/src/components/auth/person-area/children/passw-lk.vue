@@ -1,7 +1,7 @@
 <template>
   <div class="passw_lk">
     <form >
-    <h3 class="h_frame_lk">Изменение пароля</h3>
+    <h3 class="h_frame_lk">Change Рassword</h3>
     <inputs-labels type="password"
     v-for="(input,i) of inputs"
     :key="i"
@@ -9,8 +9,7 @@
     :title="input.name"
     :errorInp="errorInp"
     @remuve-input="checkInput"></inputs-labels>
-
-      <small v-show="mess">Проверте павильность заполения формы</small>
+       <small v-show="mess">Проверте павильность заполения формы</small>
     <button-dream :isDisabled="metodDis" @click="ChangeButton"></button-dream>
     </form>
   </div>
@@ -76,8 +75,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  box-sizing: border-box;
   .h_frame_lk {
     margin-bottom: 15px;
+    text-align: left;
     font-family: $base-ff;
     font-style: normal;
     font-weight: bold;

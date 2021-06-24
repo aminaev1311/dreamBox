@@ -103,6 +103,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  box-sizing: border-box;
 
   .photo_frame_lk {
     display: flex;
@@ -160,11 +161,13 @@ export default {
 
   .contact_frame_lk {
     width: 100%;
+    height: 432px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding-left: 20%;
     padding-bottom: 30px;
+    box-sizing: border-box;
   }
 }
 </style>
