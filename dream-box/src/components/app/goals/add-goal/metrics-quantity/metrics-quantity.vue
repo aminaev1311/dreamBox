@@ -22,7 +22,8 @@ export default {
     };
   },
   emits: {
-    "send-metrics-quantity": (payload) => typeof payload === "number",
+    "send-metrics-quantity": (payload) =>
+      typeof payload === "number" || payload === "",
   },
   methods: {
     inc() {
@@ -43,7 +44,12 @@ export default {
           newQuantity.push(letter);
         });
       const newQuantityTypeNumber = parseInt(newQuantity.slice(0, 2).join(""));
-      this.quantity = newQuantityTypeNumber > 0 ? newQuantityTypeNumber : 0;
+      this.quantity =
+        newQuantityTypeNumber > 0
+          ? newQuantityTypeNumber
+          : newQuantityTypeNumber === 0
+          ? 0
+          : "";
       this.$emit("send-metrics-quantity", this.quantity);
     },
   },

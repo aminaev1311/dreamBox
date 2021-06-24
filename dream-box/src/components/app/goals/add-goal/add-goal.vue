@@ -16,7 +16,7 @@
     </div>
     <div class="metrics">
       <span class="title">Metrics</span>
-      <!--   <MetricsQuantity /> -->
+      <MetricsQuantity />
       <input type="text" class="units" name="units" placeholder="units" />
     </div>
     <div class="tactits-wrapper">
@@ -35,12 +35,12 @@
 import ChooseTheme from "@c/app/goals/add-goal/choose-theme";
 import AddMore from "@c/app/goals/add-goal/add-more";
 import uid from "uniqid";
-/* import MetricsQuantity from "@c/app/goals/add-goal/metrics-quantity"; */
+import MetricsQuantity from "@c/app/goals/add-goal/metrics-quantity";
 export default {
   components: {
     ChooseTheme,
     AddMore,
-    /* MetricsQuantity, */
+    MetricsQuantity,
   },
   data() {
     return {
@@ -218,6 +218,7 @@ export default {
   }
   & > .tactics {
     @include fc-c-c-b;
+    align-items: flex-start!important;
     & > p {
       font-family: $base-ff;
       font-style: normal;
