@@ -36,21 +36,21 @@ export default {};
     text-decoration: none;
     align-items: center;
     & > .img {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       margin-right: 10px;
     }
     & > .weeks {
-      background: url("~@/assets/images/lsb/weeks-dark.png");
+      background: url("~@/assets/images/lsb/weeks-dark.svg");
     }
     & > .goals {
-      background: url("~@/assets/images/lsb/goals-dark.png");
+      background: url("~@/assets/images/lsb/goals-dark.svg");
     }
     & > .vision {
-      background: url("~@/assets/images/lsb/vision-dark.png");
+      background: url("~@/assets/images/lsb/vision-dark.svg");
     }
     & > .archive {
-      background: url("~@/assets/images/lsb/archive-dark.png");
+      background: url("~@/assets/images/lsb/archive-dark.svg");
     }
     & > span {
       font-family: $base-ff;
@@ -67,16 +67,16 @@ export default {};
   & > a.active {
     border-right: 3px solid $color-base-blue;
     & > .weeks {
-      background: url("~@/assets/images/lsb/weeks-blue.png");
+      background: url("~@/assets/images/lsb/weeks-blue.svg");
     }
     & > .goals {
-      background: url("~@/assets/images/lsb/goals-blue.png");
+      background: url("~@/assets/images/lsb/goals-blue.svg");
     }
     & > .vision {
-      background: url("~@/assets/images/lsb/vision-blue.png");
+      background: url("~@/assets/images/lsb/vision-blue.svg");
     }
     & > .archive {
-      background: url("~@/assets/images/lsb/archive-blue.png");
+      background: url("~@/assets/images/lsb/archive-blue.svg");
     }
     & > span {
       font-family: $base-ff;
