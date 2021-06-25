@@ -2,8 +2,10 @@
   <div class="inputs_labels">
     <input
       class="input_dream-box"
+      :class="{errorInp}"
       :type="!isShow ? type : 'text'"
       v-model="value"
+      @change="$emit('remuve-input',input.name)"
     /><label class="label_frame_lk">{{ title }}</label>
     <div class="cursor after">
       <img
@@ -22,7 +24,7 @@
 
 <script>
 export default {
-  data() {
+ data() {
     return {
       isShow: false,
     };
@@ -40,11 +42,16 @@ export default {
       type: String,
       default: "No filled",
     },
+    input: Array,
+    errorInp: Boolean
   },
 };
 </script>
 
 <style lang="scss">
+.errorInp{
+  background-color: rgba(200,3,3,0.1)!important;
+}
 .inputs_labels {
   position: relative;
   display: flex;
@@ -93,7 +100,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 0;
-  top: -5px;
+  right: 15px;
+  top: 15px;
 }
 </style>

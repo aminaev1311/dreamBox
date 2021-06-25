@@ -1,10 +1,17 @@
 <template>
   <div class="passw_lk">
-    <h3 class="h_frame_lk">Изменение пароля</h3>
-    <inputs-labels type="password"></inputs-labels>
-    <inputs-labels type="password"></inputs-labels>
-    <inputs-labels type="password"></inputs-labels>
-    <button-dream></button-dream>
+    <form >
+    <h3 class="h_frame_lk">Change Рassword</h3>
+    <inputs-labels type="password"
+    v-for="(input,i) of inputs"
+    :key="i"
+    :input="input"
+    :title="input.name"
+    :errorInp="errorInp"
+    @remuve-input="checkInput"></inputs-labels>
+       <small v-show="mess">Проверте павильность заполения формы</small>
+    <button-dream :isDisabled="metodDis" @click="ChangeButton"></button-dream>
+    </form>
   </div>
 </template>
 
@@ -14,7 +21,45 @@ import InputsLabels from "@ca/person-area/children/inputs-labels";
 export default {
   name: "passw-lk",
   components: { InputsLabels, ButtonDream },
-};
+  data() {
+    return {
+      ChangeButton: false,
+      metodDis: true,
+      passwd: /D/,
+      mess: false,
+      errorInp: false,
+      inputs:[
+        {value:'', name:'old password', flag: false},
+        {value:'', name:'new password', flag: false},
+        {value:'', name:'repl_new password', flag: false}
+        ],
+    }
+  },
+  methods: {
+    metodDis(){
+        this.inputs.some(function(input) {
+          return input.value
+          })
+    },
+    ChangeButton(){
+        this.inputs.every(function(input){
+          return input.flag
+        })
+    },
+    checkInput(inp){
+      console.log(inp)
+      this.inputs.forEach(input => {
+        if(input.name == inp){
+          input.flag = true
+        }  else {
+          this.errorInp = true
+          this.mess = true
+        }
+      })
+
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -30,8 +75,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  box-sizing: border-box;
   .h_frame_lk {
     margin-bottom: 15px;
+    text-align: left;
     font-family: $base-ff;
     font-style: normal;
     font-weight: bold;

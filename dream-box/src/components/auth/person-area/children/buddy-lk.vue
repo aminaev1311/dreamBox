@@ -6,7 +6,9 @@
     </div>
     <div class="contact_frame_lk">
       <inputs-labels></inputs-labels>
+      <div class="position">
       <button-dream></button-dream>
+      </div>
     </div>
   </div>
 </template>
@@ -33,14 +35,20 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  box-sizing: border-box;
 }
 .contact_frame_lk {
   width: 100%;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-left: 19%;
+  padding-left: 29%;
   padding-bottom: 30px;
+  .position{
+    margin-bottom: 19px;
+    margin-top: -19px;
+  }
 }
 .text_buddy_lk {
   width: 136px;

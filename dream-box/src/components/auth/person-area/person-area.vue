@@ -23,6 +23,6 @@ export default {
 .wrapper-info-password {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 </style>
