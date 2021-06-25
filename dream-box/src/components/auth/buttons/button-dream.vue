@@ -2,7 +2,7 @@
   <button
     class="button_dream-box"
     :disabled="isDisabled"
-    @click="$emit('event-fb',)"
+    @click="$emit('event-fb')"
   >
     Сохранить
   </button>
@@ -24,6 +24,7 @@ export default {
 
 <style  lang="scss" scoped>
 .button_dream-box {
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -38,7 +39,6 @@ export default {
   left: 0px;
   top: 280px;
   background: $color-buttons;
-  cursor: pointer;
   font-family: $base-ff;
   font-style: normal;
   font-weight: normal;
@@ -49,10 +49,10 @@ export default {
   color: $color-font-light;
 }
 .button_dream-box:hover {
-  background: #87c8f3;
+  background: darken($color-buttons, 10%);
 }
 .button_dream-box:active {
-  background: #1880db;
+  background: darken($color-buttons, 20%);
 }
 
 .button_dream-box:disabled {

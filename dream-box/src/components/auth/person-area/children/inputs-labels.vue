@@ -5,7 +5,7 @@
       :class="{errorInp}"
       :type="!isShow ? type : 'text'"
       v-model="value"
-      @change="$emit('remuve-input',input.name)"
+      @change="$emit('remove-input',input.name)"
     /><label class="label_frame_lk">{{ title }}</label>
     <div class="cursor after">
       <img

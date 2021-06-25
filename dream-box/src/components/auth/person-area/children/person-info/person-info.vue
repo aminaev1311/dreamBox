@@ -30,7 +30,7 @@
         v-model="fields.firstName"
         @input="changeControl()"
       ></inputs-labels>
-      <radios-lk :isActive="isActive"></radios-lk>
+      <radios-lk ></radios-lk>
       <button-dream :isDisabled="!isChenged"></button-dream>
     </form>
   </div>
@@ -84,9 +84,6 @@ export default {
         birthday: this.birthday,
       };
     },
-  },
-  mounted() {
-    console.log(this.feilds);
   },
 };
 </script>
