@@ -113,6 +113,7 @@ export default {
     border-radius: 8px;
 
     .h_frame_lk {
+      text-align: left;
       margin-bottom: 15px;
       font-family: $base-ff;
       font-style: normal;

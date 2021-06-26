@@ -7,6 +7,7 @@ import PersonArea from '@p/PersonArea.vue'
 import store from '@s'
 import Test from '@p/Test.vue'
 import MainPage from '@p/MainPage.vue'
+import ShortVision from "@p/ShortVision";
 
 const routes = [
   {
@@ -37,9 +38,9 @@ const routes = [
     component: Registration
   },
   {
-    path: '/test',
-    name: 'test',
-    component: Test
+    path: '/short-vision',
+    name: 'short-vision',
+    component: ShortVision
   }
 ]
 
