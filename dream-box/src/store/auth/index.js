@@ -178,6 +178,7 @@ export default {
       try {
         await authApi.removeAccount()
         localStorage.removeItem('TOKEN')
+        commit('SETUSER', null)
         await router.push({ name: 'registration' })
         dispatch(
           'alert/setAlert',
