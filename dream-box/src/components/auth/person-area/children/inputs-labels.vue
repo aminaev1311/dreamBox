@@ -2,55 +2,41 @@
   <div class="inputs_labels">
     <input
       class="input_dream-box"
-      :class="{errorInp}"
-      :type="!isShow ? type : 'text'"
-      v-model="value"
-      @change="$emit('remove-input',input.name)"
-    /><label class="label_frame_lk">{{ title }}</label>
-    <div class="cursor after">
-      <img
-        v-if="type === 'password'"
-        :src="
-          !isShow
-            ? require('@i/auth/eye-close.png')
-            : require('@i/auth/eye-open.png')
-        "
-        alt="eye-close"
-        @click="isShow = !isShow"
-      />
-    </div>
+      type="text"
+      :value="value"
+      @input="sendValue($event)"
+    />
+    <label class="label_frame_lk">{{ title }}</label>
   </div>
 </template>
 
 <script>
 export default {
- data() {
+  data() {
     return {
       isShow: false,
     };
   },
-  name: "inputs-labels",
   props: {
     title: {
       type: String,
     },
-    type: {
-      type: String,
-      default: "text",
-    },
     value: {
       type: String,
-      default: "No filled",
+      default: "",
     },
-    input: Array,
-    errorInp: Boolean
+  },
+  methods: {
+    sendValue({ target }) {
+      this.$emit("update:value", target.value);
+    },
   },
 };
 </script>
 
 <style lang="scss">
-.errorInp{
-  background-color: rgba(200,3,3,0.1)!important;
+.errorInp {
+  background-color: rgba(200, 3, 3, 0.1) !important;
 }
 .inputs_labels {
   position: relative;
@@ -63,7 +49,7 @@ export default {
     border: none;
     border-radius: 8px;
     margin-bottom: 20px;
-    outline: none;;
+    outline: none;
     padding-left: 19px;
     padding-right: 19px;
     padding-top: 30px;

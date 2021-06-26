@@ -8,7 +8,14 @@ const SALT_ROUNDS = 12
 const User = new Schema({
   login: {
     type: String,
-    default: 'Гость'
+    default: 'Гость',
+  },
+  gender: {
+    type: String,
+    default: null,
+    required: function () {
+      return this.gender === null || this.gender.toSting().toLowerCase() === 'female' || this.gender.toSting().toLowerCase() === 'male'
+    }
   },
   name: {
     type: String,

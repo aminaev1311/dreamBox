@@ -58,6 +58,6 @@ export default {
 .button_dream-box:disabled {
   color: $color-font-light;
   cursor: not-allowed;
-  background-color: $color-buttons-disabled;
+  background: lighten($color-buttons, 30%);
 }
 </style>
