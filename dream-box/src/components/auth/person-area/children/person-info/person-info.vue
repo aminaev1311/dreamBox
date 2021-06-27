@@ -26,7 +26,7 @@
 
       <radios-lk @chengeGender="validGender($event)" :gender="gender.value">
       </radios-lk>
-      <button-dream :isDisabled="!isDisabled"></button-dream>
+      <button-dream :isDisabled="!isDisabled || isLoad" @click="update"></button-dream>
     </form>
   </div>
 </template>
@@ -61,60 +61,75 @@ export default {
     },
   },
   mounted() {
-    let { USER_FIRST_NAME, USER_LAST_NAME, USER_BIRTHDAY, USER_GENDER } =
-      this.$options;
-
-    USER_FIRST_NAME = this.user?.name.split(" ")[0].trim();
-
-    USER_LAST_NAME = this.user?.name.split(" ")[1]
-      ? this.user.name.split(" ")[1]
-      : "";
-
-    USER_BIRTHDAY = this.user?.birthday ? this.user.birthday : "";
-
-    USER_GENDER = this.user?.gender ? this.user.gender : null;
-
-    this.fields = [
-      {
-        value: USER_FIRST_NAME,
-        name: "user-firts-name",
-        title: "Name",
-        valid: (value) => value !== USER_FIRST_NAME,
-        isValid: false,
-        type: "field",
-      },
-      {
-        value: USER_LAST_NAME,
-        name: "user-last-name",
-        title: "Surname",
-        valid: (value) => value !== USER_LAST_NAME,
-        isValid: false,
-        type: "field",
-      },
-      {
-        value: USER_BIRTHDAY,
-        name: "user-birthday",
-        title: "Day of Birth",
-        valid: (value) => value !== USER_BIRTHDAY,
-        isValid: false,
-        type: "field",
-      },
-    ];
-
-    this.gender = {
-      value: USER_GENDER,
-      name: "user-gender",
-      valid: (value) => value !== USER_GENDER,
-      isValid: false,
-    };
+    this.init();
   },
+
   methods: {
     valid(field, newValue) {
       field.value = newValue;
       field.isValid = field.valid(newValue);
     },
     validGender(gender) {
+      this.gender.value = gender;
       this.gender.isValid = this.gender.valid(gender);
+    },
+    update() {
+      const newUserInfo = new FormData();
+
+      this.fields.forEach(({ name, value }) => {
+        newUserInfo.append(name, value || "");
+      });
+      newUserInfo.append(this.gender.name, this.gender.value || "");
+
+      this.$store
+        .dispatch("auth/updateUserInfo", newUserInfo)
+        .then(() => this.init());
+    },
+    init() {
+      let { USER_FIRST_NAME, USER_LAST_NAME, USER_BIRTHDAY, USER_GENDER } =
+        this.$options;
+
+      USER_FIRST_NAME = this.user?.name?.trim() || "";
+
+      USER_LAST_NAME = this.user?.surname ? this.user.surname : "";
+
+      USER_BIRTHDAY = this.user?.birthday ? this.user.birthday : "";
+
+      USER_GENDER = this.user?.gender ? this.user.gender : null;
+
+      this.fields = [
+        {
+          value: USER_FIRST_NAME,
+          name: "name",
+          title: "Name",
+          valid: (value) => value !== USER_FIRST_NAME,
+          isValid: false,
+          type: "field",
+        },
+        {
+          value: USER_LAST_NAME,
+          name: "surname",
+          title: "Surname",
+          valid: (value) => value !== USER_LAST_NAME,
+          isValid: false,
+          type: "field",
+        },
+        {
+          value: USER_BIRTHDAY,
+          name: "birthday",
+          title: "Day of Birth",
+          valid: (value) => value !== USER_BIRTHDAY,
+          isValid: false,
+          type: "field",
+        },
+      ];
+
+      this.gender = {
+        value: USER_GENDER,
+        name: "gender",
+        valid: (value) => value !== USER_GENDER,
+        isValid: false,
+      };
     },
   },
   computed: {

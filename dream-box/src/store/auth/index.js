@@ -102,6 +102,8 @@ export default {
         return false
       }
     },
+
+
     async checkEmail({ dispatch }, email) {
       try {
         const { result } = await authApi.checkEmail(email)
@@ -119,6 +121,8 @@ export default {
         return false
       }
     },
+
+
     async getUser({ commit, dispatch }, user) {
       commit('SETISLOAD', true)
       try {
@@ -146,6 +150,8 @@ export default {
       }
       commit('SETISLOAD', false)
     },
+
+
     async checkUser({ commit, dispatch }) {
       try {
         const { result, user } = await authApi.checkUser()
@@ -168,11 +174,14 @@ export default {
       }
       resolve()
     },
+
+
     async logOut({ commit }) {
       localStorage.removeItem('TOKEN')
       commit('SETUSER', null)
       router.push({ name: 'auth' })
     },
+
     async removeAccount({ commit, dispatch }) {
       commit('SETISLOAD', true)
       try {
@@ -202,6 +211,72 @@ export default {
         )
       }
       commit('SETISLOAD', false)
-    }
-  }
+    },
+    // Uapdate user info
+    async updateUserInfo({ commit, dispatch }, user) {
+      commit('SETISLOAD', true)
+      try {
+        const { user: newUser, token } = await authApi.updateUser(user)
+        commit('SETUSER', newUser)
+        localStorage.setItem('TOKEN', token)
+        dispatch(
+          'alert/setAlert',
+          {
+            status: 'success',
+            message: "User information updated successfully!!",
+            daley: 3000
+          },
+          { root: true }
+        )
+      } catch (e) {
+        console.log(e)
+        dispatch(
+          'alert/setAlert',
+          {
+            status: 'error',
+            message: 'Error on server!! Try later...',
+            daley: 3000
+          },
+          { root: true }
+        )
+      }
+      commit('SETISLOAD', false)
+    },
+
+
+    // Uapdate user password
+    async updateUserPassword({ commit, dispatch }, passwords) {
+      commit('SETISLOAD', true)
+      try {
+        const { oldPassword, currentPasswords } = await authApi.updateUserPassword(passwords)
+        if (!oldPassword && !currentPasswords) {
+          dispatch(
+            'alert/setAlert',
+            {
+              status: 'success',
+              message: "Your password updated successfully!!",
+              daley: 3000
+            },
+            { root: true }
+          )
+        }
+
+        return { oldPassword, currentPasswords }
+      } catch (e) {
+        console.log(e)
+        dispatch(
+          'alert/setAlert',
+          {
+            status: 'error',
+            message: 'Error on server!! Try later...',
+            daley: 3000
+          },
+          { root: true }
+        )
+      }
+      commit('SETISLOAD', false)
+    },
+  },
+
+
 }

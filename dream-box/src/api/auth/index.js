@@ -27,13 +27,30 @@ export const checkUser = async () => {
   return data
 }
 
+export const updateUser = async user => {
+
+  const headers = addToken()
+  const { data } = await http.put(`update-user`, user, headers)
+  return data
+}
+
+export const updateUserPassword = async passwords => {
+  const headers = addToken()
+  const { data } = await http.put(`update-user-password`, passwords, headers)
+  return data
+}
+
 export const removeAccount = async () => {
   const token = addToken()
   const { data } = await http.delete(`remove-user`, token)
   return data
 }
 
-export function addToken () {
+
+
+
+
+export function addToken() {
   return {
     headers: localStorage.getItem('TOKEN')
       ? { token: localStorage.getItem('TOKEN') }

@@ -13,13 +13,25 @@ const User = new Schema({
   gender: {
     type: String,
     default: null,
-    required: function () {
-      return this.gender === null || this.gender.toSting().toLowerCase() === 'female' || this.gender.toSting().toLowerCase() === 'male'
+    required: function (v) {
+
+      return v === null || v?.toSting().toLowerCase() === 'female' || v?.toSting().toLowerCase() === 'male'
+    }
+  },
+  role: {
+    type: String,
+    default: null,
+    required: function (v) {
+      return v === null || v?.toSting().toLowerCase() === 'user' || v?.toSting().toLowerCase() === 'admin'
     }
   },
   name: {
     type: String,
-    default: 'Not filled'
+    default: ''
+  },
+  surname: {
+    type: String,
+    default: ''
   },
   logo: {
     type: String,

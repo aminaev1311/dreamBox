@@ -1,5 +1,7 @@
 <template>
-  <div class="wrapper-input-password">
+  <div class="wrapper-input-password"
+  :class="{ error: error }"
+  >
     <input
       :type="isShowPassword ? 'text' : 'password'"
       @input="setValue($event)"
@@ -9,6 +11,7 @@
       :placeholder="placeholder"
       class="password"
       :autocomplete="autocomplete"
+      
     />
     <div class="cursor after">
       <img
@@ -22,6 +25,7 @@
       />
     </div>
   </div>
+  <small v-if="error">{{ errorMessage }}</small>
 </template>
 
 <script>
@@ -46,6 +50,14 @@ export default {
       type: String,
       default: "",
     },
+    error:{
+      type: Boolean,
+      default: false
+    },
+    errorMessage: {
+      type: String,
+      default: "",
+    },
   },
   emits: {
     "update:modelValue": (payload) => typeof payload === "string",
@@ -60,9 +72,9 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper-input-password {
-  @include fr-c-c-b;
+  @include fc-c-c-b;
   width: 319px;
-  height: 60px;
+  min-height: 60px;
   background: $color-base-light;
   border-radius: 8px;
   position: relative;
@@ -114,11 +126,14 @@ export default {
   }
 }
 
-input.error {
-  border-color: red;
+.wrapper-input-password.error {
+  border:1px solid red!important;
 }
 
 small {
   color: red;
+  display: flex;
+  margin-bottom: 20px;
+  padding-left: 10px;
 }
 </style>
