@@ -110,7 +110,7 @@ export default {
           this.sent = false;
           this.email = "";
           this.password = "";
-          this.$router.push({ name: "start" });
+          this.$router.push({ path: '/' });
         } else {
           this.error = true;
         }

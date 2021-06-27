@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import ModelWin from "@ca/person-area/children/model-win";
 export default {
   components: {
@@ -18,11 +18,6 @@ export default {
     return {
       show: false,
     };
-  },
-  methods: {
-    ...mapActions({
-      logOut: "auth/logOut",
-    }),
   },
   computed: {
     ...mapGetters({
