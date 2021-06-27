@@ -1,11 +1,8 @@
 <template>
-  <button class="menu-links" @click.self="show = true">
-    <slot></slot>
-  </button>
   <div
     class="model-window-wrapper"
     :class="{ active: show }"
-    @click.self="show = false"
+    @click.self="closeWin"
   >
     <div class="window">
       <p class="content">
@@ -15,7 +12,7 @@
       <button class="btn-delete" @click="$store.dispatch('auth/removeAccount')">
         Yes, delete
       </button>
-      <button @click.self="show = false" class="btn-mistake">
+      <button @click.self="closeWin" class="btn-mistake">
         No, it’s a mistake
       </button>
     </div>
@@ -24,14 +21,18 @@
 
 <script>
 export default {
-  data() {
-    return {
-      show: false,
-    };
-  },
   props: {
-    btnClass: {
-      type: String,
+    show: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: {
+    "close-window": null,
+  },
+  methods: {
+    closeWin() {
+      this.$emit("close-window");
     },
   },
 };
@@ -56,6 +57,7 @@ export default {
   background: #2d3446c9;
   transform: scale(0);
   transition: transform 0.3s;
+  z-index: 500;
 }
 .model-window-wrapper.active {
   transform: scale(1);

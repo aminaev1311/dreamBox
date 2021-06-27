@@ -11,27 +11,22 @@
       </div>
     </div>
 
-    <form class="contact_frame_lk" @submit.prevent="() => {}">
+    <form
+      v-if="fields.length"
+      class="contact_frame_lk"
+      @submit.prevent="() => {}"
+    >
       <inputs-labels
-        title="First name"
-        :value="fields.firstName"
-        v-model="fields.firstName"
-        @input="changeControl()"
-      ></inputs-labels>
-      <inputs-labels
-        title="Last name"
-        :value="fields.firstName"
-        v-model="fields.firstName"
-        @input="changeControl()"
-      ></inputs-labels>
-      <inputs-labels
-        title="Birthday"
-        :value="fields.firstName"
-        v-model="fields.firstName"
-        @input="changeControl()"
-      ></inputs-labels>
-      <radios-lk :isActive="isActive"></radios-lk>
-      <button-dream :isDisabled="!isChenged"></button-dream>
+        v-for="field in fields"
+        :key="field.name"
+        :title="field.title"
+        :value="field.value"
+        @input="valid(field, $event.target.value)"
+      />
+
+      <radios-lk @chengeGender="validGender($event)" :gender="gender.value">
+      </radios-lk>
+      <button-dream :isDisabled="!isDisabled || isLoad" @click="update"></button-dream>
     </form>
   </div>
 </template>
@@ -46,16 +41,95 @@ import { mapGetters } from "vuex";
 import config from "@config";
 
 export default {
+  USER_FIRST_NAME: "",
+  USER_LAST_NAME: "",
+  USER_BIRTHDAY: "",
+  USER_GENDER: "",
+
   components: { ButtonDream, InputsLabels, RadiosLk, ChangeImage },
   data() {
     return {
       show: false,
       isChenged: false,
+      fields: [],
+      gender: {},
     };
   },
   methods: {
     changeControl() {
       this.isChenged = true;
+    },
+  },
+  mounted() {
+    this.init();
+  },
+
+  methods: {
+    valid(field, newValue) {
+      field.value = newValue;
+      field.isValid = field.valid(newValue);
+    },
+    validGender(gender) {
+      this.gender.value = gender;
+      this.gender.isValid = this.gender.valid(gender);
+    },
+    update() {
+      const newUserInfo = new FormData();
+
+      this.fields.forEach(({ name, value }) => {
+        newUserInfo.append(name, value || "");
+      });
+      newUserInfo.append(this.gender.name, this.gender.value || "");
+
+      this.$store
+        .dispatch("auth/updateUserInfo", newUserInfo)
+        .then(() => this.init());
+    },
+    init() {
+      let { USER_FIRST_NAME, USER_LAST_NAME, USER_BIRTHDAY, USER_GENDER } =
+        this.$options;
+
+      USER_FIRST_NAME = this.user?.name?.trim() || "";
+
+      USER_LAST_NAME = this.user?.surname ? this.user.surname : "";
+
+      USER_BIRTHDAY = this.user?.birthday ? this.user.birthday : "";
+
+      USER_GENDER = this.user?.gender ? this.user.gender : null;
+
+      this.fields = [
+        {
+          value: USER_FIRST_NAME,
+          name: "name",
+          title: "Name",
+          valid: (value) => value !== USER_FIRST_NAME,
+          isValid: false,
+          type: "field",
+        },
+        {
+          value: USER_LAST_NAME,
+          name: "surname",
+          title: "Surname",
+          valid: (value) => value !== USER_LAST_NAME,
+          isValid: false,
+          type: "field",
+        },
+        {
+          value: USER_BIRTHDAY,
+          name: "birthday",
+          title: "Day of Birth",
+          valid: (value) => value !== USER_BIRTHDAY,
+          isValid: false,
+          type: "field",
+        },
+      ];
+
+      this.gender = {
+        value: USER_GENDER,
+        name: "gender",
+        valid: (value) => value !== USER_GENDER,
+        isValid: false,
+      };
     },
   },
   computed: {
@@ -66,27 +140,9 @@ export default {
     logo() {
       return config.linkToImg(this.user?.logo).trim();
     },
-    firstName() {
-      return this.user?.name.split(" ")[0].trim();
+    isDisabled() {
+      return this.fields.some(({ isValid }) => isValid) || this.gender.isValid;
     },
-    lastName() {
-      return this.user?.name.split(" ")[1]
-        ? this.user.name.split(" ")[1]
-        : "No filled";
-    },
-    birthday() {
-      return this.user?.birthday ? this.user.birthday : "No filled";
-    },
-    fields() {
-      return {
-        lastName: this.lastName,
-        firstName: this.firstName,
-        birthday: this.birthday,
-      };
-    },
-  },
-  mounted() {
-    console.log(this.feilds);
   },
 };
 </script>

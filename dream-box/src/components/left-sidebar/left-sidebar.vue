@@ -11,14 +11,17 @@
         <span class="role">{{ user && user.role ? user.role : "me" }}</span>
       </div>
     </div>
+    <LsbNav />
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import config from "@config";
+import LsbNav from "./children/nav";
 
 export default {
+  components: { LsbNav },
   computed: {
     ...mapGetters({
       user: ["auth/user"],
@@ -32,12 +35,11 @@ export default {
       return user && user.role ? user.role : "me";
     },
     logo() {
-      const img = config.linkToImg(this.user?.logo).trim()
+      const img = config.linkToImg(this.user?.logo).trim();
       return img;
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 

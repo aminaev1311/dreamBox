@@ -1,0 +1,156 @@
+// center - center
+@mixin  fc-c-c {
+        & {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;  
+        }
+}
+@mixin  fr-c-c {
+        & {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;  
+        }
+}
+
+@mixin  fc-c-c-b {
+        & {
+           @include fc-c-c;
+           box-sizing: border-box;
+        }
+}
+@mixin  fr-c-c-b {
+        & {
+            @include fr-c-c;
+            box-sizing: border-box;
+        }
+}
+
+// start - center
+
+@mixin  fc-s-c {
+        & {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;  
+        }
+}
+@mixin  fr-s-c {
+        & {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;  
+        }
+}
+
+@mixin  fc-s-c-b {
+        & {
+           @include fc-s-c;
+           box-sizing: border-box;
+        }
+}
+@mixin  fr-s-c-b {
+        & {
+            @include fr-s-c;
+            box-sizing: border-box;
+        }
+}
+
+// start - start
+
+@mixin  fc-s-s {
+        & {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;  
+        }
+}
+@mixin  fr-s-s {
+        & {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;  
+        }
+}
+
+@mixin  fc-s-s-b {
+        & {
+           @include fc-s-s;
+           box-sizing: border-box;
+        }
+}
+@mixin  fr-s-s-b {
+        & {
+            @include fr-s-s;
+            box-sizing: border-box;
+        }
+}
+// center - end
+
+@mixin  fc-c-e {
+        & {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;  
+        }
+}
+@mixin  fr-c-e {
+        & {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end;  
+        }
+}
+
+@mixin  fc-c-e-b {
+        & {
+           @include fc-c-e;
+           box-sizing: border-box;
+        }
+}
+@mixin  fr-c-e-b {
+        & {
+            @include fr-s-e;
+            box-sizing: border-box;
+        }
+}
+
+// buttons config
+
+@mixin o-b-none {
+       & {
+           outline: none;
+           border: none;
+           cursor: pointer;
+       } 
+}
+
+// fonts 
+
+// pleceholder
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+      @content;
+    }
+    &:-moz-placeholder {
+      @content;
+    }
+    &::-moz-placeholder {
+      @content;
+    }
+    &:-ms-input-placeholder {
+      @content;
+    }
+  }
+
+
+

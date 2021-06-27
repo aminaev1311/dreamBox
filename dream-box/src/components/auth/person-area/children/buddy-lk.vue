@@ -5,9 +5,9 @@
       <p class="p_frame_lk">You don’t have personal buddy yet</p>
     </div>
     <div class="contact_frame_lk">
-      <inputs-labels></inputs-labels>
+      <InputsLabels value="" title="Email" />
       <div class="position">
-      <button-dream></button-dream>
+        <button-dream></button-dream>
       </div>
     </div>
   </div>
@@ -45,7 +45,7 @@ export default {
   justify-content: flex-end;
   padding-left: 29%;
   padding-bottom: 30px;
-  .position{
+  .position {
     margin-bottom: 19px;
     margin-top: -19px;
   }
@@ -73,6 +73,7 @@ export default {
     line-height: 24px;
     letter-spacing: 0.1px;
     color: $color-link;
+    text-align: start;
   }
 }
 </style>

@@ -8,6 +8,8 @@ const TOKEN_SECRET_KEY = require('@c/secret')
 const multer = require('multer')
 const path = require('path')
 const createHash = require('hash-generator')
+const bcryptjs = require('bcryptjs')
+const SALT_ROUNDS = 12
 
 const fs = require('fs')
 
@@ -34,6 +36,7 @@ router.post('/api/upload', upload.single('img'), async (req, res) => {
     let user = await User.findById(id)
     user = JSON.parse(JSON.stringify(user))
     user.logo = req.fileName
+    delete user.password
 
     // clearing old files
     const linkToFiles = path.join(__dirname, "../../files")
@@ -98,6 +101,89 @@ router.get('/api/check-user', async (req, res) => {
   }
 })
 
+// Update User
+
+router.put('/api/update-user', async (req, res) => {
+
+  try {
+    console.log(req.user);
+    const id = req.user._id
+    console.log(req.body);
+    const { name, surname, birthday, gender } = req.body
+
+    console.log(name);
+
+    let user = await User.findById(id)
+
+    if (user) {
+      await User.findByIdAndUpdate(
+        id,
+        { $set: { name: name, surname: surname, birthday: birthday, gender: gender } },
+        { new: true },
+        function (err) {
+          console.log(err);
+          if (err) return res.status(501).end()
+        }
+      )
+      user = await User.findById(id)
+      user = JSON.parse(JSON.stringify(user))
+      delete user.password
+      console.log(user);
+
+      res.status(200).send({ user, token: jwt.sign(user, TOKEN_SECRET_KEY), result: true })
+    } else {
+      res.status(404).end()
+    }
+
+  } catch (e) {
+    console.log(e)
+    res.status(501).end()
+  }
+})
+// Update User Password
+
+router.put('/api/update-user-password', async (req, res) => {
+
+  try {
+
+    const id = req.user._id
+
+    const { oldPassword, newPassword, confirmNewPassword } = req.body
+
+    let user = await User.findById(id)
+
+    if (!user.validatePassword(oldPassword)) {
+      return res.status(200).send({ oldPassword: true })
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      return res.status(200).send({ currentPasswords: true })
+    }
+
+    const salt = bcryptjs.genSaltSync(SALT_ROUNDS)
+    const password = bcryptjs.hashSync(newPassword, salt)
+
+    if (user) {
+       await User.findByIdAndUpdate(
+        id,
+        { $set: { password } },
+        { new: true },
+        function (err) {
+          console.log(err);
+          if (err) return res.status(501).end()
+        }
+      )
+      res.status(200).end()
+    } else {
+      res.status(404).end()
+    }
+
+  } catch (e) {
+    console.log(e)
+    res.status(501).end()
+  }
+})
+
 router.post('/api/log-in', async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email })
@@ -152,7 +238,7 @@ router.post('/api/registration', async (req, res) => {
 
     if (!isUser) {
       const { password_1, password_2, ...user } = req.body
-      const newUser = new User({ ...user, password: password_1 })
+      const newUser = new User({ ...user, password: password_1, role: null, gender: null, surname: '' })
       await newUser.save()
       const url = baseURL + currentURL + `/?id=${newUser._id}`
       const letter = {

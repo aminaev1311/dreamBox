@@ -2,23 +2,41 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Auth from '@p/Auth.vue'
 import Registration from '@p/Registration.vue'
-import StartPage from '@p/Start.vue'
+import App from '@p/App'
 import PersonArea from '@p/PersonArea.vue'
 import store from '@s'
 import Test from '@p/Test.vue'
-import MainPage from '@p/MainPage.vue'
-import ShortVision from "@p/ShortVision";
+import Weeks from '@p/App/Weeks.vue'
+import Goals from '@p/App/Goals.vue'
+import Vision from '@p/App/Vision.vue'
+import Archive from '@p/App/Archive.vue'
+
 
 const routes = [
   {
     path: '/',
     name: 'start',
-    component: StartPage,
+    component: App,
     children: [
       {
         path: '',
-        name: 'MainPage',
-        component: MainPage
+        name: 'Weeks',
+        component: Weeks
+      },
+      {
+        path: '/goals',
+        name: 'Goals',
+        component: Goals
+      },
+      {
+        path: '/vision',
+        name: 'Vision',
+        component: Vision
+      },
+      {
+        path: '/archive',
+        name: 'Archive',
+        component: Archive
       },
       {
         path: '/person-area',
@@ -37,11 +55,7 @@ const routes = [
     name: 'registration',
     component: Registration
   },
-  {
-    path: '/short-vision',
-    name: 'short-vision',
-    component: ShortVision
-  }
+
 ]
 
 const router = createRouter({

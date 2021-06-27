@@ -74,7 +74,7 @@ export default {
       if (jsonData?.token) {
         localStorage.setItem("TOKEN", jsonData.token);
       }
- 
+
     },
     cropUploadFail(status, field) {},
   },
