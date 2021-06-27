@@ -5,6 +5,19 @@ const Schema = mongoose.Schema
 
 const SALT_ROUNDS = 12
 
+const validGender = (value) => {
+  const ifFemale = value && value.toSting ? value.toSting().toLowerCase() === 'female' : null
+  const ifMale = value && value.toSting ? value.toSting().toLowerCase() === 'male' : null
+  return value === null || ifMale || ifFemale
+}
+const validRole = (value) => {
+  const ifFemale = value && value.toSting ? value.toSting().toLowerCase() === 'user' : null
+  const ifMale = value && value.toSting ? value.toSting().toLowerCase() === 'admin' : null
+  return value === null || ifMale || ifFemale
+}
+
+
+
 const User = new Schema({
   login: {
     type: String,
@@ -13,17 +26,12 @@ const User = new Schema({
   gender: {
     type: String,
     default: null,
-    required: function (v) {
-
-      return v === null || v?.toSting().toLowerCase() === 'female' || v?.toSting().toLowerCase() === 'male'
-    }
+    required: (v) => validGender(v)
   },
   role: {
     type: String,
     default: null,
-    required: function (v) {
-      return v === null || v?.toSting().toLowerCase() === 'user' || v?.toSting().toLowerCase() === 'admin'
-    }
+    required: (v) => validRole(v)
   },
   name: {
     type: String,

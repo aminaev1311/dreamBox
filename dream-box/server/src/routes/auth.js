@@ -106,13 +106,9 @@ router.get('/api/check-user', async (req, res) => {
 router.put('/api/update-user', async (req, res) => {
 
   try {
-    console.log(req.user);
+   
     const id = req.user._id
-    console.log(req.body);
     const { name, surname, birthday, gender } = req.body
-
-    console.log(name);
-
     let user = await User.findById(id)
 
     if (user) {
@@ -128,7 +124,6 @@ router.put('/api/update-user', async (req, res) => {
       user = await User.findById(id)
       user = JSON.parse(JSON.stringify(user))
       delete user.password
-      console.log(user);
 
       res.status(200).send({ user, token: jwt.sign(user, TOKEN_SECRET_KEY), result: true })
     } else {
