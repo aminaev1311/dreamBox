@@ -1,2 +1,2 @@
-import WeekHeader from "./w-header"
-export default WeekHeader
+import WeekHeader from "./w-header";
+export default WeekHeader;

@@ -218,7 +218,7 @@ export default {
   }
   & > .tactics {
     @include fc-c-c-b;
-    align-items: flex-start!important;
+    align-items: flex-start !important;
     & > p {
       font-family: $base-ff;
       font-style: normal;

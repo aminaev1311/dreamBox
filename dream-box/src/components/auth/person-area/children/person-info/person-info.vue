@@ -1,7 +1,9 @@
 <template>
   <div class="frame_lk">
     <div class="photo_frame_lk">
-      <h3 class="h_frame_lk">Your Profile</h3>
+      <h3 class="h_frame_lk">
+Your Profile
+</h3>
       <ChangeImage :show="show" @hide="show = !show" />
       <div class="round">
         <div class="chage-image" @click="show = !show">
@@ -30,8 +32,8 @@
         v-model="fields.firstName"
         @input="changeControl()"
       ></inputs-labels>
-      <radios-lk ></radios-lk>
-      <button-dream :isDisabled="!isChenged"></button-dream>
+      <radios-lk></radios-lk>
+      <button-dream :is-disabled="!isChenged"></button-dream>
     </form>
   </div>
 </template>
@@ -88,7 +90,7 @@ export default {
 };
 </script>
 
-<style  lang="scss"  scoped>
+<style lang="scss" scoped>
 .frame_lk {
   min-height: 100%;
   height: 432px;

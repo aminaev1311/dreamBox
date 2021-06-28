@@ -1,7 +1,9 @@
 <template>
   <div class="passw_lk">
     <form>
-      <h3 class="h_frame_lk">Change password</h3>
+      <h3 class="h_frame_lk">
+Change password
+</h3>
       <InputPassword
         type="password"
         v-for="input in inputs"
@@ -12,7 +14,7 @@
         :autocomplete="'username'"
       ></InputPassword>
       <button-dream
-        :isDisabled="isDisabled"
+        :is-disabled="isDisabled"
         @click.prevent="savePassword"
       ></button-dream>
     </form>
@@ -23,7 +25,7 @@
 import ButtonDream from "@ca/buttons/button-dream";
 import InputPassword from "@ca/input-password";
 export default {
-  name: "passw-lk",
+  name: "PasswLk",
   components: { InputPassword, ButtonDream },
   data() {
     return {
@@ -42,15 +44,15 @@ export default {
       ],
     };
   },
-  methods: {
-    savePassword() {
-      console.log("save-password");
-    },
-  },
 
   computed: {
     isDisabled() {
       return this.inputs.some(({ value }) => value === "");
+    },
+  },
+  methods: {
+    savePassword() {
+      console.log("save-password");
     },
   },
 };

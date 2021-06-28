@@ -3,7 +3,7 @@
     <div v-for="field in fields" :key="field.id">
       <RegField :v$="v$" :field="field" />
     </div>
-    <Buttons :isLoad="!isLoad" :isDisabled="isLoad" />
+    <Buttons :is-load="!isLoad" :is-disabled="isLoad" />
     <ToPage
       :class="$style['to-page']"
       message="Already a user? "
@@ -31,6 +31,11 @@ import RegField from "./field";
 import ToPage from "@c/auth/to-page";
 
 export default {
+  components: {
+    RegField,
+    Buttons,
+    ToPage,
+  },
   setup() {
     return { v$: useVuelidate() };
   },
@@ -44,11 +49,6 @@ export default {
       birthday: "",
       fields: [...fields],
     };
-  },
-  components: {
-    RegField,
-    Buttons,
-    ToPage,
   },
   validations() {
     return {

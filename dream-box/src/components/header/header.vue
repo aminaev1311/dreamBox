@@ -1,15 +1,33 @@
 <template>
   <nav class="menu-up">
     <ul class="menu-up__list">
-      <li class="menu-up__item"><a href="" class="menu-up__item">week 1</a></li>
-      <li class="menu-up__item"><a href="" class="menu-up__item">week 2</a></li>
-      <li class="menu-up__item"><a href="" class="menu-up__item">week 3</a></li>
-      <li class="menu-up__item"><a href="" class="menu-up__item">week 4</a></li>
-      <li class="menu-up__item"><a href="" class="menu-up__item">week 5</a></li>
-      <li class="menu-up__item"><a href="" class="menu-up__item">week 6</a></li>
-      <li class="menu-up__item"><a href="" class="menu-up__item">week 7</a></li>
-      <li class="menu-up__item"><a href="" class="menu-up__item">week 8</a></li>
-      <li class="menu-up__item"><a href="" class="menu-up__item">week 9</a></li>
+      <li class="menu-up__item">
+        <a href="" class="menu-up__item">week 1</a>
+      </li>
+      <li class="menu-up__item">
+        <a href="" class="menu-up__item">week 2</a>
+      </li>
+      <li class="menu-up__item">
+        <a href="" class="menu-up__item">week 3</a>
+      </li>
+      <li class="menu-up__item">
+        <a href="" class="menu-up__item">week 4</a>
+      </li>
+      <li class="menu-up__item">
+        <a href="" class="menu-up__item">week 5</a>
+      </li>
+      <li class="menu-up__item">
+        <a href="" class="menu-up__item">week 6</a>
+      </li>
+      <li class="menu-up__item">
+        <a href="" class="menu-up__item">week 7</a>
+      </li>
+      <li class="menu-up__item">
+        <a href="" class="menu-up__item">week 8</a>
+      </li>
+      <li class="menu-up__item">
+        <a href="" class="menu-up__item">week 9</a>
+      </li>
       <li class="menu-up__item">
         <a href="" class="menu-up__item">week 10</a>
       </li>

@@ -22,8 +22,7 @@ export default {
 };
 </script>
 
-
-<style lang="scss" >
+<style lang="scss">
 @keyframes enter {
   from {
     opacity: 0;
@@ -73,4 +72,3 @@ export default {
   }
 }
 </style>
-

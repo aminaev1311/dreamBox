@@ -2,26 +2,18 @@
   <div class="radios_lk">
     <label for="woman">
       <div class="circle" :class="{ active: user === 'woman' }"></div>
-      <input
-        type="radio"
-        id="woman"
-        value="woman"
-        v-model="user"
-        checked
-      />
-      Женщина</label
-    >
+      <input type="radio" id="woman" value="woman" v-model="user" checked />
+      Женщина</label>
     <label for="man">
       <div class="circle" :class="{ active: user === 'man' }"></div>
       <input type="radio" class="" id="man" value="man" v-model="user" />
-      Мужчина</label
-    >
+      Мужчина</label>
   </div>
 </template>
 
 <script>
 export default {
-  name: "radios_lk",
+  name: "RadiosLk",
   data() {
     return {
       user: "woman",

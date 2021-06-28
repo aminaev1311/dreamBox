@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import { maska } from 'maska'
+import { maska } from "maska";
 export default {
-   directives: { maska },
+  directives: { maska },
   props: {
     field: {
       type: Object,
@@ -96,7 +96,7 @@ export default {
   color: red;
 }
 </style>
-<style lang="scss" >
+<style lang="scss">
 .error_input {
   border-color: red;
 }

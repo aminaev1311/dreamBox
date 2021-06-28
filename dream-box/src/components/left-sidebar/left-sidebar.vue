@@ -5,8 +5,8 @@
         <img :src="logo" alt="logo" />
       </div>
       <div class="description">
-        <router-link to="/person-area" class="name"
-          >{{ userName }}
+        <router-link to="/person-area" class="name">
+          {{ userName }}
         </router-link>
         <span class="role">{{ user && user.role ? user.role : "me" }}</span>
       </div>

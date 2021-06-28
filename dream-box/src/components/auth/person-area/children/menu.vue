@@ -2,9 +2,21 @@
   <button class="menu" @click.self="show = !show">
     <div v-if="show" class="menu-nav">
       <ModelWin>Remove account</ModelWin>
-      <button class="menu-links" @click="logOut">Log out</button>
-      <router-link class="menu-links" to="/">Back to App</router-link>
-      <button class="menu-links" @click.self="show = !show">Close</button>
+      <button class="menu-links"
+@click="logOut"
+>
+Log out
+</button>
+      <router-link class="menu-links"
+to="/"
+>
+Back to App
+</router-link>
+      <button class="menu-links"
+@click.self="show = !show"
+>
+Close
+</button>
     </div>
   </button>
 </template>
@@ -13,13 +25,13 @@
 import { mapGetters, mapActions } from "vuex";
 import ModelWin from "@ca/person-area/children/model-win";
 export default {
+  components: {
+    ModelWin,
+  },
   data() {
     return {
       show: false,
     };
-  },
-  components: {
-    ModelWin,
   },
   methods: {
     ...mapActions({
@@ -38,7 +50,7 @@ export default {
 };
 </script>
 
-<style lang= "scss" scoped>
+<style lang="scss" scoped>
 .menu {
   cursor: pointer;
   width: 20px;

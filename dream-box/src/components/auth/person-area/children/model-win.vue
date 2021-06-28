@@ -24,20 +24,20 @@
 
 <script>
 export default {
-  data() {
-    return {
-      show: false,
-    };
-  },
   props: {
     btnClass: {
       type: String,
     },
   },
+  data() {
+    return {
+      show: false,
+    };
+  },
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .show {
   outline: none;
   border: none;

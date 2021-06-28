@@ -26,11 +26,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      isShowPassword: false,
-    };
-  },
   props: {
     modelValue: {
       type: String,
@@ -49,6 +44,11 @@ export default {
   },
   emits: {
     "update:modelValue": (payload) => typeof payload === "string",
+  },
+  data() {
+    return {
+      isShowPassword: false,
+    };
   },
   methods: {
     setValue({ target }) {

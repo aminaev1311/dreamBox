@@ -1,12 +1,14 @@
 <template>
-
-    <div :class="$style.content">
-      <div :class="$style.right">
-        <p :class="$style['h-small']">Sign UP</p>
-        <h1 :class="$style['h1']">new ACCOUNT</h1>
-        <RegForm />
-      </div>
-
+  <div :class="$style.content">
+    <div :class="$style.right">
+      <p :class="$style['h-small']">
+Sign UP
+</p>
+      <h1 :class="$style['h1']">
+new ACCOUNT
+</h1>
+      <RegForm />
+    </div>
   </div>
 </template>
 
@@ -20,8 +22,6 @@ export default {
 };
 </script>
 <style lang="scss" module>
-
-
 .content {
   width: 100%;
   max-width: $max-width;
@@ -75,4 +75,3 @@ export default {
   margin: 0 0 36px 0;
 }
 </style>
-

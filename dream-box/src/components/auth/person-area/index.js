@@ -1,2 +1,2 @@
-import PersonArea from "./person-area"
-export default PersonArea
+import PersonArea from "./person-area";
+export default PersonArea;

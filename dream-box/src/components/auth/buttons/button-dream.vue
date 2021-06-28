@@ -22,7 +22,7 @@ export default {
 };
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
 .button_dream-box {
   cursor: pointer;
   display: flex;

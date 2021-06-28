@@ -1,9 +1,6 @@
-
-
-
 <template>
   <FullScreenPage>
-    <SingUp  />
+    <SingUp />
   </FullScreenPage>
 </template>
 

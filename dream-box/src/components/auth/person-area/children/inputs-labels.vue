@@ -2,10 +2,10 @@
   <div class="inputs_labels">
     <input
       class="input_dream-box"
-      :class="{errorInp}"
+      :class="{ errorInp }"
       :type="!isShow ? type : 'text'"
       v-model="value"
-      @change="$emit('remove-input',input.name)"
+      @change="$emit('remove-input', input.name)"
     /><label class="label_frame_lk">{{ title }}</label>
     <div class="cursor after">
       <img
@@ -24,12 +24,7 @@
 
 <script>
 export default {
- data() {
-    return {
-      isShow: false,
-    };
-  },
-  name: "inputs-labels",
+  name: "InputsLabels",
   props: {
     title: {
       type: String,
@@ -43,14 +38,19 @@ export default {
       default: "No filled",
     },
     input: Array,
-    errorInp: Boolean
+    errorInp: Boolean,
+  },
+  data() {
+    return {
+      isShow: false,
+    };
   },
 };
 </script>
 
 <style lang="scss">
-.errorInp{
-  background-color: rgba(200,3,3,0.1)!important;
+.errorInp {
+  background-color: rgba(200, 3, 3, 0.1) !important;
 }
 .inputs_labels {
   position: relative;
@@ -63,7 +63,7 @@ export default {
     border: none;
     border-radius: 8px;
     margin-bottom: 20px;
-    outline: none;;
+    outline: none;
     padding-left: 19px;
     padding-right: 19px;
     padding-top: 30px;

@@ -16,22 +16,14 @@
 
 <script>
 export default {
-  data() {
-    return {
-      quantity: null,
-    };
-  },
   emits: {
     "send-metrics-quantity": (payload) =>
       typeof payload === "number" || payload === "",
   },
-  methods: {
-    inc() {
-      this.quantity++;
-    },
-    dec() {
-      this.quantity = this.quantity > 0 ? --this.quantity : 0;
-    },
+  data() {
+    return {
+      quantity: null,
+    };
   },
   watch: {
     quantity() {
@@ -51,6 +43,14 @@ export default {
           ? 0
           : "";
       this.$emit("send-metrics-quantity", this.quantity);
+    },
+  },
+  methods: {
+    inc() {
+      this.quantity++;
+    },
+    dec() {
+      this.quantity = this.quantity > 0 ? --this.quantity : 0;
     },
   },
 };

@@ -1,7 +1,11 @@
 <template>
   <div class="week-header">
-    <p class="title">{{ currentDate }}</p>
-    <p class="events-amount">{{ 5 }} events for today</p>
+    <p class="title">
+      {{ currentDate }}
+    </p>
+    <p class="events-amount">
+{{ 5 }} events for today
+</p>
   </div>
 </template>
 
@@ -10,7 +14,7 @@ import moment from "moment";
 export default {
   data() {
     return {
-      currentDate: moment().format('MMMM, D')
+      currentDate: moment().format("MMMM, D"),
     };
   },
 };

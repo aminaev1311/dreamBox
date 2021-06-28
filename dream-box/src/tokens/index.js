@@ -1,7 +1,7 @@
-const LOCAL_ACCESS_NAME = 'accessToken';
-const LOCAL_REFRESH_NAME = 'refreshToken';
-const LOCAL_ACCESS_EXP = 'accessExp';
-const LOCAL_ACCESS_USERNAME = 'userName';
+const LOCAL_ACCESS_NAME = "accessToken";
+const LOCAL_REFRESH_NAME = "refreshToken";
+const LOCAL_ACCESS_EXP = "accessExp";
+const LOCAL_ACCESS_USERNAME = "userName";
 
 function setTokens(access, refresh) {
   let accessData = getJWTPayload(access);
@@ -33,7 +33,7 @@ function getJWTPayload(token) {
 }
 
 function parseJWT(token) {
-  let parts = token.split('.');
+  let parts = token.split(".");
 
   return {
     header: parsePart(parts[0]),

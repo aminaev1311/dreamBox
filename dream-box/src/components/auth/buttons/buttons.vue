@@ -1,8 +1,8 @@
 <template>
   <div :class="$style.buttons">
-    <BaseButton :disabled="isDisabled" :isLoad="!isLoad">{{
-      titleMainButton
-    }}</BaseButton>
+    <BaseButton :disabled="isDisabled" :is-load="!isLoad">
+      {{ titleMainButton }}
+    </BaseButton>
     <span :class="$style.or">or</span>
     <div :class="$style['sosial-networks']">
       <button

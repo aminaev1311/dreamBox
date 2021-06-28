@@ -1,2 +1,2 @@
-import ChooseTheme from "./choose-theme"
-export default ChooseTheme
+import ChooseTheme from "./choose-theme";
+export default ChooseTheme;

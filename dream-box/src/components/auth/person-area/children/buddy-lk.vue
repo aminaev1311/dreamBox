@@ -1,8 +1,12 @@
 <template>
   <div class="buddy_lk">
     <div class="text_buddy_lk">
-      <h3 class="h_frame_lk">Your Buddy</h3>
-      <p class="p_frame_lk">You don’t have personal buddy yet</p>
+      <h3 class="h_frame_lk">
+Your Buddy
+</h3>
+      <p class="p_frame_lk">
+You don’t have personal buddy yet
+</p>
     </div>
     <div class="contact_frame_lk">
       <InputsLabels value="" title="Email" />
@@ -17,7 +21,7 @@
 import ButtonDream from "@ca/buttons/button-dream";
 import InputsLabels from "@ca/person-area/children/inputs-labels";
 export default {
-  name: "buddy-lk",
+  name: "BuddyLk",
   components: { InputsLabels, ButtonDream },
 };
 </script>

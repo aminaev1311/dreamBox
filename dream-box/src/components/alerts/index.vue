@@ -2,7 +2,9 @@
   <transition enter-active-class="alert-enter" leave-active-class="alert-leave">
     <div v-if="alert" class="alert" :class="[alert.status, { active: alert }]">
       <div class="alert-container">
-        <p class="message">{{ alert.message }}</p>
+        <p class="message">
+          {{ alert.message }}
+        </p>
         <button
           class="alert-button"
           v-if="alert.buttonTitle"

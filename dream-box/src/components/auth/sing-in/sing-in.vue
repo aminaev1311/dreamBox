@@ -1,9 +1,12 @@
 <template>
   <div class="sing-in-container">
-
     <form class="sing-in" ref="form-sing-in" @submit.prevent="sentForm">
-      <p class="action">Sing in</p>
-      <h1 class="h1">Your account</h1>
+      <p class="action">
+Sing in
+</p>
+      <h1 class="h1">
+Your account
+</h1>
       <div
         class="field animate__animated"
         :class="{
@@ -54,9 +57,9 @@
         <small v-if="error">Email or password aren't correct!</small>
       </div>
       <Buttons
-        :isLoad="!isLoad"
-        :isDisabled="isLoad"
-        titleMainButton="Log In"
+        :is-load="!isLoad"
+        :is-disabled="isLoad"
+        title-main-button="Log In"
       />
       <ToPage
         class="to-page"
@@ -74,6 +77,10 @@ import Buttons from "@c/auth/buttons";
 import ToPage from "@c/auth/to-page";
 
 export default {
+  components: {
+    Buttons,
+    ToPage,
+  },
   data() {
     return {
       email: "",
@@ -82,11 +89,6 @@ export default {
       isShowPassword: false,
       error: false,
     };
-  },
-  components: {
-    Buttons,
-    ToPage,
-
   },
   async mounted() {
     const getParams = this.$router.currentRoute.value.fullPath.split("/?")[1];
@@ -134,7 +136,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="scss" scoped>
 .sing-in-container {

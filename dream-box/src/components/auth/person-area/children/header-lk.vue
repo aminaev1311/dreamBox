@@ -1,6 +1,8 @@
 <template>
   <div class="header-lk">
-    <h1 class="title">Личный кабинет</h1>
+    <h1 class="title">
+Личный кабинет
+</h1>
     <AppPersonAreaMenu />
   </div>
 </template>
@@ -15,7 +17,7 @@ export default {
 };
 </script>
 
-<style lang = "scss" scoped>
+<style lang="scss" scoped>
 .header-lk {
   padding: 20px 0;
   display: flex;

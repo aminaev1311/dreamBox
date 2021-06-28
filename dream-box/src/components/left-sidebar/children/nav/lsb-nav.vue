@@ -23,7 +23,7 @@
 export default {};
 </script>
 
-<style lang ="scss" scoped>
+<style lang="scss" scoped>
 .nav {
   margin-top: 35px;
   display: flex;

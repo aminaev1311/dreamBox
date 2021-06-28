@@ -9,8 +9,7 @@
             v-for="theme in themes"
             :key="theme"
             @click.prevent.stop="chooseTheme(theme)"
-            >{{ theme }}</span
-          >
+          >{{ theme }}</span>
         </div>
       </div>
     </button>
@@ -46,6 +45,13 @@ export default {
       ],
     };
   },
+  computed: {
+    currentValue() {
+      return this.selectedTheme
+        ? this.selectedTheme
+        : this.$options.DEFAULT_TEXT;
+    },
+  },
   methods: {
     toggleOnOff() {
       this.isOpen = !this.isOpen;
@@ -55,15 +61,8 @@ export default {
         theme.length > this.$options.MAX_LENGTH
           ? theme.slice(0, this.$options.MAX_LENGTH) + "..."
           : theme;
-			this.toggleOnOff()
+      this.toggleOnOff();
       this.$emit("sent-current-value", theme);
-    },
-  },
-  computed: {
-    currentValue() {
-      return this.selectedTheme
-        ? this.selectedTheme
-        : this.$options.DEFAULT_TEXT;
     },
   },
 };

@@ -1,206 +1,205 @@
-import * as authApi from '@api/auth'
-import router from '@r'
+import * as authApi from "@api/auth";
+import router from "@r";
 
-let resolve
+let resolve;
 const isChecked = () =>
-  new Promise(res => {
-    resolve = () => res(true)
-  })
+  new Promise((res) => {
+    resolve = () => res(true);
+  });
 
 export default {
   namespaced: true,
   state: {
     user: null,
-    isLoad: false
+    isLoad: false,
   },
   getters: {
-    user: state => state.user,
-    isLoad: state => state.isLoad,
-    isChecked: state => isChecked()
+    user: (state) => state.user,
+    isLoad: (state) => state.isLoad,
+    isChecked: (state) => isChecked(),
   },
   mutations: {
     SETISLOAD(state, val) {
-      state.isLoad = val
+      state.isLoad = val;
     },
     SETUSER(state, user) {
-      state.user = user
-    }
+      state.user = user;
+    },
   },
   actions: {
     async register({ commit, dispatch }, data) {
-      commit('SETISLOAD', true)
+      commit("SETISLOAD", true);
       try {
-        await authApi.sentFormForReg(data)
+        await authApi.sentFormForReg(data);
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'info',
+            status: "info",
             message:
-              'You registered successfully. We have sent you an email with a link to complete the registration.',
+              "You registered successfully. We have sent you an email with a link to complete the registration.",
             daley: 10000,
-            buttonTitle: 'X'
+            buttonTitle: "X",
           },
           { root: true }
-        )
+        );
       } catch (e) {
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'error',
-            message: 'Error by registration...Try later...',
-            daley: 4000
+            status: "error",
+            message: "Error by registration...Try later...",
+            daley: 4000,
           },
           { root: true }
-        )
+        );
       }
-      commit('SETISLOAD', false)
-
+      commit("SETISLOAD", false);
     },
     async activate({ commit, dispatch }, id) {
-      let result = false
-      commit('SETISLOAD', true)
+      let result = false;
+      commit("SETISLOAD", true);
       try {
-        await authApi.activate(id)
+        await authApi.activate(id);
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'success',
-            message: 'You account get activated successfully!!!',
-            daley: 4000
+            status: "success",
+            message: "You account get activated successfully!!!",
+            daley: 4000,
           },
           { root: true }
-        )
-        result = true
+        );
+        result = true;
       } catch (e) {
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'error',
-            message: 'Error by activated!!! Try later...',
-            daley: 4000
+            status: "error",
+            message: "Error by activated!!! Try later...",
+            daley: 4000,
           },
           { root: true }
-        )
+        );
       }
-      commit('SETISLOAD', false)
-      return result
+      commit("SETISLOAD", false);
+      return result;
     },
     async checkLogin({ dispatch }, login) {
       try {
-        const { result } = await authApi.checkLogin(login)
-        return !result
+        const { result } = await authApi.checkLogin(login);
+        return !result;
       } catch (e) {
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'error',
-            message: 'Error by checked of login!!! Try later...',
-            daley: 2000
+            status: "error",
+            message: "Error by checked of login!!! Try later...",
+            daley: 2000,
           },
           { root: true }
-        )
-        return false
+        );
+        return false;
       }
     },
     async checkEmail({ dispatch }, email) {
       try {
-        const { result } = await authApi.checkEmail(email)
-        return !result
+        const { result } = await authApi.checkEmail(email);
+        return !result;
       } catch (e) {
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'error',
-            message: 'Error by checked of email!!! Try later...',
-            daley: 2000
+            status: "error",
+            message: "Error by checked of email!!! Try later...",
+            daley: 2000,
           },
           { root: true }
-        )
-        return false
+        );
+        return false;
       }
     },
     async getUser({ commit, dispatch }, user) {
-      commit('SETISLOAD', true)
+      commit("SETISLOAD", true);
       try {
-        const { user: newUser, result, token } = await authApi.logIn(user)
+        const { user: newUser, result, token } = await authApi.logIn(user);
         if (result) {
-          commit('SETUSER', newUser)
-          localStorage.setItem('TOKEN', token)
-          commit('SETISLOAD', false)
-          return true
+          commit("SETUSER", newUser);
+          localStorage.setItem("TOKEN", token);
+          commit("SETISLOAD", false);
+          return true;
         } else {
-          commit('SETISLOAD', false)
-          return false
+          commit("SETISLOAD", false);
+          return false;
         }
       } catch (e) {
-        console.log(e)
+        console.log(e);
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'error',
-            message: 'Error on server!! Try later...',
-            daley: 3000
+            status: "error",
+            message: "Error on server!! Try later...",
+            daley: 3000,
           },
           { root: true }
-        )
+        );
       }
-      commit('SETISLOAD', false)
+      commit("SETISLOAD", false);
     },
     async checkUser({ commit, dispatch }) {
       try {
-        const { result, user } = await authApi.checkUser()
+        const { result, user } = await authApi.checkUser();
         if (result) {
-          commit('SETUSER', user)
+          commit("SETUSER", user);
         } else {
-          commit('SETUSER', null)
+          commit("SETUSER", null);
         }
       } catch (e) {
-        console.log(e)
+        console.log(e);
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'error',
-            message: 'Error on server!! Try later...',
-            daley: 3000
+            status: "error",
+            message: "Error on server!! Try later...",
+            daley: 3000,
           },
           { root: true }
-        )
+        );
       }
-      resolve()
+      resolve();
     },
     async logOut({ commit }) {
-      localStorage.removeItem('TOKEN')
-      commit('SETUSER', null)
-      router.push({ name: 'auth' })
+      localStorage.removeItem("TOKEN");
+      commit("SETUSER", null);
+      router.push({ name: "auth" });
     },
     async removeAccount({ commit, dispatch }) {
-      commit('SETISLOAD', true)
+      commit("SETISLOAD", true);
       try {
-        await authApi.removeAccount()
-        localStorage.removeItem('TOKEN')
-        await router.push({ name: 'registration' })
+        await authApi.removeAccount();
+        localStorage.removeItem("TOKEN");
+        await router.push({ name: "registration" });
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'success',
-            message: 'Your account got deleted succesfully!!!',
-            daley: 3000
+            status: "success",
+            message: "Your account got deleted succesfully!!!",
+            daley: 3000,
           },
           { root: true }
-        )
+        );
       } catch (e) {
-        console.log(e)
+        console.log(e);
         dispatch(
-          'alert/setAlert',
+          "alert/setAlert",
           {
-            status: 'error',
-            message: 'Error on server!! Try later...',
-            daley: 3000
+            status: "error",
+            message: "Error on server!! Try later...",
+            daley: 3000,
           },
           { root: true }
-        )
+        );
       }
-      commit('SETISLOAD', false)
-    }
-  }
-}
+      commit("SETISLOAD", false);
+    },
+  },
+};

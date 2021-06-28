@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style lang = "scss" module>
+<style lang="scss" module>
 $danger: rgb(216, 87, 87);
 $info: rgb(59, 219, 72);
 .button-create {
