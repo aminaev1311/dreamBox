@@ -4,9 +4,9 @@
     :class="[$style.field, { animate__shakeX: v$[field.name].$error }]"
     class="animate__animated"
   >
-    <label :for="field.id" :class="$style['form-label']">{{
-      field.title
-    }}</label>
+    <label :for="field.id" :class="$style['form-label']">
+      {{ field.title }}
+    </label>
     <input
       v-if="field.lazy"
       :name="field.name"
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { maska } from "maska";
 export default {
   directives: { maska },

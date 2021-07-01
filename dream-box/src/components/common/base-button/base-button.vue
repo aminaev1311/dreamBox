@@ -8,11 +8,7 @@
     <span v-if="!isLoad">
       <slot></slot>
     </span>
-    <div
-      v-else
-      class="spin primary"
-      style="width: 1.5rem; height: 1.5rem"
-    ></div>
+    <div v-else class="spin primary" style="width: 1.5rem; height: 1.5rem"></div>
   </button>
 </template>
 

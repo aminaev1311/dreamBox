@@ -2,12 +2,7 @@
   <form class="add-goal" @submit.prevent="() => {}">
     <div class="goal-name">
       <ChooseTheme />
-      <input
-        type="text"
-        name="goal-name"
-        class="input-goal-name"
-        placeholder="Name of the goal"
-      />
+      <input type="text" name="goal-name" class="input-goal-name" placeholder="Name of the goal" />
       <button class="menu"></button>
       <button class="close"></button>
     </div>

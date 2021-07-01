@@ -14,21 +14,16 @@
 </template>
 
 <script>
+/* eslint-disable */ 
 import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  minLength,
-  email,
-  sameAs,
-  helpers,
-} from "@vuelidate/validators";
-const { withAsync } = helpers;
+import { required, minLength, email, sameAs, helpers } from "@vuelidate/validators";
 
 import { mapActions, mapGetters } from "vuex";
 import fields from "./reg-form";
 import Buttons from "@c/auth/buttons";
 import RegField from "./field";
 import ToPage from "@c/auth/to-page";
+const { withAsync } = helpers;
 
 export default {
   components: {
@@ -77,11 +72,7 @@ export default {
         birthday: (value) => {
           if (!value) return true;
           const newValue =
-            value.split(".")[1] +
-            "." +
-            value.split(".")[0] +
-            "." +
-            value.split(".")[2];
+            value.split(".")[1] + "." + value.split(".")[0] + "." + value.split(".")[2];
           const myIf =
             /^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/.test(newValue.trim()) &&
             new Date(newValue) > new Date("01.01.1900") &&
@@ -135,8 +126,7 @@ export default {
           const form = new FormData(this.$refs.reg);
           form.append("currentURL", "auth");
           await this.register(form);
-          let { name, email, password_1, password_2, submitStatus, birthday } =
-            this;
+          let { name, email, password_1, password_2, submitStatus, birthday } = this;
           name = email = password_1 = password_2 = submitStatus = birthday = "";
           this.$refs.reg.reset();
           this.$router.push({ name: "auth" });

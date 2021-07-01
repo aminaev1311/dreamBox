@@ -4,11 +4,7 @@
     <div class="start-pages">
       <AppHeader />
       <router-view v-slot="{ Component }" class="margin-top">
-        <transition
-          enter-active-class="enter-page"
-          leave-active-class="leave-page"
-          mode="out-in"
-        >
+        <transition enter-active-class="enter-page" leave-active-class="leave-page" mode="out-in">
           <component :is="Component" />
         </transition>
       </router-view>

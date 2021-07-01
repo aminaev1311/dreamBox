@@ -1,9 +1,5 @@
 <template>
-  <button
-    class="button_dream-box"
-    :disabled="isDisabled"
-    @click="$emit('event-fb')"
-  >
+  <button class="button_dream-box" :disabled="isDisabled" @click="$emit('event-fb')">
     Сохранить
   </button>
 </template>

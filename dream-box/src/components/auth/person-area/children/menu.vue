@@ -2,21 +2,9 @@
   <button class="menu" @click.self="show = !show">
     <div v-if="show" class="menu-nav">
       <ModelWin>Remove account</ModelWin>
-      <button class="menu-links"
-@click="logOut"
->
-Log out
-</button>
-      <router-link class="menu-links"
-to="/"
->
-Back to App
-</router-link>
-      <button class="menu-links"
-@click.self="show = !show"
->
-Close
-</button>
+      <button class="menu-links" @click="logOut">Log out</button>
+      <router-link class="menu-links" to="/"> Back to App </router-link>
+      <button class="menu-links" @click.self="show = !show">Close</button>
     </div>
   </button>
 </template>

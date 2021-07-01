@@ -1,9 +1,5 @@
 <template>
-  <button
-    @click="$emit('btn-click')"
-    :disabled="isDisabled"
-    :style="`width: ${width}`"
-  >
+  <button @click="$emit('btn-click')" :disabled="isDisabled" :style="`width: ${width}`">
     {{ title }}
   </button>
 </template>

@@ -6,13 +6,9 @@
     </button>
     <div v-if="showInput" class="add-tactic">
       <input type="text" v-model="value" :class="{ error: isError }" />
-      <button @click="addTactic">
-Save
-</button>
+      <button @click="addTactic">Save</button>
     </div>
-    <small
-v-if="showInput && isError"
-class="error-message">This field can't be empty!</small>
+    <small v-if="showInput && isError" class="error-message">This field can't be empty!</small>
   </div>
 </template>
 

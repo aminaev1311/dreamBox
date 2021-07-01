@@ -1,12 +1,8 @@
 <template>
   <div :class="$style.content">
     <div :class="$style.right">
-      <p :class="$style['h-small']">
-Sign UP
-</p>
-      <h1 :class="$style['h1']">
-new ACCOUNT
-</h1>
+      <p :class="$style['h-small']">Sign UP</p>
+      <h1 :class="$style['h1']">new ACCOUNT</h1>
       <RegForm />
     </div>
   </div>

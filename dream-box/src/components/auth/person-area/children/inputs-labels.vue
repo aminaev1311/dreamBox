@@ -10,11 +10,7 @@
     <div class="cursor after">
       <img
         v-if="type === 'password'"
-        :src="
-          !isShow
-            ? require('@i/auth/eye-close.png')
-            : require('@i/auth/eye-open.png')
-        "
+        :src="!isShow ? require('@i/auth/eye-close.png') : require('@i/auth/eye-open.png')"
         alt="eye-close"
         @click="isShow = !isShow"
       />
@@ -23,6 +19,7 @@
 </template>
 
 <script>
+/* eslint-disable */ 
 export default {
   name: "InputsLabels",
   props: {

@@ -9,7 +9,8 @@
             v-for="theme in themes"
             :key="theme"
             @click.prevent.stop="chooseTheme(theme)"
-          >{{ theme }}</span>
+            >{{ theme }}</span
+          >
         </div>
       </div>
     </button>
@@ -47,9 +48,7 @@ export default {
   },
   computed: {
     currentValue() {
-      return this.selectedTheme
-        ? this.selectedTheme
-        : this.$options.DEFAULT_TEXT;
+      return this.selectedTheme ? this.selectedTheme : this.$options.DEFAULT_TEXT;
     },
   },
   methods: {

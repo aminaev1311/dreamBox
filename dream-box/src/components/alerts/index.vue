@@ -5,11 +5,7 @@
         <p class="message">
           {{ alert.message }}
         </p>
-        <button
-          class="alert-button"
-          v-if="alert.buttonTitle"
-          @click="closeAlert"
-        >
+        <button class="alert-button" v-if="alert.buttonTitle" @click="closeAlert">
           {{ alert.buttonTitle }}
         </button>
       </div>

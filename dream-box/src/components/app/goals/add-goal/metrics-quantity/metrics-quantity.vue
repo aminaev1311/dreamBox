@@ -17,8 +17,7 @@
 <script>
 export default {
   emits: {
-    "send-metrics-quantity": (payload) =>
-      typeof payload === "number" || payload === "",
+    "send-metrics-quantity": (payload) => typeof payload === "number" || payload === "",
   },
   data() {
     return {
@@ -37,11 +36,7 @@ export default {
         });
       const newQuantityTypeNumber = parseInt(newQuantity.slice(0, 2).join(""));
       this.quantity =
-        newQuantityTypeNumber > 0
-          ? newQuantityTypeNumber
-          : newQuantityTypeNumber === 0
-          ? 0
-          : "";
+        newQuantityTypeNumber > 0 ? newQuantityTypeNumber : newQuantityTypeNumber === 0 ? 0 : "";
       this.$emit("send-metrics-quantity", this.quantity);
     },
   },

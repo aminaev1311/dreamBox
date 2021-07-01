@@ -67,8 +67,7 @@ router.beforeEach(async (to, from, next) => {
     flag = await store.getters["auth/isChecked"];
   }
 
-  const condition =
-    to.name === "auth" || to.name === "registration" || to.name === "test";
+  const condition = to.name === "auth" || to.name === "registration" || to.name === "test";
   const isUser = store.getters["auth/user"];
 
   if (condition && !isUser) {

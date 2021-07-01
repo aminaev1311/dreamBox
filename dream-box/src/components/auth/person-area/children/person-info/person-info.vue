@@ -1,9 +1,7 @@
 <template>
   <div class="frame_lk">
     <div class="photo_frame_lk">
-      <h3 class="h_frame_lk">
-Your Profile
-</h3>
+      <h3 class="h_frame_lk">Your Profile</h3>
       <ChangeImage :show="show" @hide="show = !show" />
       <div class="round">
         <div class="chage-image" @click="show = !show">
@@ -72,9 +70,7 @@ export default {
       return this.user?.name.split(" ")[0].trim();
     },
     lastName() {
-      return this.user?.name.split(" ")[1]
-        ? this.user.name.split(" ")[1]
-        : "No filled";
+      return this.user?.name.split(" ")[1] ? this.user.name.split(" ")[1] : "No filled";
     },
     birthday() {
       return this.user?.birthday ? this.user.birthday : "No filled";

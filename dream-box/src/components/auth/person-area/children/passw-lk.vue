@@ -1,9 +1,7 @@
 <template>
   <div class="passw_lk">
     <form>
-      <h3 class="h_frame_lk">
-Change password
-</h3>
+      <h3 class="h_frame_lk">Change password</h3>
       <InputPassword
         type="password"
         v-for="input in inputs"
@@ -13,10 +11,7 @@ Change password
         :name="input.attribute"
         :autocomplete="'username'"
       ></InputPassword>
-      <button-dream
-        :is-disabled="isDisabled"
-        @click.prevent="savePassword"
-      ></button-dream>
+      <button-dream :is-disabled="isDisabled" @click.prevent="savePassword"></button-dream>
     </form>
   </div>
 </template>

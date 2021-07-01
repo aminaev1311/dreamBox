@@ -1,12 +1,8 @@
 <template>
   <div class="sing-in-container">
     <form class="sing-in" ref="form-sing-in" @submit.prevent="sentForm">
-      <p class="action">
-Sing in
-</p>
-      <h1 class="h1">
-Your account
-</h1>
+      <p class="action">Sing in</p>
+      <h1 class="h1">Your account</h1>
       <div
         class="field animate__animated"
         :class="{
@@ -44,9 +40,7 @@ Your account
           <div class="cursor after">
             <img
               :src="
-                !isShowPassword
-                  ? require('@i/auth/eye-close.png')
-                  : require('@i/auth/eye-open.png')
+                !isShowPassword ? require('@i/auth/eye-close.png') : require('@i/auth/eye-open.png')
               "
               alt="eye-close"
               @click="isShowPassword = !isShowPassword"
@@ -56,11 +50,7 @@ Your account
         <small v-if="!password && sent">This field can't be empty!</small>
         <small v-if="error">Email or password aren't correct!</small>
       </div>
-      <Buttons
-        :is-load="!isLoad"
-        :is-disabled="isLoad"
-        title-main-button="Log In"
-      />
+      <Buttons :is-load="!isLoad" :is-disabled="isLoad" title-main-button="Log In" />
       <ToPage
         class="to-page"
         message="Don’t have an account?"

@@ -4,7 +4,7 @@ const LOCAL_ACCESS_EXP = "accessExp";
 const LOCAL_ACCESS_USERNAME = "userName";
 
 function setTokens(access, refresh) {
-  let accessData = getJWTPayload(access);
+  const accessData = getJWTPayload(access);
   localStorage.setItem(LOCAL_ACCESS_NAME, access);
   localStorage.setItem(LOCAL_REFRESH_NAME, refresh);
   localStorage.setItem(LOCAL_ACCESS_EXP, accessData.exp);
@@ -33,7 +33,7 @@ function getJWTPayload(token) {
 }
 
 function parseJWT(token) {
-  let parts = token.split(".");
+  const parts = token.split(".");
 
   return {
     header: parsePart(parts[0]),
@@ -46,10 +46,4 @@ function parsePart(str) {
   return JSON.parse(atob(str));
 }
 
-export {
-  setTokens,
-  cleanTokensData,
-  getJWTPayload,
-  getAccessToken,
-  getRefreshToken,
-};
+export { setTokens, cleanTokensData, getJWTPayload, getAccessToken, getRefreshToken };

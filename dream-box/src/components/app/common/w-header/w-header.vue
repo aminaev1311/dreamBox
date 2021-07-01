@@ -3,9 +3,7 @@
     <p class="title">
       {{ currentDate }}
     </p>
-    <p class="events-amount">
-{{ 5 }} events for today
-</p>
+    <p class="events-amount">{{ 5 }} events for today</p>
   </div>
 </template>
 

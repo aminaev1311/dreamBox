@@ -37,8 +37,7 @@ export default {
       langExt: {
         hint: "Click or drag the file here to upload",
         loading: "Uploading…",
-        noSupported:
-          "Browser is not supported, please use IE10+ or other browsers",
+        noSupported: "Browser is not supported, please use IE10+ or other browsers",
         success: "Upload success",
         fail: "Upload failed",
         preview: "Preview",

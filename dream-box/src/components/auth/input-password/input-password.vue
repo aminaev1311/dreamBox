@@ -12,11 +12,7 @@
     />
     <div class="cursor after">
       <img
-        :src="
-          !isShowPassword
-            ? require('@i/auth/eye-close.png')
-            : require('@i/auth/eye-open.png')
-        "
+        :src="!isShowPassword ? require('@i/auth/eye-close.png') : require('@i/auth/eye-open.png')"
         alt="eye-close"
         @click="isShowPassword = !isShowPassword"
       />

@@ -74,13 +74,11 @@ export default [
     errors: [
       {
         type: "birthday",
-        message:
-          "This field has an invalid value !!!(from 01.01.1900  to today)",
+        message: "This field has an invalid value !!!(from 01.01.1900  to today)",
       },
       {
         type: "autoDot",
-        message:
-          "This field has an invalid value !!!(from 01.01.1900  to today)",
+        message: "This field has an invalid value !!!(from 01.01.1900  to today)",
       },
     ],
   },

@@ -2,22 +2,13 @@
   <button class="menu-links" @click.self="show = true">
     <slot></slot>
   </button>
-  <div
-    class="model-window-wrapper"
-    :class="{ active: show }"
-    @click.self="show = false"
-  >
+  <div class="model-window-wrapper" :class="{ active: show }" @click.self="show = false">
     <div class="window">
       <p class="content">
-        Are you sure you want to delete your account? This action is
-        irreversible
+        Are you sure you want to delete your account? This action is irreversible
       </p>
-      <button class="btn-delete" @click="$store.dispatch('auth/removeAccount')">
-        Yes, delete
-      </button>
-      <button @click.self="show = false" class="btn-mistake">
-        No, it’s a mistake
-      </button>
+      <button class="btn-delete" @click="$store.dispatch('auth/removeAccount')">Yes, delete</button>
+      <button @click.self="show = false" class="btn-mistake">No, it’s a mistake</button>
     </div>
   </div>
 </template>
