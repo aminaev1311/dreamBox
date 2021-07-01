@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-choose-theme">
-    <button :class="{ active: isOpen }" @click.prevent="toggleOnOff">
+    <button :class="{ active: isOpen, error: isSelected }" @click.prevent="toggleOnOff">
       {{ currentValue }}
       <div class="wrapper-themes" :class="{ active: isOpen }">
         <div class="themes" @click.prevent.stop>
@@ -23,6 +23,10 @@ export default {
   MAX_LENGTH: 12,
   props: {
     active: {
+      type: Boolean,
+      default: false,
+    },
+    error: {
       type: Boolean,
       default: false,
     },
@@ -49,6 +53,9 @@ export default {
   computed: {
     currentValue() {
       return this.selectedTheme ? this.selectedTheme : this.$options.DEFAULT_TEXT;
+    },
+    isSelected() {
+      return this.error && this.selectedTheme === null;
     },
   },
   methods: {
@@ -78,7 +85,7 @@ button {
   width: 136px;
   height: 28px;
   background: $color-base-blue;
-  border: 1px solid $color-base-blue;
+  border: 1px solid $color-base-blue !important;
   box-sizing: border-box;
   border-radius: $radius;
   font-family: $base-ff;
@@ -93,6 +100,13 @@ button {
 }
 button.active {
   border-radius: $radius $radius 0 0;
+}
+button.error {
+  background: lighten($color-base-error, 35);
+  border-color: $color-base-error !important;
+  @include placeholder {
+    color: $color-base-light;
+  }
 }
 button:after {
   content: "";

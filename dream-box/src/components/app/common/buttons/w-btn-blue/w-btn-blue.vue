@@ -1,5 +1,5 @@
 <template>
-  <button @click="$emit('btn-click')" :disabled="isDisabled" :style="`width: ${width}`">
+  <button @click="$emit('click')" :disabled="isDisabled" :style="`width: ${width}`">
     {{ title }}
   </button>
 </template>
@@ -12,7 +12,7 @@ export default {
     width: { type: String, default: "250px" },
   },
   emits: {
-    btnClick: null,
+    click: null,
   },
 };
 </script>

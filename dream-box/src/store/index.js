@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import alert from "@s/alert";
 import auth from "@s/auth";
+import goals from "@s/goals";
 
 export default createStore({
   state: {},
@@ -9,5 +10,6 @@ export default createStore({
   modules: {
     alert,
     auth,
+    goals,
   },
 });

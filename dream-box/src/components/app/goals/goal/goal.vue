@@ -1,41 +1,56 @@
 <template>
-  <form class="add-goal" @submit.prevent="() => {}">
-    <div class="goal-name">
-      <ChooseTheme />
-      <input type="text" name="goal-name" class="input-goal-name" placeholder="Name of the goal" />
-      <button class="menu"></button>
-      <button class="close"></button>
-    </div>
-    <div class="details">
-      <input type="text" name="datails" placeholder="Details" />
-    </div>
-    <div class="metrics">
-      <span class="title">Metrics</span>
-      <MetricsQuantity />
-      <input type="text" class="units" name="units" placeholder="units" />
-    </div>
-    <div class="tactits-wrapper">
-      <span class="title">Tactics</span>
-      <div class="tactics">
-        <p v-for="(tactic, i) in goal.tactics" :key="tactic.id">
-          {{ i + 1 }}. {{ tactic.name.toUpperCase() }}
-        </p>
+  <div class="wrapper-goal">
+    <form v-if="goal.id" class="add-goal" @submit.prevent="() => {}">
+      <div class="goal-name">
+        <ChooseTheme @sentCurrentValue="setTheme($event)" :error="errors.theme" />
+        <input
+          type="text"
+          name="goal-name"
+          class="input-goal-name"
+          :class="{ error: errors.name }"
+          :placeholder="errors.name ? `This field can't be empty` : 'Name of the goal'"
+          v-model="goal.name"
+        />
+        <button class="menu"></button>
+        <button class="close"></button>
       </div>
-      <AddMore @add-tactic="add($event)" />
+      <div class="details">
+        <input type="text" name="datails" placeholder="Details" />
+      </div>
+      <div class="metrics">
+        <span class="title">Metrics</span>
+        <MetricsQuantity @send-metrics-quantity="setMetricsQuantity($event)" />
+        <input type="text" class="units" name="units" placeholder="units" />
+      </div>
+      <div class="tactits-wrapper">
+        <span class="title">Tactics</span>
+        <div class="tactics">
+          <p v-for="(tactic, i) in goal.tactics" :key="tactic.id">
+            {{ i + 1 }}. {{ tactic.name.toUpperCase() }}
+          </p>
+        </div>
+        <AddMore @add-tactic="add($event)" />
+      </div>
+    </form>
+    <div class="buttons">
+      <BtnBlue :title="titleForBautton" @click="createGoal" />
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
-import ChooseTheme from "@c/app/goals/add-goal/choose-theme";
-import AddMore from "@c/app/goals/add-goal/add-more";
+import ChooseTheme from "@c/app/goals/goal/choose-theme";
+import AddMore from "@c/app/goals/goal/add-more";
 import uid from "uniqid";
-import MetricsQuantity from "@c/app/goals/add-goal/metrics-quantity";
+import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
+import BtnBlue from "@c/app/common/buttons/w-btn-blue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     ChooseTheme,
     AddMore,
     MetricsQuantity,
+    BtnBlue,
   },
   data() {
     return {
@@ -44,16 +59,54 @@ export default {
         theme: "",
         name: "",
         metrics: {
-          number: 0,
+          quantity: 0,
           units: "",
         },
         tactics: [],
       },
+      startCreateGoal: false,
     };
   },
+  computed: {
+    ...mapGetters({ goals: "goals/getGoals" }),
+    titleForBautton() {
+      return !this.goals.length && !this.goal.id ? "Start" : "Create a goal";
+    },
+    errors() {
+      return {
+        theme: this.startCreateGoal && this.goal.theme !== null,
+        name: this.startCreateGoal && this.goal.name === "",
+      };
+    },
+  },
   methods: {
+    createGoal() {
+      if (!this.initGoal()) return false;
+      this.startCreateGoal = true;
+    },
+    initGoal() {
+      if (this.goal.id) return true;
+      this.goal.id = uid();
+      return false;
+    },
+    setTheme(theme) {
+      this.goal.theme = theme;
+    },
+    setMetricsQuantity(quantity) {
+      this.goal.metrics.quantity = quantity;
+    },
     add(tactic) {
-      this.goal.tactics.push({ id: uid(), name: tactic });
+      this.goal.tactics.push({ id: uid(), name: tactic, weeks: this.createWeeksForTactics() });
+    },
+    createWeeksForTactics() {
+      const weeks = [];
+      for (let number = 1; number < 13; number++) {
+        weeks.push({
+          weekNumber: number,
+          weeksValue: "default",
+        });
+      }
+      return weeks;
     },
   },
 };
@@ -81,6 +134,7 @@ export default {
   height: 28px;
   border-radius: 8px;
   background-color: $color-base-light;
+  border: 1px solid transparent !important;
   @include o-b-none;
   padding: 4px 20px;
   box-sizing: border-box;
@@ -94,6 +148,15 @@ export default {
     color: #a9acbf;
   }
 }
+
+.input-goal-name.error {
+  background: lighten($color-base-error, 35);
+  border-color: $color-base-error !important;
+  @include placeholder {
+    color: $color-base-light;
+  }
+}
+
 .menu,
 .close {
   display: block;

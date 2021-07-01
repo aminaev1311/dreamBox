@@ -3,20 +3,19 @@
     <WeekHeader />
     <h1>Start your first goal</h1>
     <AddGoal />
-    <BtnBlue title="Create a goal" />
   </div>
 </template>
 
 <script>
-import BtnBlue from "@c/app/common/buttons/w-btn-blue";
 import WeekHeader from "@c/app/common/w-header";
-import AddGoal from "@c/app/goals/add-goal";
-
+import AddGoal from "@c/app/goals/goal";
 export default {
   components: {
-    BtnBlue,
     WeekHeader,
     AddGoal,
+  },
+  methods: {
+    addGoal() {},
   },
 };
 </script>
