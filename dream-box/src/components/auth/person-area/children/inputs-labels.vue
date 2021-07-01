@@ -1,46 +1,31 @@
 <template>
   <div class="inputs_labels">
-    <input
-      class="input_dream-box"
-      :class="{ errorInp }"
-      :type="!isShow ? type : 'text'"
-      v-model="value"
-      @change="$emit('remove-input', input.name)"
-    /><label class="label_frame_lk">{{ title }}</label>
-    <div class="cursor after">
-      <img
-        v-if="type === 'password'"
-        :src="!isShow ? require('@i/auth/eye-close.png') : require('@i/auth/eye-open.png')"
-        alt="eye-close"
-        @click="isShow = !isShow"
-      />
-    </div>
+    <input class="input_dream-box" type="text" :value="value" @input="sendValue($event)" />
+    <label class="label_frame_lk">{{ title }}</label>
   </div>
 </template>
 
 <script>
 /* eslint-disable */ 
 export default {
-  name: "InputsLabels",
-  props: {
-    title: {
-      type: String,
-    },
-    type: {
-      type: String,
-      default: "text",
-    },
-    value: {
-      type: String,
-      default: "No filled",
-    },
-    input: Array,
-    errorInp: Boolean,
-  },
   data() {
     return {
       isShow: false,
     };
+  },
+  props: {
+    title: {
+      type: String,
+    },
+    value: {
+      type: String,
+      default: "",
+    },
+  },
+  methods: {
+    sendValue({ target }) {
+      this.$emit("update:value", target.value);
+    },
   },
 };
 </script>

@@ -177,6 +177,7 @@ export default {
       try {
         await authApi.removeAccount();
         localStorage.removeItem("TOKEN");
+        commit("SETUSER", null);
         await router.push({ name: "registration" });
         dispatch(
           "alert/setAlert",
@@ -187,6 +188,67 @@ export default {
           },
           { root: true }
         );
+      } catch (e) {
+        console.log(e);
+        dispatch(
+          "alert/setAlert",
+          {
+            status: "error",
+            message: "Error on server!! Try later...",
+            daley: 3000,
+          },
+          { root: true }
+        );
+      }
+      commit("SETISLOAD", false);
+    },
+    // Uapdate user info
+    async updateUserInfo({ commit, dispatch }, user) {
+      commit("SETISLOAD", true);
+      try {
+        const { user: newUser, token } = await authApi.updateUser(user);
+        commit("SETUSER", newUser);
+        localStorage.setItem("TOKEN", token);
+        dispatch(
+          "alert/setAlert",
+          {
+            status: "success",
+            message: "User information updated successfully!!",
+            daley: 3000,
+          },
+          { root: true }
+        );
+      } catch (e) {
+        console.log(e);
+        dispatch(
+          "alert/setAlert",
+          {
+            status: "error",
+            message: "Error on server!! Try later...",
+            daley: 3000,
+          },
+          { root: true }
+        );
+      }
+      commit("SETISLOAD", false);
+    },
+    // Uapdate user password
+    async updateUserPassword({ commit, dispatch }, passwords) {
+      commit("SETISLOAD", true);
+      try {
+        const { oldPassword, currentPasswords } = await authApi.updateUserPassword(passwords);
+        if (!oldPassword && !currentPasswords) {
+          dispatch(
+            "alert/setAlert",
+            {
+              status: "success",
+              message: "Your password updated successfully!!",
+              daley: 3000,
+            },
+            { root: true }
+          );
+        }
+        return { oldPassword, currentPasswords };
       } catch (e) {
         console.log(e);
         dispatch(

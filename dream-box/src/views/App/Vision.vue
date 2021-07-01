@@ -1,9 +1,14 @@
 <template>
-  <h1>Vision</h1>
+  <div><VisionPage></VisionPage></div>
 </template>
 
 <script>
-export default {};
+import VisionPage from "@c/app/vision";
+
+export default {
+  name: "vision-page",
+  components: { VisionPage },
+};
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

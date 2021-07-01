@@ -1,14 +1,11 @@
 <template>
-  <button class="menu-links" @click.self="show = true">
-    <slot></slot>
-  </button>
-  <div class="model-window-wrapper" :class="{ active: show }" @click.self="show = false">
+  <div class="model-window-wrapper" :class="{ active: show }" @click.self="closeWin">
     <div class="window">
       <p class="content">
         Are you sure you want to delete your account? This action is irreversible
       </p>
       <button class="btn-delete" @click="$store.dispatch('auth/removeAccount')">Yes, delete</button>
-      <button @click.self="show = false" class="btn-mistake">No, it’s a mistake</button>
+      <button @click.self="closeWin" class="btn-mistake">No, it’s a mistake</button>
     </div>
   </div>
 </template>
@@ -16,14 +13,18 @@
 <script>
 export default {
   props: {
-    btnClass: {
-      type: String,
+    show: {
+      type: Boolean,
+      default: false,
     },
   },
-  data() {
-    return {
-      show: false,
-    };
+  emits: {
+    "close-window": null,
+  },
+  methods: {
+    closeWin() {
+      this.$emit("close-window");
+    },
   },
 };
 </script>
@@ -47,6 +48,7 @@ export default {
   background: #2d3446c9;
   transform: scale(0);
   transition: transform 0.3s;
+  z-index: 500;
 }
 .model-window-wrapper.active {
   transform: scale(1);

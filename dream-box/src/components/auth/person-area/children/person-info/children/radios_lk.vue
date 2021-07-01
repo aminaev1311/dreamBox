@@ -1,25 +1,55 @@
 <template>
   <div class="radios_lk">
     <label for="woman">
-      <div class="circle" :class="{ active: user === 'woman' }"></div>
-      <input type="radio" id="woman" value="woman" v-model="user" checked />
-      Женщина</label
+      <div class="circle" :class="{ active: user === 'female' }"></div>
+      <input type="radio" id="woman" value="female" v-model="user" />
+      Female</label
     >
     <label for="man">
-      <div class="circle" :class="{ active: user === 'man' }"></div>
-      <input type="radio" class="" id="man" value="man" v-model="user" />
-      Мужчина</label
+      <div class="circle" :class="{ active: user === 'male' }"></div>
+      <input type="radio" id="man" @click="$event.value = 'mail'" value="male" v-model="user" />
+      Male</label
     >
   </div>
 </template>
 
 <script>
+const validGender = (value) => {
+  const string = value?.toString().toLowerCase();
+  return value === null || string === "female" || string === "male";
+};
+
 export default {
   name: "RadiosLk",
   data() {
     return {
-      user: "woman",
+      user: "",
     };
+  },
+  mounted() {
+    this.user = this.gender;
+  },
+  props: {
+    gender: {
+      type: String,
+      default: null,
+      validator: (value) => validGender(value),
+    },
+  },
+  emits: {
+    "chenge-gender": (value) => validGender(value),
+  },
+  watch: {
+    gender() {
+      this.user = this.gender;
+    },
+    user() {
+      this.$emit("chenge-gender", this.user);
+    },
+  },
+
+  methods: {
+    checkedFemail($event) {},
   },
 };
 </script>

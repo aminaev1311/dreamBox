@@ -1,15 +1,16 @@
 <template>
   <div class="passw_lk">
     <form>
-      <h3 class="h_frame_lk">Change password</h3>
+      <h3 class="h_frame_lk">Change Password</h3>
       <InputPassword
-        type="password"
         v-for="input in inputs"
-        :key="input.placeholder"
+        :key="input.name"
         :placeholder="input.placeholder"
         v-model="input.value"
-        :name="input.attribute"
-        :autocomplete="'username'"
+        :errorMessage="input.errorMessage"
+        :name="input.name"
+        :error="input.error"
+        :autocomplete="input.placeholder"
       ></InputPassword>
       <button-dream :is-disabled="isDisabled" @click.prevent="savePassword"></button-dream>
     </form>
@@ -28,26 +29,58 @@ export default {
         {
           value: "",
           placeholder: "input old password",
-          attribute: "old-password",
+          name: "oldPassword",
+          error: false,
+          errorMessage: "Old password isn't correct",
         },
-        { value: "", placeholder: "new password", attribute: "new-password" },
+        {
+          value: "",
+          placeholder: "new password",
+          name: "newPassword",
+          error: false,
+          errorMessage: "New passwords are different",
+        },
         {
           value: "",
           placeholder: "confirm new password",
-          attribute: "confirm-new-password",
+          name: "confirmNewPassword",
+          error: false,
+          errorMessage: "New passwords are different",
         },
       ],
     };
   },
+  methods: {
+    async savePassword() {
+      const passwords = new FormData();
+      this.inputs.forEach(({ value, name }) => {
+        passwords.append(name, value);
+      });
 
+      const { oldPassword, currentPasswords } = await this.$store.dispatch(
+        "auth/updateUserPassword",
+        passwords
+      );
+      if (oldPassword) {
+        this.inputs[0].error = true;
+      } else {
+        this.inputs[0].error = false;
+      }
+      if (currentPasswords) {
+        this.inputs[1].error = this.inputs[2].error = true;
+      } else {
+        this.inputs[1].error = this.inputs[2].error = false;
+      }
+      if (!oldPassword && !currentPasswords) {
+        this.inputs.forEach((p) => {
+          p.value = "";
+        });
+      }
+    },
+  },
   computed: {
     isDisabled() {
       return this.inputs.some(({ value }) => value === "");
-    },
-  },
-  methods: {
-    savePassword() {
-      console.log("save-password");
     },
   },
 };

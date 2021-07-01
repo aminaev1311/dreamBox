@@ -19,6 +19,7 @@ module.exports = {
       },
     ],
     "promise/param-names": "off",
+    "promise/catch-or-return": "off",
     "vue/html-self-closing": "off",
     "vue/attributes-order": "off",
     "vue/no-mutating-props": "off",

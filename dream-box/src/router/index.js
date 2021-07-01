@@ -17,7 +17,7 @@ const routes = [
     component: App,
     children: [
       {
-        path: "",
+        path: "/",
         name: "Weeks",
         component: Weeks,
       },

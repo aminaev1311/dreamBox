@@ -1,6 +1,6 @@
 <template>
   <div class="header-lk">
-    <h1 class="title">Личный кабинет</h1>
+    <h1 class="title">Personal Account</h1>
     <AppPersonAreaMenu />
   </div>
 </template>
