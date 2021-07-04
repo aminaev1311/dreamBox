@@ -18,5 +18,6 @@ export default {
   width: 100%;
   padding: 30px 48px;
   text-align: left;
+  box-sizing: border-box;
 }
 </style>

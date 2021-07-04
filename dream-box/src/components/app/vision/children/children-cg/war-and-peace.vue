@@ -3,7 +3,7 @@
     <GoalIcon
       :numbers="numbers"
       :colors="colors"
-      :comp="filter"></GoalIcon>
+      :comp="comp"></GoalIcon>
     <Counter>
       <h3>{{ title }}</h3>
     </Counter>
@@ -30,7 +30,7 @@ name: "war-and-peace",
 
 <style lang="scss" scoped>
 h3 {
-  margin: 59px 15px 17px;
+  margin: 59px 15px 17px 0;
   text-align: left;
   font-family: $base-ff;
   font-style: normal;

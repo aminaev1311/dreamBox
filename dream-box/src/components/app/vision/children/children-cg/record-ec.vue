@@ -29,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 h3 {
-  margin: 44px 15px 17px;
+  margin: 44px 15px 17px 0;
   text-align: left;
   font-family: $base-ff;
   font-style: normal;

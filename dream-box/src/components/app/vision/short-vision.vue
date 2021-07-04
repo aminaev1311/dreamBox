@@ -14,6 +14,8 @@ export default {
 
 <style lang="scss" scoped>
 h3 {
+  margin-top: 35px;
+  margin-bottom: 15px;
   text-align: left;
   font-family: $base-ff;
   font-style: normal;

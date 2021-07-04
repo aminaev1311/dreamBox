@@ -3,16 +3,19 @@
   <ScoreAssessment>
     <h3>Goal score</h3>
     <h4>{{ descr }}</h4>
+
   </ScoreAssessment>
   <div>
   <a href="" class="details">see details </a>
   </div>
+  <DoughnutChart/>
 </div>
 </template>
 <script>
 import ScoreAssessment from "@c/app/vision/children/children-cg/score/score-assessment";
+import DoughnutChart from "@c/app/vision/children/children-cg/score/doughnut-chart";
 export default {
-  components: { ScoreAssessment },
+  components: { ScoreAssessment, DoughnutChart },
   data() {
     return {
       descr: 'could be better'
@@ -42,5 +45,11 @@ export default {
   letter-spacing: 0.1px;
   color: #1E92FA;
   text-decoration: none;
+}
+h3{
+  text-align: left;
+}
+h4{
+  color:$color-font-yellow;
 }
 </style>

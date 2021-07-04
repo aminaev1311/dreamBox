@@ -4,19 +4,19 @@
     <RecordEc
       :numbers="numbers[0]"
       :colors="colors[0]"
-      :comp="comp"
+      :comp="comp[0]"
       :title="title[0]"
     ></RecordEc>
     <SecondIg
       :numbers="numbers[1]"
       :colors="colors[1]"
-      :comp="comp"
+      :comp="comp[0]"
       :title="title[1]"
     ></SecondIg>
     <WarAndPeace
       :numbers="numbers[2]"
       :colors="colors[2]"
-      :comp="filter"
+      :comp="comp[1]"
       :title="title[2]"
     ></WarAndPeace>
   </div>
@@ -33,8 +33,7 @@ export default {
     return {
       colors: ["#62A1FF", "#900093", "#F9AA34"],
       numbers: [1, 2, 3],
-      comp: "Vector",
-      filter: "Vector_3",
+      comp: ["Vector", "Vector3"],
       title: [
         "Record personal efficiency video course",
         "Second important goal",
@@ -47,6 +46,8 @@ export default {
 
 <style lang="scss" scoped>
 h3 {
+  margin-bottom: 15px;
+  margin-top: 20px;
   text-align: left;
   font-family: $base-ff;
   font-style: normal;

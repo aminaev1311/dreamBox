@@ -1,6 +1,6 @@
 <template>
   <div class="goal_icon_cg" :style="{ backgroundColor: colors }">
-    <small class="goal_text_cg"> Goal{{ numbers }} </small>
+    <small class="goal_text_cg" :style="{ '--bg-image': backgrImg()}"> Goal{{ numbers }} </small>
   </div>
 </template>
 
@@ -9,12 +9,26 @@ export default {
   props: {
     numbers: Number,
     colors: String,
-    comp: String,
+    comp: String
   },
-  data() {
-    return {};
+  data () {
+    return {
+      image: 'url("../../../../../assets/images/auth/Vector.png")',
+      filterImg: 'url("../../../../../assets/images/auth/Vector_3.png")'
+    }
   },
-};
+  methods: {
+    backgrImg () {
+      console.log(this.comp)
+      if (this.comp === 'Vector3') {
+        console.log(this.filterImg)
+        return this.filterImg
+      } else {
+        return this.image
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -24,8 +38,6 @@ export default {
   display: flex;
   width: 89px;
   height: 28px;
-  //background: #900093;
-  //background: #F9AA34;
   border-radius: 16px;
   justify-content: center;
   align-items: center;
@@ -38,14 +50,14 @@ export default {
     letter-spacing: 0.1px;
     color: #ffffff;
   }
-  .goal_text_cg::before {
-    content: " ";
-    display: inline-block;
-    width: 12px;
-    height: 11px;
-    margin-right: 7px;
-    background-image: url("../../../../../assets/images/auth/Vector.png");
-    //background-image: url('../../../../../assets/images/auth/Vector_3.png');
-  }
+
+  ::v-deep(.goal_text_cg::before) {
+      content: " ";
+      display: inline-block;
+      width: 12px;
+      height: 11px;
+      margin-right: 7px;
+      background-image: var(--bg-image);
+    }
 }
 </style>
