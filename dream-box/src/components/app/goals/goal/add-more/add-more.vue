@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-add-more">
-    <button class="add" @click.prevent="show">
+    <button class="add" @click.prevent="show" :class="{ error: empty }">
       <img v-if="!showInput" src="@i/goals/plus.svg" alt="icon-plus" />
       <span>{{ buttonTitle }}</span>
     </button>
@@ -16,6 +16,10 @@
 export default {
   props: {
     startAdding: {
+      type: Boolean,
+      default: false,
+    },
+    empty: {
       type: Boolean,
       default: false,
     },
@@ -54,7 +58,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .wrapper-add-more {
   @include fc-s-c-b;
   align-items: flex-start !important;
@@ -128,5 +132,12 @@ export default {
   color: red;
   font-size: 14px;
   padding: 0 10px;
+}
+.error {
+  background: lighten($color-base-error, 35);
+  border-color: $color-base-error !important;
+  @include placeholder {
+    color: $color-base-light;
+  }
 }
 </style>

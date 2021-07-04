@@ -9,6 +9,7 @@ export default {
   mutations: {
     ADD_GOAL(state, goal) {
       state.goals.push(goal);
+      console.log(state.goals);
     },
     REMOVE_GOAL(state, goal) {
       state.goals.filter(({ id }) => goal.id.toString() === id.toSting());

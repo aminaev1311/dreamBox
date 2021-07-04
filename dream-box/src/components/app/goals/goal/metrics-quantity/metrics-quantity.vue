@@ -17,12 +17,18 @@
 <script>
 export default {
   emits: {
-    "send-metrics-quantity": (payload) => typeof payload === "number" || payload === "",
+    "update:quantity": (payload) => typeof payload === "number" || payload === "",
   },
   data() {
     return {
       quantity: null,
     };
+  },
+  props: {
+    quantityProp: {
+      default: "",
+      validator: (value) => typeof value === "number" || value === "",
+    },
   },
   watch: {
     quantity() {
@@ -37,7 +43,10 @@ export default {
       const newQuantityTypeNumber = parseInt(newQuantity.slice(0, 2).join(""));
       this.quantity =
         newQuantityTypeNumber > 0 ? newQuantityTypeNumber : newQuantityTypeNumber === 0 ? 0 : "";
-      this.$emit("send-metrics-quantity", this.quantity);
+      this.$emit("update:quantity", this.quantity);
+    },
+    quantityProp() {
+      this.quantity = this.quantityProp;
     },
   },
   methods: {
@@ -47,6 +56,9 @@ export default {
     dec() {
       this.quantity = this.quantity > 0 ? --this.quantity : 0;
     },
+  },
+  mounted() {
+    this.quantity = this.quantityProp;
   },
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper-goal">
-    <form v-if="goal.id" class="add-goal" @submit.prevent="() => {}">
+    <form v-if="views.creating || views.isCreated" class="add-goal" @submit.prevent="() => {}">
       <div class="goal-name">
-        <ChooseTheme @sentCurrentValue="setTheme($event)" :error="errors.theme" />
+        <ChooseTheme v-model:theme="goal.theme" :error="errors.theme" />
         <input
           type="text"
           name="goal-name"
@@ -15,12 +15,21 @@
         <button class="close"></button>
       </div>
       <div class="details">
-        <input type="text" name="datails" placeholder="Details" />
+        <input type="text" name="datails" placeholder="Details" v-model="goal.details" />
       </div>
       <div class="metrics">
         <span class="title">Metrics</span>
-        <MetricsQuantity @send-metrics-quantity="setMetricsQuantity($event)" />
-        <input type="text" class="units" name="units" placeholder="units" />
+        <MetricsQuantity
+          v-model:quantity="goal.metrics.quantity"
+          :quantityProp="goal.metrics.quantity"
+        />
+        <input
+          type="text"
+          class="units"
+          name="units"
+          placeholder="units"
+          v-model="goal.metrics.units"
+        />
       </div>
       <div class="tactits-wrapper">
         <span class="title">Tactics</span>
@@ -29,11 +38,11 @@
             {{ i + 1 }}. {{ tactic.name.toUpperCase() }}
           </p>
         </div>
-        <AddMore @add-tactic="add($event)" />
+        <AddMore @add-tactic="add($event)" :empty="errors.tactics" />
       </div>
     </form>
     <div class="buttons">
-      <BtnBlue :title="titleForBautton" @click="createGoal" />
+      <BtnBlue v-if="!views.isCreated" :title="titleForBautton" @click="createGoal" />
     </div>
   </div>
 </template>
@@ -45,6 +54,20 @@ import uid from "uniqid";
 import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
 import BtnBlue from "@c/app/common/buttons/w-btn-blue";
 import { mapGetters } from "vuex";
+
+const defaultGoal = () => ({
+  id: null,
+  view: "null",
+  theme: "",
+  ditails: "",
+  name: "",
+  metrics: {
+    quantity: "",
+    units: "",
+  },
+  tactics: [],
+});
+
 export default {
   components: {
     ChooseTheme,
@@ -54,18 +77,14 @@ export default {
   },
   data() {
     return {
-      goal: {
-        id: null,
-        theme: "",
-        name: "",
-        metrics: {
-          quantity: 0,
-          units: "",
-        },
-        tactics: [],
-      },
+      goal: defaultGoal(),
       startCreateGoal: false,
     };
+  },
+  props: {
+    goalProp: {
+      type: Object,
+    },
   },
   computed: {
     ...mapGetters({ goals: "goals/getGoals" }),
@@ -74,8 +93,22 @@ export default {
     },
     errors() {
       return {
-        theme: this.startCreateGoal && this.goal.theme !== null,
+        theme: this.startCreateGoal && this.goal.theme === "",
         name: this.startCreateGoal && this.goal.name === "",
+        tactics: this.startCreateGoal && !this.goal.tactics.length,
+      };
+    },
+    // goal's fields are filled correctly/uncorrectly
+    isValidGoalField() {
+      return !Object.values(this.errors).some((v) => v);
+    },
+    views() {
+      const {
+        goal: { id, view },
+      } = this;
+      return {
+        creating: id && view === "creating",
+        isCreated: id && view === "is-created",
       };
     },
   },
@@ -83,10 +116,17 @@ export default {
     createGoal() {
       if (!this.initGoal()) return false;
       this.startCreateGoal = true;
+      if (this.isValidGoalField) {
+        this.goal.view = "is-created";
+        this.$store.commit("goals/ADD_GOAL", this.goal);
+        this.goal = defaultGoal();
+        this.startCreateGoal = false;
+      }
     },
     initGoal() {
       if (this.goal.id) return true;
       this.goal.id = uid();
+      this.goal.view = "creating";
       return false;
     },
     setTheme(theme) {
@@ -108,6 +148,11 @@ export default {
       }
       return weeks;
     },
+  },
+  mounted() {
+    if (this.goalProp) {
+      this.goal = this.goalProp;
+    }
   },
 };
 </script>
