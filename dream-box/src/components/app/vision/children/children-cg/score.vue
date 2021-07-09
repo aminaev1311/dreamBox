@@ -62,6 +62,11 @@ export default {
   text-decoration: none;
 }
 h3{
+  font-family: $base-ff;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
   text-align: left;
 }
 h4{

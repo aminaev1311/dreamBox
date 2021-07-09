@@ -6,7 +6,6 @@
       <div class="text">
         <div>
           <b>{{ percent }}%</b>
-
         </div>
       </div>
     </div>

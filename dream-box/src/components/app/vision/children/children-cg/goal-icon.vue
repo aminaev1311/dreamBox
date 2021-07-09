@@ -51,7 +51,7 @@ export default {
     color: #ffffff;
   }
 
-  ::v-deep(.goal_text_cg::before) {
+  .goal_text_cg::before {
       content: " ";
       display: inline-block;
       width: 12px;
