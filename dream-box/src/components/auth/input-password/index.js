@@ -1,2 +1,2 @@
-import InputPassword from './input-password'
-export default InputPassword
+import InputPassword from "./input-password";
+export default InputPassword;

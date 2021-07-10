@@ -1,18 +1,8 @@
 <template>
   <h3>Currents goals</h3>
   <div class="currents-goals">
-    <RecordEc
-      :numbers="numbers[0]"
-      :colors="colors[0]"
-      :comp="comp[0]"
-      :title="title[0]"
-    ></RecordEc>
-    <SecondIg
-      :numbers="numbers[1]"
-      :colors="colors[1]"
-      :comp="comp[0]"
-      :title="title[1]"
-    ></SecondIg>
+    <RecordEc :numbers="numbers[0]" :colors="colors[0]" :comp="comp" :title="title[0]"></RecordEc>
+    <SecondIg :numbers="numbers[1]" :colors="colors[1]" :comp="comp" :title="title[1]"></SecondIg>
     <WarAndPeace
       :numbers="numbers[2]"
       :colors="colors[2]"

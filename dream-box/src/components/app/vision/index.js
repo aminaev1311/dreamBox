@@ -1,2 +1,2 @@
-import PageVision from './short-vision'
-export default PageVision
+import PageVision from "./short-vision";
+export default PageVision;

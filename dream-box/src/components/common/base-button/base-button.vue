@@ -8,11 +8,7 @@
     <span v-if="!isLoad">
       <slot></slot>
     </span>
-    <div
-      v-else
-      class="spin primary"
-      style="width: 1.5rem; height: 1.5rem"
-    ></div>
+    <div v-else class="spin primary" style="width: 1.5rem; height: 1.5rem"></div>
   </button>
 </template>
 
@@ -38,7 +34,7 @@ export default {
 };
 </script>
 
-<style lang = "scss" module>
+<style lang="scss" module>
 $danger: rgb(216, 87, 87);
 $info: rgb(59, 219, 72);
 .button-create {

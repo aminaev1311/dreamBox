@@ -1,16 +1,12 @@
 <template>
   <div class="inputs_labels">
-    <input
-      class="input_dream-box"
-      type="text"
-      :value="value"
-      @input="sendValue($event)"
-    />
+    <input class="input_dream-box" type="text" :value="value" @input="sendValue($event)" />
     <label class="label_frame_lk">{{ title }}</label>
   </div>
 </template>
 
 <script>
+/* eslint-disable */ 
 export default {
   data() {
     return {

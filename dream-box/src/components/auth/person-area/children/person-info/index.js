@@ -1,2 +1,2 @@
-import PersonInfo from "./person-info"
-export default PersonInfo 
+import PersonInfo from "./person-info";
+export default PersonInfo;

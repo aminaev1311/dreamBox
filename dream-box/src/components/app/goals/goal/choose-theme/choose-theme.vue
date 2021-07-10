@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-choose-theme">
-    <button :class="{ active: isOpen }" @click.prevent="toggleOnOff">
+    <button :class="{ active: isOpen, error }" @click.prevent="toggleOnOff">
       {{ currentValue }}
       <div class="wrapper-themes" :class="{ active: isOpen }">
         <div class="themes" @click.prevent.stop>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import themesList from "./themes-list";
 export default {
   DEFAULT_TEXT: "Choose theme",
   MAX_LENGTH: 12,
@@ -26,45 +27,54 @@ export default {
       type: Boolean,
       default: false,
     },
+    error: {
+      type: Boolean,
+      default: false,
+    },
+    theme: {
+      type: String,
+      default: "",
+      validator: (value) => {
+        return value === "" || themesList.some((theme) => theme === value);
+      },
+    },
   },
   emits: {
-    "sent-current-value": (payload) => typeof payload === "string",
+    "update:theme": (payload) => typeof payload === "string",
   },
   data() {
     return {
       isOpen: false,
-      selectedTheme: null,
-      themes: [
-        "family&friends",
-        "cereer",
-        "self-development",
-        "spiritual",
-        "finance",
-        "sports",
-        "health",
-        "relax",
-      ],
+      selectedTheme: "",
+      themes: themesList,
     };
+  },
+  computed: {
+    currentValue() {
+      return this.selectedTheme ? this.selectedTheme : this.$options.DEFAULT_TEXT;
+    },
   },
   methods: {
     toggleOnOff() {
       this.isOpen = !this.isOpen;
     },
     chooseTheme(theme) {
-      this.selectedTheme =
-        theme.length > this.$options.MAX_LENGTH
-          ? theme.slice(0, this.$options.MAX_LENGTH) + "..."
-          : theme;
-			this.toggleOnOff()
-      this.$emit("sent-current-value", theme);
+      this.toggleOnOff();
+      this.$emit("update:theme", theme);
+    },
+    cutTheme(theme) {
+      return theme.length > this.$options.MAX_LENGTH
+        ? theme.slice(0, this.$options.MAX_LENGTH) + "..."
+        : theme;
     },
   },
-  computed: {
-    currentValue() {
-      return this.selectedTheme
-        ? this.selectedTheme
-        : this.$options.DEFAULT_TEXT;
+  watch: {
+    theme() {
+      this.selectedTheme = this.cutTheme(this.theme);
     },
+  },
+  mounted() {
+    this.selectedTheme = this.cutTheme(this.theme);
   },
 };
 </script>
@@ -80,7 +90,7 @@ button {
   width: 136px;
   height: 28px;
   background: $color-base-blue;
-  border: 1px solid $color-base-blue;
+  border: 1px solid $color-base-blue !important;
   box-sizing: border-box;
   border-radius: $radius;
   font-family: $base-ff;
@@ -95,6 +105,13 @@ button {
 }
 button.active {
   border-radius: $radius $radius 0 0;
+}
+button.error {
+  background: lighten($color-base-error, 35);
+  border-color: $color-base-error !important;
+  @include placeholder {
+    color: $color-base-light;
+  }
 }
 button:after {
   content: "";

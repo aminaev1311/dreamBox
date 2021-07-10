@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style lang = "scss" scoped>
+<style lang="scss" scoped>
 .header-sv {
   padding: 20px 0;
   display: flex;

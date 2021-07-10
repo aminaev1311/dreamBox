@@ -11,11 +11,7 @@
       </div>
     </div>
 
-    <form
-      v-if="fields.length"
-      class="contact_frame_lk"
-      @submit.prevent="() => {}"
-    >
+    <form v-if="fields.length" class="contact_frame_lk" @submit.prevent="() => {}">
       <inputs-labels
         v-for="field in fields"
         :key="field.name"
@@ -24,8 +20,7 @@
         @input="valid(field, $event.target.value)"
       />
 
-      <radios-lk @chengeGender="validGender($event)" :gender="gender.value">
-      </radios-lk>
+      <radios-lk @chengeGender="validGender($event)" :gender="gender.value"> </radios-lk>
       <button-dream :isDisabled="!isDisabled || isLoad" @click="update"></button-dream>
     </form>
   </div>
@@ -55,13 +50,10 @@ export default {
       gender: {},
     };
   },
-  methods: {
-    changeControl() {
-      this.isChenged = true;
-    },
-  },
+
   mounted() {
     this.init();
+    console.log(this.$store);
   },
 
   methods: {
@@ -81,13 +73,10 @@ export default {
       });
       newUserInfo.append(this.gender.name, this.gender.value || "");
 
-      this.$store
-        .dispatch("auth/updateUserInfo", newUserInfo)
-        .then(() => this.init());
+      this.$store.dispatch("auth/updateUserInfo", newUserInfo).then(() => this.init());
     },
     init() {
-      let { USER_FIRST_NAME, USER_LAST_NAME, USER_BIRTHDAY, USER_GENDER } =
-        this.$options;
+      let { USER_FIRST_NAME, USER_LAST_NAME, USER_BIRTHDAY, USER_GENDER } = this.$options;
 
       USER_FIRST_NAME = this.user?.name?.trim() || "";
 
@@ -147,7 +136,7 @@ export default {
 };
 </script>
 
-<style  lang="scss"  scoped>
+<style lang="scss" scoped>
 .frame_lk {
   min-height: 100%;
   height: 432px;

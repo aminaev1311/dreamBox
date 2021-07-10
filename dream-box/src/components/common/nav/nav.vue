@@ -3,9 +3,7 @@
     <router-link v-if="user" :to="{ name: 'start' }"> To App </router-link>
     <router-link :to="{ name: 'auth' }"> Sing In </router-link>
     <router-link :to="{ name: 'registration' }"> Sin Up </router-link>
-    <router-link v-if="user" :to="{ name: 'person-area' }">
-      Person area
-    </router-link>
+    <router-link v-if="user" :to="{ name: 'person-area' }"> Person area </router-link>
   </nav>
 </template>
 
@@ -20,7 +18,7 @@ export default {
 };
 </script>
 
-<style lang = "scss" module>
+<style lang="scss" module>
 .nav {
   position: fixed;
   display: flex;
