@@ -1,8 +1,8 @@
 <template>
   <div class="record-ec">
-    <GoalIcon :numbers="numbers" :colors="colors" :comp="comp"></GoalIcon>
+    <GoalIcon :color="item.color" :item="item" :goal_icon="item.goal_icon"></GoalIcon>
     <Counter>
-      <h3>{{ title }}</h3>
+      <h3>{{ item.title }}</h3>
     </Counter>
     <Score></Score>
   </div>
@@ -15,10 +15,16 @@ import Score from "@c/app/vision/children/children-cg/score";
 export default {
   name: "record-ec",
   props: {
-    numbers: Number,
-    colors: String,
-    comp: String,
-    title: String,
+    item: {
+      type: Object,
+      required: true,
+      validator : value =>{
+        return (typeof value === "object" && !Array.isArray(value) && value !== null)
+      }}
+    // color: String,
+    // goal_icon: String,
+    // title: String,
+    // key: Number
   },
   components: { Score, Counter, GoalIcon },
   data() {
@@ -44,11 +50,12 @@ h3 {
   display: flex;
   flex-direction: column;
   width: 366px;
-  height: 267px;
+  height: 100%;
+  min-height: 239px;
   background: #f0f3fc;
   border-radius: 9px;
+  margin: 0 22px 0 0;
   padding: 15px;
   box-sizing: border-box;
 }
 </style>
-

@@ -10,7 +10,6 @@
 import PhotoReview from "@c/app/vision/children/children-rw/photo-review";
 import TextRiview from "@c/app/vision/children/children-rw/text-review";
 export default {
-  name: "SV-review",
   components: { TextRiview, PhotoReview }
 }
 </script>

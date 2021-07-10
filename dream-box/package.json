@@ -35,6 +35,7 @@
     "vue": "^3.0.0",
     "vue-image-crop-upload": "^3.0.3",
     "vue-router": "^4.0.8",
+    "vue-w3c-valid": "0.0.9",
     "vuesax": "^3.12.2",
     "vuex": "^4.0.0-0"
   },

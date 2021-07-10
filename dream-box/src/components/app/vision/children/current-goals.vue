@@ -1,47 +1,31 @@
 <template>
   <h3>Currents goals</h3>
   <div class="currents-goals">
-    <RecordEc
-      :numbers="numbers[0]"
-      :colors="colors[0]"
-      :comp="comp[0]"
-      :title="title[0]"
-    ></RecordEc>
-    <SecondIg
-      :numbers="numbers[1]"
-      :colors="colors[1]"
-      :comp="comp[0]"
-      :title="title[1]"
-    ></SecondIg>
-    <WarAndPeace
-      :numbers="numbers[2]"
-      :colors="colors[2]"
-      :comp="comp[1]"
-      :title="title[2]"
-    ></WarAndPeace>
-  </div>
+    <Goal v-for="item in goals"
+          :key="item.id"
+          :item="item">
+<!--      :color="item.color"-->
+<!--      :goal_icon="item.goal_icon"-->
+<!--      :title="item.title"-->
+    </Goal>
+    </div>
 </template>
 
 <script>
-import RecordEc from "@c/app/vision/children/children-cg/record-ec";
-import SecondIg from "@c/app/vision/children/children-cg/second-ig";
-import WarAndPeace from "@c/app/vision/children/children-cg/war-and-peace";
+import Goal from "@c/app/vision/children/children-cg/goal";
 export default {
   name: "Currents-Goals",
-  components: { WarAndPeace, SecondIg, RecordEc },
-  data() {
+  components: { Goal },
+  data () {
     return {
-      colors: ["#62A1FF", "#900093", "#F9AA34"],
-      numbers: [1, 2, 3],
-      comp: ["Vector", "Vector3"],
-      title: [
-        "Record personal efficiency video course",
-        "Second important goal",
-        "War and Peace reading",
-      ],
-    };
-  },
-};
+      goals:[
+        { id: 1, title: 'Record personal efficiency video course', color: '#62A1FF', goal_icon: 'pc.png' },
+        { id: 2, title: 'Second important goal', color: '#900093', goal_icon: 'pc.png' },
+        { id: 3, title: 'War and Peace reading', color: '#F9AA34', goal_icon: 'athletics.png' }
+      ]
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

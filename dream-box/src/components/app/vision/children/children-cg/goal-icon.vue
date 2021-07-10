@@ -1,37 +1,30 @@
 <template>
-  <div class="goal_icon_cg" :style="{ backgroundColor: colors }">
-    <small class="goal_text_cg" :style="{ '--bg-image': backgrImg()}"> Goal{{ numbers }} </small>
+  <div class="goal_icon_cg" :style="{ backgroundColor: item.color }">
+    <small class="goal_text_cg" :style="{'$bg-image': bg_image}"> Goal {{ item.id }}</small>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    numbers: Number,
-    colors: String,
-    comp: String
+    item: {
+      type: Object,
+      required: true,
+      validator : value =>{
+        return (typeof value === "object" && !Array.isArray(value) && value !== null)
+    }}
   },
   data () {
     return {
-      image: 'url("../../../../../assets/images/auth/Vector.png")',
-      filterImg: 'url("../../../../../assets/images/auth/Vector_3.png")'
-    }
-  },
-  methods: {
-    backgrImg () {
-      console.log(this.comp)
-      if (this.comp === 'Vector3') {
-        console.log(this.filterImg)
-        return this.filterImg
-      } else {
-        return this.image
-      }
+      bg_image: 'url("~@/assets/images/auth/' + this.item.goal_icon + '")'
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+//:root { --bg-image: url("~@/assets/images/auth/pc.png");}
+$bg-image: url("~@/assets/images/auth/pc.png");
 .goal_icon_cg {
   margin: 0 0 28px;
   position: absolute;
@@ -41,6 +34,7 @@ export default {
   border-radius: 16px;
   justify-content: center;
   align-items: center;
+
   .goal_text_cg {
     font-family: $base-ff;
     font-style: normal;
@@ -51,13 +45,14 @@ export default {
     color: #ffffff;
   }
 
-  .goal_text_cg::before {
+  ::v-deep(:before) {
       content: " ";
       display: inline-block;
       width: 12px;
       height: 11px;
       margin-right: 7px;
-      background-image: var(--bg-image);
+      background-image: $bg-image;
+        //var(--bg-image);
     }
 }
 </style>
