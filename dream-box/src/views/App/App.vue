@@ -3,11 +3,7 @@
     <LeftSideBar />
     <div class="start-pages">
       <AppHeader />
-      <router-view v-slot="{ Component }" class="margin-top">
-        <transition enter-active-class="enter-page" leave-active-class="leave-page" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <router-view class="margin-top"></router-view>
     </div>
   </div>
 </template>

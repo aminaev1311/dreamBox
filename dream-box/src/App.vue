@@ -1,11 +1,7 @@
 <template>
   <div>
     <app-alert />
-    <router-view v-slot="{ Component }">
-      <transition enter-active-class="enter-page" leave-active-class="leave-page" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <router-view></router-view>
   </div>
 </template>
 
