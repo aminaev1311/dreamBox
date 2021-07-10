@@ -44,7 +44,7 @@ export default {
     width: 12px;
     height: 11px;
     margin-right: 7px;
-    background-image: url("../../../../../assets/images/auth/Vector.png");
+    background-image: url("~@/assets/images/auth/Vector.png");
     //background-image: url('../../../../../assets/images/auth/Vector_3.png');
   }
 }
