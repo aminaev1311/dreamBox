@@ -1,2 +1,2 @@
-import Goals from "./goals"
-export default Goals
+import Goals from "./goals";
+export default Goals;

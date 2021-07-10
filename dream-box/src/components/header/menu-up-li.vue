@@ -7,14 +7,12 @@
 
 <script>
 export default {
-name: "menu-up-li",
-  props:{
-      {item: integer},
-      {className: String},
+  name: "menu-up-li",
+  props: {
+    item: Number,
+    className: String,
   },
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

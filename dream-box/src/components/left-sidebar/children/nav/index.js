@@ -1,2 +1,2 @@
-import LsbNav from "./lsb-nav"
-export default LsbNav
+import LsbNav from "./lsb-nav";
+export default LsbNav;

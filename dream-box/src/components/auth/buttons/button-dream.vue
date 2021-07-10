@@ -1,9 +1,5 @@
 <template>
-  <button
-    class="button_dream-box"
-    :disabled="isDisabled"
-    @click="$emit('event-fb')"
-  >
+  <button class="button_dream-box" :disabled="isDisabled" @click="$emit('event-fb')">
     Сохранить
   </button>
 </template>
@@ -22,7 +18,7 @@ export default {
 };
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
 .button_dream-box {
   cursor: pointer;
   display: flex;

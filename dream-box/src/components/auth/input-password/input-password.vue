@@ -1,7 +1,5 @@
 <template>
-  <div class="wrapper-input-password"
-  :class="{ error: error }"
-  >
+  <div class="wrapper-input-password" :class="{ error: error }">
     <input
       :type="isShowPassword ? 'text' : 'password'"
       @input="setValue($event)"
@@ -11,15 +9,10 @@
       :placeholder="placeholder"
       class="password"
       :autocomplete="autocomplete"
-      
     />
     <div class="cursor after">
       <img
-        :src="
-          !isShowPassword
-            ? require('@i/auth/eye-close.png')
-            : require('@i/auth/eye-open.png')
-        "
+        :src="!isShowPassword ? require('@i/auth/eye-close.png') : require('@i/auth/eye-open.png')"
         alt="eye-close"
         @click="isShowPassword = !isShowPassword"
       />
@@ -30,11 +23,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      isShowPassword: false,
-    };
-  },
   props: {
     modelValue: {
       type: String,
@@ -50,9 +38,9 @@ export default {
       type: String,
       default: "",
     },
-    error:{
+    error: {
       type: Boolean,
-      default: false
+      default: false,
     },
     errorMessage: {
       type: String,
@@ -61,6 +49,11 @@ export default {
   },
   emits: {
     "update:modelValue": (payload) => typeof payload === "string",
+  },
+  data() {
+    return {
+      isShowPassword: false,
+    };
   },
   methods: {
     setValue({ target }) {
@@ -127,7 +120,7 @@ export default {
 }
 
 .wrapper-input-password.error {
-  border:1px solid red!important;
+  border: 1px solid red !important;
 }
 
 small {

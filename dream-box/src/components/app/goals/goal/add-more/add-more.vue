@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-add-more">
-    <button class="add" @click.prevent="show">
+    <button class="add" @click.prevent="show" :class="{ error: empty }">
       <img v-if="!showInput" src="@i/goals/plus.svg" alt="icon-plus" />
       <span>{{ buttonTitle }}</span>
     </button>
@@ -8,14 +8,22 @@
       <input type="text" v-model="value" :class="{ error: isError }" />
       <button @click="addTactic">Save</button>
     </div>
-    <small v-if="showInput && isError" class="error-message"
-      >This field can't be empty!</small
-    >
+    <small v-if="showInput && isError" class="error-message">This field can't be empty!</small>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    startAdding: {
+      type: Boolean,
+      default: false,
+    },
+    empty: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       showInput: false,
@@ -23,10 +31,17 @@ export default {
       isError: false,
     };
   },
-  props: {
-    startAdding: {
-      type: Boolean,
-      default: false,
+  computed: {
+    buttonTitle() {
+      return this.showInput ? "Close" : !this.startAdding ? "add" : "add-more";
+    },
+    error() {
+      return this.value === "";
+    },
+  },
+  watch: {
+    value() {
+      if (this.value !== "") this.isError = false;
     },
   },
   methods: {
@@ -40,23 +55,10 @@ export default {
       this.value = "";
     },
   },
-  watch: {
-    value() {
-      if (this.value !== "") this.isError = false;
-    },
-  },
-  computed: {
-    buttonTitle() {
-      return this.showInput ? "Close" : !this.startAdding ? "add" : "add-more";
-    },
-    error() {
-      return this.value === "";
-    },
-  },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .wrapper-add-more {
   @include fc-s-c-b;
   align-items: flex-start !important;
@@ -130,5 +132,12 @@ export default {
   color: red;
   font-size: 14px;
   padding: 0 10px;
+}
+.error {
+  background: lighten($color-base-error, 35);
+  border-color: $color-base-error !important;
+  @include placeholder {
+    color: $color-base-light;
+  }
 }
 </style>

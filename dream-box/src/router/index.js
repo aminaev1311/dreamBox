@@ -1,88 +1,84 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
-import Auth from '@p/Auth.vue'
-import Registration from '@p/Registration.vue'
-import App from '@p/App'
-import PersonArea from '@p/PersonArea.vue'
-import store from '@s'
-import Test from '@p/Test.vue'
-import Weeks from '@p/App/Weeks.vue'
-import Goals from '@p/App/Goals.vue'
-import Vision from '@p/App/Vision.vue'
-import Archive from '@p/App/Archive.vue'
-
+import Auth from "@p/Auth.vue";
+import Registration from "@p/Registration.vue";
+import App from "@p/App";
+import PersonArea from "@p/PersonArea.vue";
+import store from "@s";
+import Weeks from "@p/App/Weeks.vue";
+import Goals from "@p/App/Goals.vue";
+import Vision from "@p/App/Vision.vue";
+import Archive from "@p/App/Archive.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'start',
+    path: "/",
+    name: "start",
     component: App,
     children: [
       {
-        path: '/',
-        name: 'Weeks',
-        component: Weeks
+        path: "/",
+        name: "Weeks",
+        component: Weeks,
       },
       {
-        path: '/goals',
-        name: 'Goals',
-        component: Goals
+        path: "/goals",
+        name: "Goals",
+        component: Goals,
       },
       {
-        path: '/vision',
-        name: 'Vision',
-        component: Vision
+        path: "/vision",
+        name: "Vision",
+        component: Vision,
       },
       {
-        path: '/archive',
-        name: 'Archive',
-        component: Archive
+        path: "/archive",
+        name: "Archive",
+        component: Archive,
       },
       {
-        path: '/person-area',
-        name: 'person-area',
-        component: PersonArea
-      }
-    ]
+        path: "/person-area",
+        name: "person-area",
+        component: PersonArea,
+      },
+    ],
   },
   {
-    path: '/auth',
-    name: 'auth',
-    component: Auth
+    path: "/auth",
+    name: "auth",
+    component: Auth,
   },
   {
-    path: '/registration',
-    name: 'registration',
-    component: Registration
+    path: "/registration",
+    name: "registration",
+    component: Registration,
   },
-
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
 
-let flag = false
+let flag = false;
 
 router.beforeEach(async (to, from, next) => {
   if (!flag) {
-    flag = await store.getters['auth/isChecked']
+    flag = await store.getters["auth/isChecked"];
   }
 
-  const condition = to.name === 'auth' || to.name === 'registration' || to.name === 'test'
-  const isUser = store.getters['auth/user']
+  const condition = to.name === "auth" || to.name === "registration" || to.name === "test";
+  const isUser = store.getters["auth/user"];
 
   if (condition && !isUser) {
-    next()
+    next();
   } else if (condition && isUser) {
-    next({ path: '/person-area' })
-  }
-  else if (!store.getters['auth/user']) {
-    next({ name: 'auth' })
+    next({ path: "/person-area" });
+  } else if (!store.getters["auth/user"]) {
+    next({ name: "auth" });
   } else {
-    next()
+    next();
   }
-})
+});
 
-export default router
+export default router;

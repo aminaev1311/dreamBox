@@ -1,20 +1,11 @@
 <template>
-  <div
-    class="model-window-wrapper"
-    :class="{ active: show }"
-    @click.self="closeWin"
-  >
+  <div class="model-window-wrapper" :class="{ active: show }" @click.self="closeWin">
     <div class="window">
       <p class="content">
-        Are you sure you want to delete your account? This action is
-        irreversible
+        Are you sure you want to delete your account? This action is irreversible
       </p>
-      <button class="btn-delete" @click="$store.dispatch('auth/removeAccount')">
-        Yes, delete
-      </button>
-      <button @click.self="closeWin" class="btn-mistake">
-        No, it’s a mistake
-      </button>
+      <button class="btn-delete" @click="$store.dispatch('auth/removeAccount')">Yes, delete</button>
+      <button @click.self="closeWin" class="btn-mistake">No, it’s a mistake</button>
     </div>
   </div>
 </template>
@@ -38,7 +29,7 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .show {
   outline: none;
   border: none;

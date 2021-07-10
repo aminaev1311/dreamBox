@@ -7,13 +7,7 @@
     >
     <label for="man">
       <div class="circle" :class="{ active: user === 'male' }"></div>
-      <input
-        type="radio"
-        id="man"
-        @click="$event.value = 'mail'"
-        value="male"
-        v-model="user"
-      />
+      <input type="radio" id="man" @click="$event.value = 'mail'" value="male" v-model="user" />
       Male</label
     >
   </div>
@@ -26,7 +20,7 @@ const validGender = (value) => {
 };
 
 export default {
-  name: "radios_lk",
+  name: "RadiosLk",
   data() {
     return {
       user: "",

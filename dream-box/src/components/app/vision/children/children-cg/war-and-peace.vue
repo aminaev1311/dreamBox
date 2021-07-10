@@ -1,13 +1,10 @@
 <template>
   <div class="war-peace">
-    <GoalIcon
-      :numbers="numbers"
-      :colors="colors"
-      :comp="comp"></GoalIcon>
+    <GoalIcon :numbers="numbers" :colors="colors" :comp="filter"></GoalIcon>
     <Counter>
       <h3>{{ title }}</h3>
     </Counter>
-    <Score/>
+    <Score />
   </div>
 </template>
 
@@ -16,16 +13,16 @@ import GoalIcon from "@c/app/vision/children/children-cg/goal-icon";
 import Counter from "@c/app/vision/children/children-cg/counter";
 import Score from "@c/app/vision/children/children-cg/score";
 export default {
-name: "war-and-peace",
-  components: {Score, GoalIcon, Counter },
-  props:{
+  name: "war-and-peace",
+  components: { Score, GoalIcon, Counter },
+  props: {
     numbers: Number,
     colors: String,
     comp: String,
-    filter:String,
-    title: String
-  }
-}
+    filter: String,
+    title: String,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -40,13 +37,13 @@ h3 {
   letter-spacing: 0.2px;
   color: $color-font-dark;
 }
-.war-peace{
+.war-peace {
   display: flex;
   position: relative;
   width: 366px;
   height: 239px;
   flex-direction: column;
-  background: #F0F3FC;
+  background: #f0f3fc;
   border-radius: 9px;
   margin-left: 22px;
   padding: 15px;

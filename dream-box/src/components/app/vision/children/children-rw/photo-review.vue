@@ -1,20 +1,19 @@
 <template>
   <div class="photo-review">
-   <img src="~@i/auth/Rectangle160.jpg" />
+    <img src="~@i/auth/Rectangle160.jpg" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "photo-review"
-}
+  name: "photo-review",
+};
 </script>
 
 <style lang="scss" scoped>
-.photo-review{
+.photo-review {
   width: 176px;
   height: 208px;
   border-radius: 8px;
 }
-
 </style>

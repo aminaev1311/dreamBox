@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style lang= "scss" scoped>
+<style lang="scss" scoped>
 .menu {
   cursor: pointer;
   width: 20px;

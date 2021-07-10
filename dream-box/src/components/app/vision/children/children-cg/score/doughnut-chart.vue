@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="diagram progress" :class="[percent >= 50 ? action : '' ]" :style="{transform: 'rotate('+deg+'deg)'}">
+    <div
+      class="diagram progress"
+      :class="[percent >= 50 ? action : '']"
+      :style="{ transform: 'rotate(' + deg + 'deg)' }"
+    >
       <div class="piece left"></div>
       <div class="piece right"></div>
       <div class="text">
@@ -14,40 +18,39 @@
 
 <script>
 export default {
-
   props: {
-    percent: Number
+    percent: Number,
   },
-  data () {
+  data() {
     return {
-      action: 'over_50'
-    }
+      action: "over_50",
+    };
   },
   methods: {
-    deg () {
-      return (360 * this.percent / 100) + 180
-    }
-  }
-}
+    deg() {
+      return (360 * this.percent) / 100 + 180;
+    },
+  },
+};
 </script>
 
 <style scoped>
 .diagram {
   width: 92px;
-  height:92px;
+  height: 92px;
   border-radius: 50%;
-  background: #C8E2FF;
+  background: #c8e2ff;
   position: relative;
   overflow: hidden;
 }
 .diagram::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
-  top:16px;
-  left:16px;
-  right:16px;
-  bottom:16px;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
   border-radius: 50%;
   background: #fff;
   z-index: 3;
@@ -62,7 +65,7 @@ export default {
   position: absolute;
 }
 .diagram .piece::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   width: 50%;
@@ -85,23 +88,21 @@ export default {
   transform: rotate(360deg);
 }
 .diagram .left::before {
-  background: #C8E2FF;
-
+  background: #c8e2ff;
 }
 .diagram.over_50 .left::before {
-  background: #F9AA34;
+  background: #f9aa34;
 }
 .diagram .right::before {
-  background: #C8E2FF;
-
+  background: #c8e2ff;
 }
 .diagram .text {
   position: absolute;
   z-index: 3;
   top: 0;
   bottom: 0;
-  left:0;
-  right:0;
+  left: 0;
+  right: 0;
   text-align: center;
   display: flex;
   align-items: center;

@@ -1,17 +1,15 @@
 <template>
   <div class="left-sidebar">
-    <div class="user-info">
+    <router-link to="/person-area" class="user-info">
       <div class="logo">
         <img :src="logo" alt="logo" />
       </div>
       <div class="description">
         <span class="name">{{ userName }} </span>
-        <router-link to="/person-area">
-          <span class="role">{{ user && user.role ? user.role : "me" }}</span>
-        </router-link>
+        <span class="role">{{ user && user.role ? user.role : "me" }}</span>
       </div>
       <button class="user-menu" @click.prevent="showLogOut = !showLogOut" />
-    </div>
+    </router-link>
     <button v-if="showLogOut" class="user-logout" @click="logOut">
       <img src="@i/lsb/sing-out.svg" alt="icon-sing-out" />
       <span>Sing Out</span>
@@ -21,10 +19,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import config from "@config";
 import LsbNav from "./children/nav";
-import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
@@ -71,6 +69,7 @@ export default {
   padding: 12px 24px;
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 .logo {
   width: 56px;
@@ -96,10 +95,7 @@ export default {
     letter-spacing: 0.1px;
     color: $color-font-light;
   }
-  & > a {
-    text-decoration: none;
-  }
-  & > a > .role {
+  & > .role {
     font-weight: normal;
     font-size: 12px;
     line-height: 20px;

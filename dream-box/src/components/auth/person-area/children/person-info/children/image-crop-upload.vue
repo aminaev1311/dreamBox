@@ -1,7 +1,7 @@
 <template>
   <my-upload
-    ref = "upload"
-    :langExt="langExt"
+    ref="upload"
+    :lang-ext="langExt"
     field="img"
     @crop-success="cropSuccess"
     @crop-upload-success="cropUploadSuccess"
@@ -12,7 +12,7 @@
     url="/api/upload"
     :headers="headers"
     img-format="png"
-    :noSquare="true"
+    :no-square="true"
   ></my-upload>
 </template>
 
@@ -21,6 +21,15 @@ import { mapActions, mapMutations } from "vuex";
 import MyUpload from "vue-image-crop-upload";
 import { addToken } from "@api/auth";
 export default {
+  components: {
+    MyUpload,
+  },
+  props: {
+    show: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       imgDataUrl: "",
@@ -28,8 +37,7 @@ export default {
       langExt: {
         hint: "Click or drag the file here to upload",
         loading: "Uploading…",
-        noSupported:
-          "Browser is not supported, please use IE10+ or other browsers",
+        noSupported: "Browser is not supported, please use IE10+ or other browsers",
         success: "Upload success",
         fail: "Upload failed",
         preview: "Preview",
@@ -47,15 +55,6 @@ export default {
       },
     };
   },
-  props: {
-    show: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  components: {
-    MyUpload,
-  },
   methods: {
     ...mapActions({
       logOut: "auth/logOut",
@@ -67,21 +66,20 @@ export default {
     cropUploadSuccess(jsonData, field) {
       if (jsonData?.user) {
         this.setUser(jsonData.user);
-        this.$emit('hide')
+        this.$emit("hide");
         console.log(33);
-        this.$refs.upload.off()
+        this.$refs.upload.off();
       }
       if (jsonData?.token) {
         localStorage.setItem("TOKEN", jsonData.token);
       }
-
     },
     cropUploadFail(status, field) {},
   },
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .vue-image-crop-upload .vicp-wrap .vicp-close {
   display: none !important;
 }

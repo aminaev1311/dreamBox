@@ -17,7 +17,7 @@
 import ButtonDream from "@ca/buttons/button-dream";
 import InputsLabels from "@ca/person-area/children/inputs-labels";
 export default {
-  name: "buddy-lk",
+  name: "BuddyLk",
   components: { InputsLabels, ButtonDream },
 };
 </script>

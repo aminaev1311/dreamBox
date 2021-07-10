@@ -12,10 +12,7 @@
         :error="input.error"
         :autocomplete="input.placeholder"
       ></InputPassword>
-      <button-dream
-        :isDisabled="isDisabled"
-        @click.prevent="savePassword"
-      ></button-dream>
+      <button-dream :is-disabled="isDisabled" @click.prevent="savePassword"></button-dream>
     </form>
   </div>
 </template>
@@ -24,7 +21,7 @@
 import ButtonDream from "@ca/buttons/button-dream";
 import InputPassword from "@ca/input-password";
 export default {
-  name: "passw-lk",
+  name: "PasswLk",
   components: { InputPassword, ButtonDream },
   data() {
     return {
@@ -35,7 +32,6 @@ export default {
           name: "oldPassword",
           error: false,
           errorMessage: "Old password isn't correct",
-
         },
         {
           value: "",
@@ -68,7 +64,7 @@ export default {
       if (oldPassword) {
         this.inputs[0].error = true;
       } else {
-        this.inputs[0].error = false;;
+        this.inputs[0].error = false;
       }
       if (currentPasswords) {
         this.inputs[1].error = this.inputs[2].error = true;
@@ -82,7 +78,6 @@ export default {
       }
     },
   },
-
   computed: {
     isDisabled() {
       return this.inputs.some(({ value }) => value === "");

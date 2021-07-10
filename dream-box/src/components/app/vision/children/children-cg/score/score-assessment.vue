@@ -1,26 +1,26 @@
 <template>
-<div>
-  <slot></slot>
-</div>
+  <div>
+    <slot></slot>
+  </div>
 </template>
 
 <script>
 export default {
-name: "score-assessment"
-}
+  name: "score-assessment",
+};
 </script>
 
 <style lang="scss" scoped>
-h3{
+h3 {
   text-align: left;
   font-family: $base-ff;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
   line-height: 28px;
-  color: #2D3446;
+  color: #2d3446;
 }
-h4{
+h4 {
   text-align: left;
   font-family: $base-ff;
   font-style: normal;
