@@ -31,29 +31,6 @@ export default {
 };
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <style lang="scss" scoped>
 h3 {
   margin-bottom: 15px;

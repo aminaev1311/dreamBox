@@ -49,7 +49,11 @@
         </div>
         <small v-if="!password && sent">This field can't be empty!</small>
         <small v-if="error">Email or password aren't correct!</small>
+        <router-link class="forgot-password-link" :to="{ name: 'forgot-password' }"
+          >Forget password?</router-link
+        >
       </div>
+
       <Buttons :is-load="!isLoad" :is-disabled="isLoad" title-main-button="Log In" />
       <ToPage
         class="to-page"
@@ -248,5 +252,17 @@ export default {
 }
 .cursor {
   cursor: pointer;
+}
+.forgot-password-link {
+  font-family: $base-ff;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #a9acbf;
+  text-decoration: none;
+  margin-right: auto;
+  margin-top: -5px;
 }
 </style>

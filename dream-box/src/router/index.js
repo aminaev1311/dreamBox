@@ -4,6 +4,7 @@ import Auth from "@p/Auth.vue";
 import Registration from "@p/Registration.vue";
 import App from "@p/App";
 import PersonArea from "@p/PersonArea.vue";
+import ForgotPassword from "@p/ForgotPassword";
 import store from "@s";
 import Weeks from "@p/App/Weeks.vue";
 import Goals from "@p/App/Goals.vue";
@@ -53,6 +54,11 @@ const routes = [
     name: "registration",
     component: Registration,
   },
+  {
+    path: "/forgot-password",
+    name: "forgot-password",
+    component: ForgotPassword,
+  },
 ];
 
 const router = createRouter({
@@ -67,7 +73,8 @@ router.beforeEach(async (to, from, next) => {
     flag = await store.getters["auth/isChecked"];
   }
 
-  const condition = to.name === "auth" || to.name === "registration" || to.name === "test";
+  const condition =
+    to.name === "auth" || to.name === "registration" || to.name === "forgot-password";
   const isUser = store.getters["auth/user"];
 
   if (condition && !isUser) {
