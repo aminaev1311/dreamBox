@@ -18,9 +18,10 @@ export default {
     item: {
       type: Object,
       required: true,
-      validator : value =>{
-        return (typeof value === "object" && !Array.isArray(value) && value !== null)
-      }}
+      validator: (value) => {
+        return typeof value === "object" && !Array.isArray(value) && value !== null;
+      },
+    },
     // color: String,
     // goal_icon: String,
     // title: String,
