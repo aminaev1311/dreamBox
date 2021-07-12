@@ -1,5 +1,4 @@
 <template>
-
   <div class="goal_icon_cg" :style="{ backgroundColor: item.color }">
     <small class="goal_text_cg" :style="{'$bg-image': bg_image}"> Goal {{ item.id }}</small>
 
@@ -12,15 +11,13 @@ export default {
     item: {
       type: Object,
       required: true,
-      validator : value =>{
-        return (typeof value === "object" && !Array.isArray(value) && value !== null)
-    }}
+      validator: value =>{ return (typeof value === "object" && !Array.isArray(value) && value !== null) }
+    }
   },
   data() {
-    return {
-      bg_image: 'url("~@/assets/images/auth/' + this.item.goal_icon + '")'
-    }
+    return { bg_image: 'url("~@/assets/images/auth/' + this.item.goal_icon + '")' }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -45,15 +42,14 @@ $bg-image: url("~@/assets/images/auth/pc.png");
     letter-spacing: 0.1px;
     color: #ffffff;
   }
-
   ::v-deep(:before) {
-      content: " ";
-      display: inline-block;
-      width: 12px;
-      height: 11px;
-      margin-right: 7px;
-      background-image: $bg-image;
-        //var(--bg-image);
-    }
+    content: " ";
+    display: inline-block;
+    width: 12px;
+    height: 11px;
+    margin-right: 7px;
+    background-image: $bg-image;
+    //var(--bg-image);
+  }
 }
 </style>
