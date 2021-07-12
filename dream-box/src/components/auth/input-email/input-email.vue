@@ -5,10 +5,10 @@
       <div class="before">
         <img src="@i/auth/user-icon.png" alt="password-icon" />
       </div>
-      <input type="text" v-model="email" id="email" name="email" />
+      <input v-model="email" id="email" name="email" />
     </div>
-    <small v-if="error.empty">{{ error.emptyMessage }}</small>
-    <small v-if="error.isntCorrect">{{ error.isntCorrectMessage }}</small>
+    <small v-if="errors.empty">{{ errors.emptyMessage }}</small>
+    <small v-if="errors.isntCorrect">{{ errors.isntCorrectMessage }}</small>
   </div>
 </template>
 
@@ -16,36 +16,51 @@
 export default {
   data() {
     return {
-      email: "",
-    };
-  },
-  props: {
-    error: {
-      type: Object,
-      default: () => ({
+      error: {
         empty: false,
         emptyMessage: "This field can't be empty!",
         isntCorrect: false,
         isntCorrectMessage: "This field is not correct filled!",
-      }),
+      },
+    };
+  },
+  props: {
+    propError: {
+      type: Object,
     },
-    value: {
+    modelValue: {
       type: String,
-      default: "",
     },
   },
   emits: {
-    "update:value": (value) => typeof value === "string",
+    "update:modelValue": (value) => typeof value === "string" || value === "",
+  },
+  methods: {
+    init() {
+      this.email = this.modelValue || "";
+      this.error = { ...this.error, ...this.propError };
+    },
   },
   mounted() {
-    this.email = this.value;
+    this.init();
   },
-  watch: {
-    value() {
-      this.email = this.value;
+  computed: {
+    email: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit("update:modelValue", value);
+      },
     },
-    email() {
-      this.$emit("update:value", this.email);
+    errors() {
+      return { ...this.error, ...this.propError };
+    },
+  },
+
+  watch: {
+    modelValue() {
+      this.init();
     },
   },
 };

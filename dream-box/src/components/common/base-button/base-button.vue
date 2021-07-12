@@ -3,7 +3,7 @@
     :type="typeBtn"
     :class="[$style[color], $style['button-create']]"
     :disabled="isDisabled"
-    @click="$emit('click')"
+    @click.prevent="$emit('click')"
     :style="`width: ${width}px;`"
   >
     <span v-if="!isLoad">
@@ -35,6 +35,9 @@ export default {
       type: Number,
       default: 132,
     },
+  },
+  emits: {
+    click: null,
   },
 };
 </script>
