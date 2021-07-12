@@ -39,11 +39,20 @@ export const updateUserPassword = async (passwords) => {
   return data;
 };
 
+
+export const sendEmailRestorePassword = async (email) => {
+  const { data } = await http.post(`send-email-restore-password`, email);
+  return data;
+};
+
+
 export const removeAccount = async () => {
   const token = addToken();
   const { data } = await http.delete(`remove-user`, token);
   return data;
 };
+
+
 
 export function addToken() {
   return {

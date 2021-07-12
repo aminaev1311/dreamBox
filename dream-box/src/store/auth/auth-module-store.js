@@ -263,5 +263,33 @@ export default {
       }
       commit("SETISLOAD", false);
     },
+    async sendEmailRestorePassword({ commit, dispatch }, email) {
+      try {
+        await authApi.sendEmailRestorePassword(email);
+        if (!oldPassword && !currentPasswords) {
+          dispatch(
+            "alert/setAlert",
+            {
+              status: "success",
+              message: "Instruction to restore password was  send in your email!!!",
+              daley: 10000,
+              buttonTitle: "X",
+            },
+            { root: true }
+          );
+        }
+      } catch (e) {
+        console.log(e);
+        dispatch(
+          "alert/setAlert",
+          {
+            status: "error",
+            message: "Error on server!! Try later...",
+            daley: 3000,
+          },
+          { root: true }
+        );
+      }
+    },
   },
 };
