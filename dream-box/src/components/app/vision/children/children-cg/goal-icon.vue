@@ -1,28 +1,55 @@
 <template>
-  <div class="goal_icon_cg" :style="{ backgroundColor: item.color }">
-    <small class="goal_text_cg" :style="{'$bg-image': bg_image}"> Goal {{ item.id }}</small>
-
+  <div class="goal_icon_cg" ref="div" :style="{ backgroundColor: gColor }">
+    <div class="img_goal" :class="goal_type"></div>
+    <small class="goal_text_cg"> Goal {{ id }}</small>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    item: {
-      type: Object,
+    id: {
+      type: Number,
       required: true,
-      validator: value =>{ return (typeof value === "object" && !Array.isArray(value) && value !== null) }
+      validator: value => {
+        return (typeof value === "number" )
+      }
     }
   },
   data() {
-    return { bg_image: 'url("~@/assets/images/auth/' + this.item.goal_icon + '")' }
-  }
-}
+    return {
+      gColor: null,
+      gTitle: null,
+      goals:[
+        {id: 1, title: 'family & friends', color: '#FA7D98', class_goal: 'goal_type_1' },
+        {id: 2, title: 'career', color: '#F2994A', class_goal: 'goal_type_2' },
+        {id: 3, title: 'self-development', color: '#57C238', class_goal: 'goal_type_3'},
+        {id: 4, title: 'spiritual', color: '#03A9DE', class_goal: 'goal_type_4'},
+        {id: 5, title: 'finance', color: '#118743', class_goal: 'goal_type_5'},
+        {id: 6, title: 'sports', color: '#900093', class_goal: 'goal_type_6'},
+        {id: 7, title: 'health', color: '#EB5757', class_goal: 'goal_type_7'},
+        {id: 8, title: 'relax', color: '#1100D4', class_goal: 'goal_type_8'},
+      ],
+      goal_type: null
+    }
+  },
+  mounted() {
+    this.goals.forEach((item) => {
+     if (this.id === item.id) {
+        this.gColor = item.color;
+        this.gTitle = item.title;
+        console.log(this.gTitle)
+        this.goal_type = item.class_goal;
+        this.$refs.div.style.backgroundColor = this.gColor
+        this.$emit("goal-title", this.gTitle);
+      }
+    })
+  },
+ }
 </script>
 
 <style lang="scss" scoped>
-//:root { --bg-image: url("~@/assets/images/auth/pc.png");}
-$bg-image: url("~@/assets/images/auth/pc.png");
+
 .goal_icon_cg {
   margin: 0 0 28px;
   position: absolute;
@@ -34,6 +61,7 @@ $bg-image: url("~@/assets/images/auth/pc.png");
   align-items: center;
 
   .goal_text_cg {
+    position: relative;
     font-family: $base-ff;
     font-style: normal;
     font-weight: bold;
@@ -42,14 +70,43 @@ $bg-image: url("~@/assets/images/auth/pc.png");
     letter-spacing: 0.1px;
     color: #ffffff;
   }
-  ::v-deep(:before) {
-    content: " ";
+  .goal_text_cg::before{
+    content: "";
     display: inline-block;
     width: 12px;
     height: 11px;
     margin-right: 7px;
-    background-image: $bg-image;
-    //var(--bg-image);
+  }
+  .img_goal {
+    position: absolute;
+    display: inline-block;
+    width: 12px;
+    height: 11px;
+    margin-right: 40px;
+  }
+  .goal_type_1 {
+    background-image: url("~@/assets/images/auth/family.png");
+  }
+  .goal_type_2 {
+    background-image: url("~@/assets/images/auth/career.png");
+  }
+  .goal_type_3 {
+    background-image: url("~@/assets/images/auth/self-development.png");
+  }
+  .goal_type_4 {
+    background-image: url("~@/assets/images/auth/spititual.png");
+  }
+  .goal_type_5 {
+    background-image: url("~@/assets/images/auth/finance.png");
+  }
+  .goal_type_6 {
+    background-image: url("~@/assets/images/auth/athletics.png");
+  }
+  .goal_type_7 {
+    background-image: url("~@/assets/images/auth/health.png");
+  }
+  .goal_type_8 {
+    background-image: url("~@/assets/images/auth/relax.png");
   }
 }
 </style>

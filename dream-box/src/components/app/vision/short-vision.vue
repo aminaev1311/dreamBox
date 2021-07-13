@@ -1,7 +1,9 @@
 <template>
+  <div class="short-vision">
   <h3>Short vision</h3>
   <SVReview />
   <CurrentsGoals />
+  </div>
 </template>
 
 <script>
@@ -13,6 +15,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.short-vision{
+  max-width: 1143px;
+  width:100%;
+}
 h3 {
   margin-top: 35px;
   margin-bottom: 15px;

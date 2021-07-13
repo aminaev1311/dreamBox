@@ -1,8 +1,9 @@
 <template>
   <div class="record-ec">
-    <GoalIcon :color="item.color" :item="item" :goal_icon="item.goal_icon"></GoalIcon>
+    <GoalIcon :id="id" @goal-title="selectTitle"></GoalIcon>
+    <ButtonSandwich></ButtonSandwich>
     <Counter>
-      <h3>{{ item.title }}</h3>
+      <h3>{{ title }}</h3>
     </Counter>
     <Score></Score>
   </div>
@@ -10,27 +11,32 @@
 
 <script>
 import GoalIcon from "@c/app/vision/children/children-cg/goal-icon";
+import ButtonSandwich from "@c/app/vision/children/children-cg/button-sandwich";
 import Counter from "@c/app/vision/children/children-cg/counter";
 import Score from "@c/app/vision/children/children-cg/score";
 export default {
   name: "record-ec",
   props: {
-    item: {
-      type: Object,
+    id: {
+      type: Number,
       required: true,
-      validator : value =>{
-        return (typeof value === "object" && !Array.isArray(value) && value !== null)
+      validator: value =>{
+        return (typeof value === "number" )
       }}
-    // color: String,
-    // goal_icon: String,
-    // title: String,
-    // key: Number
   },
   components: { Score, Counter, GoalIcon },
   data() {
-    return {};
+    return {
+      title: null
+    }
   },
-};
+  methods: {
+    selectTitle(value){
+      this.title = value;
+      console.log(value)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -54,7 +60,7 @@ h3 {
   min-height: 239px;
   background: #f0f3fc;
   border-radius: 9px;
-  margin: 0 22px 0 0;
+  margin: 0 22px 22px 0;
   padding: 15px;
   box-sizing: border-box;
 }
