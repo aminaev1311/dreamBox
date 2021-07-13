@@ -1,5 +1,9 @@
 <template>
-<button class="sandwich"><img src="" alt=""></button>
+<button class="sandwich">
+  <div class="circle"></div>
+  <div class="circle right"></div>
+  <div class="circle left"></div>
+</button>
 </template>
 
 <script>
@@ -10,14 +14,38 @@ name: "button"
 
 <style lang="scss" scoped>
 .sandwich{
-
+  background: #E6E9F8;
   position:absolute;
-  margin-top: 17px;
-  margin-left: 450px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 310px;
   margin-right: 15px;
   width: 24px;
   height: 24px;
+  border: none;
   border-radius: 50%;
   z-index: 50;
+  .circle{
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #A9ACBF;
+    border-radius: 50%;
+  }
+  .right{
+    margin-right: 9px;
+  }
+  .left{
+    margin-left: 9px;
+  }
+  &:hover{
+    background: #c8e2ff;
+    cursor: pointer;
+  }
+  &:active{
+    background: #cFcfff;
+  }
 }
 </style>

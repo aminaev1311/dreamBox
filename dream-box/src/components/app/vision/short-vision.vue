@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss" scoped>
 .short-vision{
-  max-width: 1143px;
+  max-width: 1164px;
   width:100%;
 }
 h3 {

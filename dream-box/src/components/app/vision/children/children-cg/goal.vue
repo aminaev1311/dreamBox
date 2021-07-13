@@ -24,7 +24,7 @@ export default {
         return (typeof value === "number" )
       }}
   },
-  components: { Score, Counter, GoalIcon },
+  components: { Score, Counter, GoalIcon, ButtonSandwich },
   data() {
     return {
       title: null
