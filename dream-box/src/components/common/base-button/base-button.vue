@@ -3,7 +3,7 @@
     :type="typeBtn"
     :class="[$style[color], $style['button-create']]"
     :disabled="isDisabled"
-    @click.prevent="$emit('click')"
+    @click="$emit('click')"
     :style="`width: ${width}px;`"
   >
     <span v-if="!isLoad">

@@ -97,7 +97,6 @@ router.get("/api/check-user", async (req, res) => {
 });
 
 // Update User
-
 router.put("/api/update-user", async (req, res) => {
   try {
     const id = req.user._id;
@@ -128,8 +127,8 @@ router.put("/api/update-user", async (req, res) => {
     res.status(501).end();
   }
 });
-// Update User Password
 
+// Update User Password
 router.put("/api/update-user-password", async (req, res) => {
   try {
     const id = req.user._id;
@@ -164,6 +163,21 @@ router.put("/api/update-user-password", async (req, res) => {
   }
 });
 
+// Send instruction to restore password on email
+router.post("/api/send-email-restore-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    let user = await User.findOne({ email });
+      return res.status(200).json({ result: true });
+    }
+    res.status(200).json({ result: false });
+  } catch (e) {
+    console.log(e);
+    res.status(501).end();
+  }
+});
+
+// Log in
 router.post("/api/log-in", async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });

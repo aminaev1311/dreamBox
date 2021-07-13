@@ -7,26 +7,18 @@
       </div>
       <input v-model="email" id="email" name="email" />
     </div>
-    <small v-if="errors.empty">{{ errors.emptyMessage }}</small>
-    <small v-if="errors.isntCorrect">{{ errors.isntCorrectMessage }}</small>
+
+    <div v-for="error in errors" :key="error.message">
+      <small v-if="error.value">{{ error.message }}</small>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      error: {
-        empty: false,
-        emptyMessage: "This field can't be empty!",
-        isntCorrect: false,
-        isntCorrectMessage: "This field is not correct filled!",
-      },
-    };
-  },
   props: {
-    propError: {
-      type: Object,
+    errors: {
+      type: Array,
     },
     modelValue: {
       type: String,
@@ -38,7 +30,6 @@ export default {
   methods: {
     init() {
       this.email = this.modelValue || "";
-      this.error = { ...this.error, ...this.propError };
     },
   },
   mounted() {
@@ -52,9 +43,6 @@ export default {
       set(value) {
         this.$emit("update:modelValue", value);
       },
-    },
-    errors() {
-      return { ...this.error, ...this.propError };
     },
   },
 
@@ -132,7 +120,7 @@ export default {
   border-color: red;
 }
 
-.wrapper-input-email > small {
+.wrapper-input-email > div > small {
   color: red;
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
-  <div class="wrapper-forgot-password">
+  <div class="wrapper-forgot-password" @submit.prevent="send">
     <form class="form-forgot-password">
       <p class="pass-recovery">Pass recovery</p>
       <h1 class="h1">FORGOT PASSWORD?</h1>
       <p class="instruction">
         It happens! Type your e-mail address and click on the button below to reset your password
       </p>
-      <InputEmail v-model="v$.email.$model" :propError="errors" />
-      <BaseButton class="button" @click="send" :disabled="isDisabled" :is-load="false" :width="176">
+      <InputEmail v-model="v$.email.$model" @input="isAbsent = false" :errors="errors" />
+      <BaseButton class="button" :disabled="isDisabled" :is-load="isload" :width="176">
         RESET password
       </BaseButton>
       <ToPage
@@ -26,6 +26,7 @@ import BaseButton from "@c/common/base-button";
 import ToPage from "@c/auth/to-page";
 import { email } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import { mapActions } from "vuex";
 export default {
   components: { InputEmail, BaseButton, ToPage },
   setup() {
@@ -34,9 +35,10 @@ export default {
   data() {
     return {
       email: "",
-      error: {},
       startValid: false,
       isDisabled: false,
+      isload: false,
+      isAbsent: false,
     };
   },
   validations() {
@@ -47,23 +49,40 @@ export default {
     };
   },
   computed: {
-    errors: {
-      get() {
-        return {
-          empty: this.startValid && this.v$.email.$model === "",
-          isntCorrect: this.startValid && this.v$.email.$error && this.v$.email.$model !== "",
-        };
-      },
-      set(value) {
-        this.error = { ...this.error, ...value };
-      },
+    errors() {
+      return [
+        {
+          type: "is-empty",
+          value: this.startValid && this.v$.email.$model === "",
+          message: "This fild cun't be empty",
+        },
+        {
+          type: "is-correct",
+          value: this.startValid && this.v$.email.$error && this.v$.email.$model !== "",
+          message: "This field is filled incorrectly",
+        },
+        {
+          type: "is-absent",
+          value: this.isAbsent,
+          message: "User c with this email was not found",
+        },
+      ];
     },
   },
   methods: {
-    send() {
+    ...mapActions({
+      sendEmailRestorePassword: "auth/sendEmailRestorePassword",
+    }),
+    async send() {
       if (!this.startValid) this.startValid = true;
-      if (this.errors.empty || this.errors.isntCorrect) return;
-      console.log('send is good');
+      if (this.errors.some(({ value }) => value)) return;
+      this.isload = true;
+      this.isAbsent = !(await this.sendEmailRestorePassword({ email: this.v$.email.$model }));
+      if (!this.isAbsent) {
+        this.v$.email.$model = "";
+        this.startValid = false;
+      }
+      this.isload = false;
     },
   },
 };
