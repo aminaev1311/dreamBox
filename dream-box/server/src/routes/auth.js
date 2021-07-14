@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const User = require("@m/user");
+const HashRestorePassword = require("@m/hash-for-restore-password");
 const jwt = require("jsonwebtoken");
 const router = Router();
 const baseURL = require("@c/baseURL");
@@ -166,11 +167,38 @@ router.put("/api/update-user-password", async (req, res) => {
 // Send instruction to restore password on email
 router.post("/api/send-email-restore-password", async (req, res) => {
   try {
-    const { email } = req.body;
-    let user = await User.findOne({ email });
-      return res.status(200).json({ result: true });
+    const _email = req.body.email;
+    console.log();
+    let user = await User.findOne({ email: _email });
+    if (user) {
+      const hash = createHash(20);
+      const userId = user._id;
+      const newHash = new HashRestorePassword({
+        hash,
+        userId,
+      });
+      await newHash.save();
+
+      const url = baseURL + "restore-password" + `/${hash}`;
+      const letter = {
+        from: "lotostoii@gmail.com",
+        to: _email,
+        subject: "Oтправка почты",
+        text: `Go to - ${url} to restore password`,
+      };
+
+      email.sendMail(letter, function (error, info) {
+        if (error) {
+          console.log(error);
+          return res.status(409).end();
+        } else {
+          console.log("Email sent successfully: " + info.response);
+          return res.status(200).json({ result: true });
+        }
+      });
+    } else {
+      res.status(200).json({ result: false });
     }
-    res.status(200).json({ result: false });
   } catch (e) {
     console.log(e);
     res.status(501).end();

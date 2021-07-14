@@ -5,6 +5,7 @@ import Registration from "@p/Registration.vue";
 import App from "@p/App";
 import PersonArea from "@p/PersonArea.vue";
 import ForgotPassword from "@p/ForgotPassword";
+import RestorePassword from "@p/RestorePassword";
 import store from "@s";
 import Weeks from "@p/App/Weeks.vue";
 import Goals from "@p/App/Goals.vue";
@@ -59,6 +60,11 @@ const routes = [
     name: "forgot-password",
     component: ForgotPassword,
   },
+  {
+    path: "/restore-password/:hash",
+    name: "restore-password",
+    component: RestorePassword,
+  },
 ];
 
 const router = createRouter({
@@ -74,7 +80,11 @@ router.beforeEach(async (to, from, next) => {
   }
 
   const condition =
-    to.name === "auth" || to.name === "registration" || to.name === "forgot-password";
+    to.name === "auth" ||
+    to.name === "registration" ||
+    to.name === "forgot-password" ||
+    to.name === "restore-password";
+
   const isUser = store.getters["auth/user"];
 
   if (condition && !isUser) {

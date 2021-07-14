@@ -1,77 +1,96 @@
 <template>
-  <div class="wrapper-input-password" :class="{ error: error }">
-    <input
-      :type="isShowPassword ? 'text' : 'password'"
-      @input="setValue($event)"
-      :id="placeholder"
-      :value="modelValue"
-      :name="name"
-      :placeholder="placeholder"
-      class="password"
-      :autocomplete="autocomplete"
-    />
-    <div class="cursor after">
-      <img
-        :src="!isShowPassword ? require('@i/auth/eye-close.png') : require('@i/auth/eye-open.png')"
-        alt="eye-close"
-        @click="isShowPassword = !isShowPassword"
+  <div class="wrapper-input-email">
+    <label v-if="title" :for="id">{{ title }}</label>
+    <div class="password">
+      <div class="before">
+        <img src="@i/auth/password-icon.png" alt="password-icon" />
+      </div>
+      <input
+        :type="isShowPassword ? 'text' : 'password'"
+        :id="id"
+        v-model="modelValue"
+        name="password"
+        current-password
       />
+      <div class="cursor after">
+        <img
+          :src="
+            !isShowPassword ? require('@i/auth/eye-close.png') : require('@i/auth/eye-open.png')
+          "
+          alt="eye-close"
+          @click.prevent="isShowPassword = !isShowPassword"
+        />
+      </div>
+    </div>
+    <div v-for="error in errors" :key="error.message">
+      <small v-if="error.value">{{ error.message }}</small>
     </div>
   </div>
-  <small v-if="error">{{ errorMessage }}</small>
 </template>
 
 <script>
+import uniqid from "uniqid";
 export default {
-  props: {
-    modelValue: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
-    placeholder: {
-      type: String,
-      default: "",
-    },
-    autocomplete: {
-      type: String,
-      default: "",
-    },
-    error: {
-      type: Boolean,
-      default: false,
-    },
-    errorMessage: {
-      type: String,
-      default: "",
-    },
-  },
-  emits: {
-    "update:modelValue": (payload) => typeof payload === "string",
-  },
   data() {
     return {
       isShowPassword: false,
+      id: uniqid(),
     };
   },
+  props: {
+    errors: {
+      type: Array,
+    },
+    title: {
+      type: String,
+    },
+    modelValue: {
+      type: String,
+    },
+  },
+  emits: {
+    "update:modelValue": (value) => typeof value === "string" || value === "",
+  },
   methods: {
-    setValue({ target }) {
-      this.$emit("update:modelValue", target.value);
+    init() {
+      this.email = this.modelValue || "";
+    },
+  },
+  mounted() {
+    this.init();
+  },
+  computed: {
+    password: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit("update:modelValue", value);
+      },
+    },
+  },
+
+  watch: {
+    modelValue() {
+      this.init();
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.wrapper-input-password {
-  @include fc-c-c-b;
-  width: 319px;
-  min-height: 60px;
-  background: $color-base-light;
-  border-radius: 8px;
-  position: relative;
+.wrapper-input-email {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
   margin-bottom: 20px;
+  align-items: flex-start;
+}
+.wrapper-input-email > .password {
+  width: 100%;
+  position: relative;
+  display: flex;
   & > .before {
     width: 24px;
     height: 24px;
@@ -89,12 +108,21 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    right: 5px;
-    top: 19px;
+    right: 0;
+    top: -5px;
   }
 }
+.wrapper-input-email > label {
+  margin-bottom: 10px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: $color-font-dark;
+}
 
-.wrapper-input-password > input {
+.wrapper-input-email > .password > input {
   width: 100%;
   border: none;
   outline: none;
@@ -106,27 +134,17 @@ export default {
   background-color: transparent;
   color: $color-font-dark;
   padding-bottom: 4px;
+  border-bottom: 1px solid #a9acbf;
+  margin-bottom: 5px;
   padding: 0 30px;
   box-sizing: border-box;
-  @include placeholder {
-    font-family: $base-ff;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.1px;
-    color: #52575c;
-  }
 }
 
-.wrapper-input-password.error {
-  border: 1px solid red !important;
+.wrapper-input-email > input.error {
+  border-color: red;
 }
 
-small {
+.wrapper-input-email > div > small {
   color: red;
-  display: flex;
-  margin-bottom: 20px;
-  padding-left: 10px;
 }
 </style>
