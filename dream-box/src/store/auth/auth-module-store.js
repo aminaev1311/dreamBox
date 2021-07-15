@@ -263,6 +263,8 @@ export default {
       }
       commit("SETISLOAD", false);
     },
+
+    // send email for restore password
     async sendEmailRestorePassword({ commit, dispatch }, email) {
       try {
         const { result } = await authApi.sendEmailRestorePassword(email);
@@ -287,6 +289,38 @@ export default {
             status: "error",
             message: "Error on server!! Try later...",
             daley: 3000,
+          },
+          { root: true }
+        );
+      }
+    },
+    async checkTokenRecoveryPassword({ dispatch }, token) {
+      try {
+        const { result, token: newToken } = await authApi.isToken(token);
+        if (!result) {
+          await router.push({ name: "auth" });
+          dispatch(
+            "alert/setAlert",
+            {
+              status: "error",
+              message: "Your token got old. So you need to repeat procedure recovery password",
+              daley: 10000,
+              buttonTitle: "X",
+            },
+            { root: true }
+          );
+        } else {
+          localStorage.setItem("RECOVERY_PASSWORD_TOKEN", newToken);
+        }
+      } catch (e) {
+        console.log(e);
+        dispatch(
+          "alert/setAlert",
+          {
+            status: "error",
+            message: "Error on server!! Reload this page or try later...",
+            daley: 10000,
+            buttonTitle: "X",
           },
           { root: true }
         );

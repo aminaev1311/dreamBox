@@ -36,6 +36,7 @@ export default {
       isDisabled: false,
       isload: false,
       isAbsent: false,
+      hashRecoveryPassword: null,
     };
   },
   validations() {
@@ -68,7 +69,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      sendEmailRestorePassword: "auth/sendEmailRestorePassword",
+      checkTokenRecoveryPassword: "auth/checkTokenRecoveryPassword",
     }),
     async send() {
       if (!this.startValid) this.startValid = true;
@@ -81,6 +82,12 @@ export default {
       }
       this.isload = false;
     },
+  },
+  created() {
+    this.hashRecoveryPassword = this.$route.params.hash || null;
+    if (this.hashRecoveryPassword) {
+      this.checkTokenRecoveryPassword(this.hashRecoveryPassword);
+    }
   },
 };
 </script>

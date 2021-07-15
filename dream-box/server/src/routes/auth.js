@@ -168,7 +168,6 @@ router.put("/api/update-user-password", async (req, res) => {
 router.post("/api/send-email-restore-password", async (req, res) => {
   try {
     const _email = req.body.email;
-    console.log();
     let user = await User.findOne({ email: _email });
     if (user) {
       const hash = createHash(20);
@@ -205,6 +204,29 @@ router.post("/api/send-email-restore-password", async (req, res) => {
   }
 });
 
+// check token for recovery password
+router.post("/api/is-token-restore-password/:token", async (req, res) => {
+  try {
+    const { token: hash } = req.params;
+    console.log(hash);
+    let token = await HashRestorePassword.findOne({ hash });
+    console.log(token);
+    if (token) {
+      const hash = createHash(30);
+      const newHash = new HashRestorePassword({
+        hash,
+        userId: token.userId,
+      });
+
+      await newHash.save();
+      return res.status(200).json({ result: true, token: hash });
+    }
+    res.status(200).json({ result: false, token: null });
+  } catch (e) {
+    console.log(e);
+    res.status(501).end();
+  }
+});
 // Log in
 router.post("/api/log-in", async (req, res) => {
   try {

@@ -21,8 +21,8 @@ export const logIn = async (user) => {
   return data;
 };
 
-export const checkUser = async () => {
-  const token = addToken();
+export const checkUser = async (newToken) => {
+  const token = addToken(newToken);
   const { data } = await http.get(`check-user/`, token);
   return data;
 };
@@ -44,14 +44,20 @@ export const sendEmailRestorePassword = async (email) => {
   return data;
 };
 
+export const isToken = async (token) => {
+  const { data } = await http.post(`is-token-restore-password/${token}`);
+  return data;
+};
+
 export const removeAccount = async () => {
   const token = addToken();
   const { data } = await http.delete(`remove-user`, token);
   return data;
 };
 
-export function addToken() {
+export function addToken(token = null) {
+  const newToken = token || localStorage.getItem("TOKEN") || "";
   return {
-    headers: localStorage.getItem("TOKEN") ? { token: localStorage.getItem("TOKEN") } : "",
+    headers: { token: newToken },
   };
 }

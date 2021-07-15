@@ -12,7 +12,7 @@ const Hash = new Schema({
     type: String,
     required: true,
   },
-  createdAt: { type: Date, default: Date.now, expires: '2m' },
+  createdAt: { type: Date, default: Date.now, expires: '30m' },
 });
 
 //Hash.index({ createdAt: 1 }, { expireAfterSeconds: 1 * 60 * 2 });
