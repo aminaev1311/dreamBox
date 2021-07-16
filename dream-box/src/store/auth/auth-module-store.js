@@ -16,7 +16,7 @@ export default {
   getters: {
     user: (state) => state.user,
     isLoad: (state) => state.isLoad,
-    isChecked: (state) => isChecked(),
+    isChecked: () => isChecked(),
   },
   mutations: {
     SETISLOAD(state, val) {
@@ -84,6 +84,7 @@ export default {
       commit("SETISLOAD", false);
       return result;
     },
+
     async checkLogin({ dispatch }, login) {
       try {
         const { result } = await authApi.checkLogin(login);
@@ -146,8 +147,9 @@ export default {
       commit("SETISLOAD", false);
     },
     async checkUser({ commit, dispatch }) {
+      const TOKEN = localStorage.getItem("TOKEN") || "";
       try {
-        const { result, user } = await authApi.checkUser();
+        const { result, user } = await authApi.checkUser(TOKEN);
         if (result) {
           commit("SETUSER", user);
         } else {

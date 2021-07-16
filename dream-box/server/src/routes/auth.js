@@ -85,14 +85,16 @@ router.get("/api/checkEmail/:email", async (req, res) => {
 
 router.get("/api/check-user", async (req, res) => {
   try {
-    const id = req.user._id;
-    let user = await User.findById(id);
-    if (user) {
-      res.status(200).send({ result: true, user });
+    const id = "user" in req ? req.user._id : null;
+    if (!id) return res.status(200).send({ result: false });
+    let _user = await User.findById(id);
+    if (_user) {
+      res.status(200).send({ result: true, _user });
     } else {
       res.status(200).send({ result: false });
     }
   } catch (e) {
+    console.log(e);
     res.status(501).send({ result: false });
   }
 });
