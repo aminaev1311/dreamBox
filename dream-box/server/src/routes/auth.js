@@ -91,8 +91,8 @@ router.get("/api/check-user", async (req, res) => {
     let user = await User.findById(id);
     if (user) {
       user = JSON.parse(JSON.stringify(user));
-      delete user.password
-      res.status(200).send({ result: true, user});
+      delete user.password;
+      res.status(200).send({ result: true, user });
     } else {
       res.status(200).send({ result: false });
     }
@@ -148,7 +148,7 @@ router.put("/api/update-user-password", async (req, res) => {
     if (newPassword !== confirmNewPassword) {
       return res.status(200).send({ currentPasswords: true });
     }
-  
+
     if (user) {
       await User.findByIdAndUpdate(id, { $set: { password: newPassword } }, { new: true });
       res.status(200).end();
@@ -169,9 +169,10 @@ router.post("/api/send-email-restore-password", async (req, res) => {
     if (user) {
       user = JSON.parse(JSON.stringify(user));
       delete user.password;
-      const token = jwt.sign(user, SECRET_KEY_FOR_PASSWORD);
+      const token = createHash(30);
       const newToken = new tokenPasswordRecovery({
         token,
+        userId: user._id,
       });
       await newToken.save();
 
@@ -207,16 +208,16 @@ router.post("/api/is-token-restore-password/:token", async (req, res) => {
     const newToken = req.params.token;
     let tokenPassword = await tokenPasswordRecovery.findOne({ token: newToken });
     let token = tokenPassword && "token" in tokenPassword ? tokenPassword.token : null;
-    if (token) {
-      let user = null;
-      jwt.verify(token, SECRET_KEY_FOR_PASSWORD, (err, data) => {
-        if (err) return res.status(200).json({ result: false, token: null });
-        user = data;
-      });
+    let userId = tokenPassword && "userId" in tokenPassword ? tokenPassword.userId : null;
 
+    if (token) {
+      let user = await User.findById({ _id:userId });
+      user = JSON.parse(JSON.stringify(user));
+      delete user.password;
       token = jwt.sign(user, SECRET_KEY_FOR_PASSWORD);
       const newToken = new tokenPasswordRecovery({
         token,
+        userId: '',
       });
 
       await newToken.save();

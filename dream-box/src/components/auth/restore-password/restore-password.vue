@@ -107,6 +107,7 @@ export default {
     },
   },
   created() {
+    console.log(this.$route);
     this.hashRecoveryPassword = this.$route.params.hash || null;
     if (this.hashRecoveryPassword) {
       this.checkTokenRecoveryPassword(this.hashRecoveryPassword);

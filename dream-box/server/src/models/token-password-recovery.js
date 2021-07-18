@@ -8,12 +8,15 @@ const Token = new Schema({
     type: String,
     required: true,
   },
+  userId: {
+    type: String,
+    default: '',
+  },
   expireAt: {
     type: Date,
     default: Date.now,
-    index: { expires: '20m' },
+    index: { expires: "20m" },
   },
 });
-
 
 module.exports = mongoose.model("Token", Token);
