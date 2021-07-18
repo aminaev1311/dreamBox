@@ -49,6 +49,11 @@ export const isToken = async (token) => {
   return data;
 };
 
+export const changePassword = async (token, password) => {
+  const { data } = await http.put(`change-password`, { token, password });
+  return data;
+};
+
 export const removeAccount = async () => {
   const token = addToken();
   const { data } = await http.delete(`remove-user`, token);

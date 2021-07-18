@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-forgot-password" @submit.prevent="send">
-    <form class="form-forgot-password">
+    <form v-if="!show" class="form-forgot-password">
       <p class="pass-recovery">Pass recovery</p>
       <h1 class="h1">FORGOT PASSWORD?</h1>
       <p class="instruction">
@@ -17,6 +17,19 @@
         name-link="Sign Up!"
       />
     </form>
+    <div v-else class="form-forgot-password">
+      <p class="pass-recovery">Pass recovery</p>
+      <h1 class="h1">CHECK YOUR EMAIL</h1>
+      <p class="instruction first">Thank you!</p>
+      <p class="instruction second">Further instructions have been sent to your e-mail address</p>
+
+      <ToPage
+        class="to-page"
+        message="Don’t have an account?"
+        :rout="{ name: 'registration' }"
+        name-link="Sign Up!"
+      />
+    </div>
   </div>
 </template>
 
@@ -39,6 +52,7 @@ export default {
       isDisabled: false,
       isload: false,
       isAbsent: false,
+      show: false,
     };
   },
   validations() {
@@ -78,10 +92,7 @@ export default {
       if (this.errors.some(({ value }) => value)) return;
       this.isload = true;
       this.isAbsent = !(await this.sendEmailRestorePassword({ email: this.v$.email.$model }));
-      if (!this.isAbsent) {
-        this.v$.email.$model = "";
-        this.startValid = false;
-      }
+      this.show = !this.isAbsent;
       this.isload = false;
     },
   },
@@ -138,6 +149,13 @@ export default {
   color: $color-font-dark;
   margin: 31px 0 65px;
   text-align: left;
+}
+.instruction.first {
+  margin: 31px 0 10px;
+}
+.instruction.second {
+  margin: -6px 0 218px;
+  max-width: 265px;
 }
 .button {
   margin-top: 30px;

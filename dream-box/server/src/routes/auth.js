@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const User = require("@m/user");
-const HashRestorePassword = require("@m/hash-for-restore-password");
+const tokenPasswordRecovery = require("@m/token-password-recovery");
 const jwt = require("jsonwebtoken");
 const router = Router();
 const baseURL = require("@c/baseURL");
@@ -11,6 +11,7 @@ const path = require("path");
 const createHash = require("hash-generator");
 const bcryptjs = require("bcryptjs");
 const SALT_ROUNDS = 12;
+const SECRET_KEY_FOR_PASSWORD = "kosdoewm,c";
 
 const fs = require("fs");
 
@@ -87,9 +88,11 @@ router.get("/api/check-user", async (req, res) => {
   try {
     const id = "user" in req ? req.user._id : null;
     if (!id) return res.status(200).send({ result: false });
-    let _user = await User.findById(id);
-    if (_user) {
-      res.status(200).send({ result: true, _user });
+    let user = await User.findById(id);
+    if (user) {
+      user = JSON.parse(JSON.stringify(user));
+      delete user.password
+      res.status(200).send({ result: true, user});
     } else {
       res.status(200).send({ result: false });
     }
@@ -112,14 +115,12 @@ router.put("/api/update-user", async (req, res) => {
         { $set: { name: name, surname: surname, birthday: birthday, gender: gender } },
         { new: true },
         function (err) {
-          console.log(err);
           if (err) return res.status(501).end();
         }
       );
       user = await User.findById(id);
       user = JSON.parse(JSON.stringify(user));
       delete user.password;
-      console.log(user);
 
       res.status(200).send({ user, token: jwt.sign(user, TOKEN_SECRET_KEY), result: true });
     } else {
@@ -147,15 +148,9 @@ router.put("/api/update-user-password", async (req, res) => {
     if (newPassword !== confirmNewPassword) {
       return res.status(200).send({ currentPasswords: true });
     }
-
-    const salt = bcryptjs.genSaltSync(SALT_ROUNDS);
-    const password = bcryptjs.hashSync(newPassword, salt);
-
+  
     if (user) {
-      await User.findByIdAndUpdate(id, { $set: { password } }, { new: true }, function (err) {
-        console.log(err);
-        if (err) return res.status(501).end();
-      });
+      await User.findByIdAndUpdate(id, { $set: { password: newPassword } }, { new: true });
       res.status(200).end();
     } else {
       res.status(404).end();
@@ -172,15 +167,15 @@ router.post("/api/send-email-restore-password", async (req, res) => {
     const _email = req.body.email;
     let user = await User.findOne({ email: _email });
     if (user) {
-      const hash = createHash(20);
-      const userId = user._id;
-      const newHash = new HashRestorePassword({
-        hash,
-        userId,
+      user = JSON.parse(JSON.stringify(user));
+      delete user.password;
+      const token = jwt.sign(user, SECRET_KEY_FOR_PASSWORD);
+      const newToken = new tokenPasswordRecovery({
+        token,
       });
-      await newHash.save();
+      await newToken.save();
 
-      const url = baseURL + "restore-password" + `/${hash}`;
+      const url = baseURL + "restore-password" + `/${token}`;
       const letter = {
         from: "lotostoii@gmail.com",
         to: _email,
@@ -209,21 +204,50 @@ router.post("/api/send-email-restore-password", async (req, res) => {
 // check token for recovery password
 router.post("/api/is-token-restore-password/:token", async (req, res) => {
   try {
-    const { token: hash } = req.params;
-    console.log(hash);
-    let token = await HashRestorePassword.findOne({ hash });
-    console.log(token);
+    const newToken = req.params.token;
+    let tokenPassword = await tokenPasswordRecovery.findOne({ token: newToken });
+    let token = tokenPassword && "token" in tokenPassword ? tokenPassword.token : null;
     if (token) {
-      const hash = createHash(30);
-      const newHash = new HashRestorePassword({
-        hash,
-        userId: token.userId,
+      let user = null;
+      jwt.verify(token, SECRET_KEY_FOR_PASSWORD, (err, data) => {
+        if (err) return res.status(200).json({ result: false, token: null });
+        user = data;
       });
 
-      await newHash.save();
-      return res.status(200).json({ result: true, token: hash });
+      token = jwt.sign(user, SECRET_KEY_FOR_PASSWORD);
+      const newToken = new tokenPasswordRecovery({
+        token,
+      });
+
+      await newToken.save();
+      return res.status(200).json({ result: true, token });
     }
     res.status(200).json({ result: false, token: null });
+  } catch (e) {
+    console.log(e);
+    res.status(501).end();
+  }
+});
+
+// change password
+router.put("/api/change-password", async (req, res) => {
+  try {
+    const newToken = req.body.token;
+    const newPasword = req.body.password;
+    let tokenPassword = await tokenPasswordRecovery.findOne({ token: newToken });
+    let token = tokenPassword && "token" in tokenPassword ? tokenPassword.token : null;
+    if (token) {
+      let user = null;
+      jwt.verify(token, SECRET_KEY_FOR_PASSWORD, (err, data) => {
+        if (err) return res.status(200).json({ result: false, token: null });
+        user = data;
+      });
+      const id = user._id;
+
+      await User.findByIdAndUpdate(id, { $set: { password: newPasword } }, { new: true });
+      return res.status(200).json({ result: true });
+    }
+    res.status(200).json({ result: false });
   } catch (e) {
     console.log(e);
     res.status(501).end();

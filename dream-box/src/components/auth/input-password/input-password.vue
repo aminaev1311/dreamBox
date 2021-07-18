@@ -22,7 +22,7 @@
         />
       </div>
     </div>
-    <div v-for="error in errors" :key="error.message">
+    <div v-for="error in currentErrors" :key="error.message">
       <small v-if="error.value">{{ error.message }}</small>
     </div>
   </div>
@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     init() {
-      this.email = this.modelValue || "";
+      this.password = this.modelValue || "";
     },
   },
   mounted() {
@@ -67,6 +67,10 @@ export default {
       set(value) {
         this.$emit("update:modelValue", value);
       },
+    },
+    currentErrors() {
+      const index = this.errors.findIndex(({ value }) => value);
+      return index || index === 0 ? this.errors.splice(index, 1) : [];
     },
   },
 

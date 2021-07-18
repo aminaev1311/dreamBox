@@ -270,18 +270,6 @@ export default {
     async sendEmailRestorePassword({ commit, dispatch }, email) {
       try {
         const { result } = await authApi.sendEmailRestorePassword(email);
-        if (result) {
-          dispatch(
-            "alert/setAlert",
-            {
-              status: "success",
-              message: "Password recovery instruction have been sent to your email!",
-              daley: 10000,
-              buttonTitle: "X",
-            },
-            { root: true }
-          );
-        }
         return result;
       } catch (e) {
         console.log(e);
@@ -296,6 +284,7 @@ export default {
         );
       }
     },
+
     async checkTokenRecoveryPassword({ dispatch }, token) {
       try {
         const { result, token: newToken } = await authApi.isToken(token);
@@ -323,6 +312,47 @@ export default {
             message: "Error on server!! Reload this page or try later...",
             daley: 10000,
             buttonTitle: "X",
+          },
+          { root: true }
+        );
+      }
+    },
+    async changePassword({ dispatch }, password) {
+      try {
+        const token = localStorage.getItem("RECOVERY_PASSWORD_TOKEN") || "";
+        const { result } = await authApi.changePassword(token, password);
+        if (result) {
+          await router.push({ name: "auth" });
+          dispatch(
+            "alert/setAlert",
+            {
+              status: "success",
+              message: "Your password got changed.",
+              daley: 10000,
+              buttonTitle: "X",
+            },
+            { root: true }
+          );
+        } else {
+          dispatch(
+            "alert/setAlert",
+            {
+              status: "error",
+              message: "Your token got old. So you need to repeat procedure recovery password",
+              daley: 10000,
+              buttonTitle: "X",
+            },
+            { root: true }
+          );
+        }
+      } catch (e) {
+        console.log(e);
+        dispatch(
+          "alert/setAlert",
+          {
+            status: "error",
+            message: "Error on server!! Reload this page or try later...",
+            daley: 3000,
           },
           { root: true }
         );

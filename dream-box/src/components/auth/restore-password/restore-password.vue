@@ -4,8 +4,12 @@
       <p class="pass-recovery">Pass recovery</p>
       <h1 class="h1">CHOOSE YOUR NEW PASSWORD</h1>
 
-      <InputPassword title="New Password:" :errors="errors" />
-      <InputPassword title="Confirm New Password:" :errors="errors" />
+      <InputPassword title="New Password:" v-model="password" :errors="errorsPassword" />
+      <InputPassword
+        title="Confirm New Password:"
+        v-model="comfirmPassword"
+        :errors="errorsComfirmPassword"
+      />
       <BaseButton class="button" :disabled="isDisabled" :is-load="isload"> SAVE </BaseButton>
       <ToPage
         class="to-page"
@@ -31,7 +35,8 @@ export default {
   },
   data() {
     return {
-      email: "",
+      password: "",
+      comfirmPassword: "",
       startValid: false,
       isDisabled: false,
       isload: false,
@@ -47,22 +52,36 @@ export default {
     };
   },
   computed: {
-    errors() {
+    errorsPassword() {
       return [
         {
           type: "is-empty",
-          value: this.startValid && this.v$.email.$model === "",
+          value: this.startValid && this.password === "",
           message: "This fild cun't be empty",
         },
         {
-          type: "is-correct",
-          value: this.startValid && this.v$.email.$error && this.v$.email.$model !== "",
-          message: "This field is filled incorrectly",
+          type: "minLength",
+          value: this.startValid && this.password.length < 7,
+          message: "Password length can't be less 7 symbols",
+        },
+      ];
+    },
+    errorsComfirmPassword() {
+      return [
+        {
+          type: "is-empty",
+          value: this.startValid && this.comfirmPassword === "",
+          message: "This fild cun't be empty",
         },
         {
-          type: "is-absent",
-          value: this.isAbsent,
-          message: "User c with this email was not found",
+          type: "minLength",
+          value: this.startValid && this.comfirmPassword.length < 7,
+          message: "Password length can't be less 7 symbols",
+        },
+        {
+          type: "isSame",
+          value: this.startValid && this.comfirmPassword !== this.password,
+          message: "Passwords aren't the same",
         },
       ];
     },
@@ -70,16 +89,20 @@ export default {
   methods: {
     ...mapActions({
       checkTokenRecoveryPassword: "auth/checkTokenRecoveryPassword",
+      changePassword: "auth/changePassword",
     }),
     async send() {
       if (!this.startValid) this.startValid = true;
-      if (this.errors.some(({ value }) => value)) return;
+      if (
+        this.errorsPassword.some(({ value }) => value) ||
+        this.errorsComfirmPassword.some(({ value }) => value)
+      )
+        return;
       this.isload = true;
-      this.isAbsent = !(await this.sendEmailRestorePassword({ email: this.v$.email.$model }));
-      if (!this.isAbsent) {
-        this.v$.email.$model = "";
-        this.startValid = false;
-      }
+      await this.changePassword(this.password);
+      this.password = "";
+      this.comfirmPassword = "";
+      this.startValid = false;
       this.isload = false;
     },
   },
