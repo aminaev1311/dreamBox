@@ -11,45 +11,44 @@ export default {
     id: {
       type: Number,
       required: true,
-      validator: value => {
-        return (typeof value === "number" )
-      }
-    }
+      validator: (value) => {
+        return typeof value === "number";
+      },
+    },
   },
   data() {
     return {
       gColor: null,
       gTitle: null,
-      goals:[
-        {id: 1, title: 'family & friends', color: '#FA7D98', class_goal: 'goal_type_1' },
-        {id: 2, title: 'career', color: '#F2994A', class_goal: 'goal_type_2' },
-        {id: 3, title: 'self-development', color: '#57C238', class_goal: 'goal_type_3'},
-        {id: 4, title: 'spiritual', color: '#03A9DE', class_goal: 'goal_type_4'},
-        {id: 5, title: 'finance', color: '#118743', class_goal: 'goal_type_5'},
-        {id: 6, title: 'sports', color: '#900093', class_goal: 'goal_type_6'},
-        {id: 7, title: 'health', color: '#EB5757', class_goal: 'goal_type_7'},
-        {id: 8, title: 'relax', color: '#1100D4', class_goal: 'goal_type_8'},
+      goals: [
+        { id: 1, title: "family & friends", color: "#FA7D98", class_goal: "goal_type_1" },
+        { id: 2, title: "career", color: "#F2994A", class_goal: "goal_type_2" },
+        { id: 3, title: "self-development", color: "#57C238", class_goal: "goal_type_3" },
+        { id: 4, title: "spiritual", color: "#03A9DE", class_goal: "goal_type_4" },
+        { id: 5, title: "finance", color: "#118743", class_goal: "goal_type_5" },
+        { id: 6, title: "sports", color: "#900093", class_goal: "goal_type_6" },
+        { id: 7, title: "health", color: "#EB5757", class_goal: "goal_type_7" },
+        { id: 8, title: "relax", color: "#1100D4", class_goal: "goal_type_8" },
       ],
-      goal_type: null
-    }
+      goal_type: null,
+    };
   },
   mounted() {
     this.goals.forEach((item) => {
-     if (this.id === item.id) {
+      if (this.id === item.id) {
         this.gColor = item.color;
         this.gTitle = item.title;
-        console.log(this.gTitle)
+        console.log(this.gTitle);
         this.goal_type = item.class_goal;
-        this.$refs.div.style.backgroundColor = this.gColor
+        this.$refs.div.style.backgroundColor = this.gColor;
         this.$emit("goal-title", this.gTitle);
       }
-    })
+    });
   },
- }
+};
 </script>
 
 <style lang="scss" scoped>
-
 .goal_icon_cg {
   margin: 0 0 28px;
   position: absolute;
@@ -70,7 +69,7 @@ export default {
     letter-spacing: 0.1px;
     color: #ffffff;
   }
-  .goal_text_cg::before{
+  .goal_text_cg::before {
     content: "";
     display: inline-block;
     width: 12px;

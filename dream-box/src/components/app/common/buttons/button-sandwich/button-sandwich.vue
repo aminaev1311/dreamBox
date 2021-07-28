@@ -1,21 +1,21 @@
 <template>
-<button class="sandwich">
-  <div class="circle"></div>
-  <div class="circle right"></div>
-  <div class="circle left"></div>
-</button>
+  <button class="sandwich">
+    <div class="circle"></div>
+    <div class="circle right"></div>
+    <div class="circle left"></div>
+  </button>
 </template>
 
 <script>
 export default {
-name: "button"
-}
+  name: "button",
+};
 </script>
 
 <style lang="scss" scoped>
-.sandwich{
-  background: #E6E9F8;
-  position:absolute;
+.sandwich {
+  background: #e6e9f8;
+  position: absolute;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -27,25 +27,25 @@ name: "button"
   border: none;
   border-radius: 50%;
   z-index: 50;
-  .circle{
+  .circle {
     position: absolute;
     width: 3px;
     height: 3px;
-    background: #A9ACBF;
+    background: #a9acbf;
     border-radius: 50%;
   }
-  .right{
+  .right {
     margin-right: 9px;
   }
-  .left{
+  .left {
     margin-left: 9px;
   }
-  &:hover{
+  &:hover {
     background: #c8e2ff;
     cursor: pointer;
   }
-  &:active{
-    background: #cFcfff;
+  &:active {
+    background: #cfcfff;
   }
 }
 </style>

@@ -1,26 +1,22 @@
 <template>
   <h3>Currents goals</h3>
   <div class="currents-goals">
-    <Goal v-for="item in g"
-          :key="item.id"
-    :id="item">
-    </Goal>
+    <Goal v-for="item in g" :key="item.id" :id="item"> </Goal>
   </div>
-
 </template>
 
 <script>
-import {testGoal} from "@c/app/vision/children/test"
+import { testGoal } from "@c/app/vision/children/test";
 import Goal from "@c/app/vision/children/children-cg/goal";
 export default {
   name: "Currents-Goals",
   components: { Goal },
   data() {
     return {
-      g: testGoal
-    }
-  }
-}
+      g: testGoal,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
