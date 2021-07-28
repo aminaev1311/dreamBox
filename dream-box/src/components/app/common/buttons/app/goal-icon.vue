@@ -84,28 +84,28 @@ export default {
     margin-right: 40px;
   }
   .goal_type_1 {
-    background-image: url("~@/assets/images/auth/family.png");
+    background-image: url("~@i/auth/family.png");
   }
   .goal_type_2 {
-    background-image: url("~@/assets/images/auth/career.png");
+    background-image: url("~@i/auth/career.png");
   }
   .goal_type_3 {
-    background-image: url("~@/assets/images/auth/self-development.png");
+    background-image: url("~@i/auth/self-development.png");
   }
   .goal_type_4 {
-    background-image: url("~@/assets/images/auth/spititual.png");
+    background-image: url("~@i/auth/spititual.png");
   }
   .goal_type_5 {
-    background-image: url("~@/assets/images/auth/finance.png");
+    background-image: url("~@i/auth/finance.png");
   }
   .goal_type_6 {
-    background-image: url("~@/assets/images/auth/athletics.png");
+    background-image: url("~@i/auth/athletics.png");
   }
   .goal_type_7 {
-    background-image: url("~@/assets/images/auth/health.png");
+    background-image: url("~@i/auth/health.png");
   }
   .goal_type_8 {
-    background-image: url("~@/assets/images/auth/relax.png");
+    background-image: url("~@i/auth/relax.png");
   }
 }
 </style>

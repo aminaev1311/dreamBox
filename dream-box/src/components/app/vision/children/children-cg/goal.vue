@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import GoalIcon from "@c/app/vision/children/children-cg/goal-icon";
+import GoalIcon from "@c/app/common/buttons/app/goal-icon";
 import ButtonSandwich from "@c/app/common/buttons/button-sandwich/button-sandwich";
 import DoughnutChart from "@c/app/vision/children/children-cg/doughnut-chart";
 export default {
