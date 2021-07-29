@@ -1,7 +1,7 @@
 <template>
   <button
-    class="menu"
-    :class="{ off: status }"
+    class="close"
+    :class="{ off: status === 'close' }"
     :disabled="disabled"
     @click="$emit('click')"
   ></button>
@@ -14,13 +14,22 @@ export default {
       type: Boolean,
       default: false,
     },
-    status: {
-      type: Boolean,
-      default: false,
+    value: {
+      type: String,
+      default: "close",
+      validator: (value) => {
+        return value === "close" || value === "open";
+      },
     },
   },
   emits: {
     click: null,
+  },
+
+  computed: {
+    status() {
+      return this.value;
+    },
   },
 };
 </script>

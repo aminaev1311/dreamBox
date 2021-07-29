@@ -11,8 +11,8 @@
           :placeholder="errors.name ? `This field can't be empty` : 'Name of the goal'"
           v-model="goal.name"
         />
-        <button class="menu"></button>
-        <button class="close"></button>
+        <GoalMenuButton />
+        <RollUpOrExpandGoal :value="goal.viewWindowGoal" @click="rollUpOrExpendGoal" />
       </div>
       <div class="details">
         <input type="text" name="datails" placeholder="Details" v-model="goal.details" />
@@ -50,10 +50,13 @@
 <script>
 import ChooseTheme from "@c/app/goals/goal/choose-theme";
 import AddMore from "@c/app/goals/goal/add-more";
-import uid from "uniqid";
 import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
 import BtnBlue from "@c/app/common/buttons/w-btn-blue";
+import GoalMenuButton from "@c/app/common/buttons/goal-menu";
+import RollUpOrExpandGoal from "@c/app/common/buttons/roll-up-or-expend-goal";
 import { mapGetters } from "vuex";
+
+import uid from "uniqid";
 
 const defaultGoal = () => ({
   id: null,
@@ -61,6 +64,7 @@ const defaultGoal = () => ({
   theme: "",
   ditails: "",
   name: "",
+  viewWindowGoal: "close",
   metrics: {
     quantity: "",
     units: "",
@@ -74,6 +78,8 @@ export default {
     AddMore,
     MetricsQuantity,
     BtnBlue,
+    GoalMenuButton,
+    RollUpOrExpandGoal,
   },
   data() {
     return {
@@ -148,6 +154,9 @@ export default {
       }
       return weeks;
     },
+    rollUpOrExpendGoal() {
+      this.goal.viewWindowGoal = this.goal.viewWindowGoal === "close" ? "open" : "close";
+    },
   },
   mounted() {
     if (this.goalProp) {
@@ -202,7 +211,6 @@ export default {
   }
 }
 
-.menu,
 .close {
   display: block;
   background-color: #e6e9f8;
@@ -214,11 +222,7 @@ export default {
   @include o-b-none;
   box-sizing: border-box;
 }
-.menu {
-  background-image: url("~@/assets/images/goals/three-dots.png");
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-}
+
 .close {
   background-image: url("~@/assets/images/goals/arrow-top-gray.png");
   background-repeat: no-repeat;
