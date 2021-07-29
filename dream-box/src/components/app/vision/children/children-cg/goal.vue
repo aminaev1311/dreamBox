@@ -1,6 +1,6 @@
 <template>
   <div class="record-ec">
-    <GoalIcon :id="id" @goal-title="selectTitle"></GoalIcon>
+    <GoalIcon :type="type" @goal-title="selectTitle"></GoalIcon>
     <ButtonSandwich></ButtonSandwich>
     <h3>{{ title }}</h3>
     <div class="score">
@@ -25,11 +25,11 @@ import DoughnutChart from "@c/app/vision/children/children-cg/doughnut-chart";
 export default {
   name: "record-ec",
   props: {
-    id: {
-      type: Number,
+    type: {
+      type: String,
       required: true,
       validator: (value) => {
-        return typeof value === "number";
+        return typeof value === "string";
       },
     },
   },

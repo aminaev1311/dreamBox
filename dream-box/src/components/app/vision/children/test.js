@@ -1,1 +1,10 @@
-export const testGoal = [1, 2, 3, 4, 5, 6, 7, 8];
+export const testGoal = [
+  { type: "family" },
+  { type: "career" },
+  { type: "self-development" },
+  { type: "spititual" },
+  { type: "finance" },
+  { type: "sports" },
+  { type: "health" },
+  { type: "relax" },
+];

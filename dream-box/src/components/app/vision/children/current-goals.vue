@@ -1,7 +1,7 @@
 <template>
   <h3>Currents goals</h3>
   <div class="currents-goals">
-    <Goal v-for="item in g" :key="item.id" :id="item"> </Goal>
+    <Goal v-for="item in g" :type="item.type"> </Goal>
   </div>
 </template>
 
