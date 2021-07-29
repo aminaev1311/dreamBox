@@ -1,7 +1,72 @@
+const defaultGoal = () => [
+  {
+    id: 111,
+    view: "is-created",
+    theme: "cereer",
+    ditails: "some text ....",
+    name: "first Goal",
+    metrics: {
+      quantity: "3",
+      units: "hours",
+    },
+    tactics: [
+      {
+        id: "1krrtrtowctik",
+        name: "rfesrwe",
+        weeks: [
+          { weekNumber: 1, weeksValue: "default" },
+          { weekNumber: 2, weeksValue: "default" },
+          { weekNumber: 3, weeksValue: "default" },
+          { weekNumber: 4, weeksValue: "default" },
+          { weekNumber: 5, weeksValue: "default" },
+          { weekNumber: 6, weeksValue: "default" },
+          { weekNumber: 7, weeksValue: "default" },
+          { weekNumber: 8, weeksValue: "default" },
+          { weekNumber: 9, weeksValue: "default" },
+          { weekNumber: 10, weeksValue: "default" },
+          { weekNumber: 11, weeksValue: "default" },
+          { weekNumber: 12, weeksValue: "default" },
+        ],
+      },
+    ],
+  },
+  {
+    id: 454545,
+    view: "is-created",
+    theme: "health",
+    ditails: "some text ....",
+    name: "first Goal",
+    metrics: {
+      quantity: "3",
+      units: "hours",
+    },
+    tactics: [
+      {
+        id: "1krowcdreetik",
+        name: "rfesrwe",
+        weeks: [
+          { weekNumber: 1, weeksValue: "default" },
+          { weekNumber: 2, weeksValue: "default" },
+          { weekNumber: 3, weeksValue: "default" },
+          { weekNumber: 4, weeksValue: "default" },
+          { weekNumber: 5, weeksValue: "default" },
+          { weekNumber: 6, weeksValue: "default" },
+          { weekNumber: 7, weeksValue: "default" },
+          { weekNumber: 8, weeksValue: "default" },
+          { weekNumber: 9, weeksValue: "default" },
+          { weekNumber: 10, weeksValue: "default" },
+          { weekNumber: 11, weeksValue: "default" },
+          { weekNumber: 12, weeksValue: "default" },
+        ],
+      },
+    ],
+  },
+];
+
 export default {
   namespaced: true,
   state: {
-    goals: [],
+    goals: defaultGoal(),
   },
   getters: {
     getGoals: (state) => state.goals,
