@@ -1,6 +1,6 @@
 <template>
   <div class="record-ec">
-    <GoalIcon :type="type" @goal-title="selectTitle"></GoalIcon>
+    <GoalIcon :type="type"></GoalIcon>
     <GoalMenu class="goal-menu" />
     <h3>{{ title }}</h3>
     <div class="score">
@@ -40,12 +40,6 @@ export default {
       descr: "could be better",
       percent: 53,
     };
-  },
-  methods: {
-    selectTitle(value) {
-      this.title = value;
-      console.log(value);
-    },
   },
 };
 </script>

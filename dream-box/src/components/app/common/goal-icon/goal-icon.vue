@@ -23,7 +23,7 @@ export default {
       goals: [
         { title: "family", goal_icon: "goal_icon_1", class_goal: "goal_type_1" },
         { title: "career", goal_icon: "goal_icon_2", class_goal: "goal_type_2" },
-        { title: "self-development", goal_icon: "goal_icon_3", class_goal: "goal_type_3" },
+        { title: "self&development", goal_icon: "goal_icon_3", class_goal: "goal_type_3" },
         { title: "spititual", goal_icon: "goal_icon_4", class_goal: "goal_type_4" },
         { title: "finance", goal_icon: "goal_icon_5", class_goal: "goal_type_5" },
         { title: "sports", goal_icon: "goal_icon_6", class_goal: "goal_type_6" },
@@ -38,9 +38,7 @@ export default {
       if (this.type === item.title) {
         this.goalIcon = item.goal_icon;
         this.gTitle = item.title;
-        console.log(this.gTitle);
         this.goal_type = item.class_goal;
-        this.$emit("goal-title", this.gTitle);
       }
     });
   },

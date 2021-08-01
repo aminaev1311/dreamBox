@@ -1,6 +1,6 @@
 export default [
   "family&friends",
-  "cereer",
+  "career",
   "self-development",
   "spiritual",
   "finance",

@@ -21,8 +21,9 @@ export default {
   computed: {
     ...mapGetters({ goals: "goals/getGoals" }),
   },
-  methods: {
-    addGoal() {},
+  mounted() {
+    console.log(333);
+    console.log(this.goals);
   },
 };
 </script>

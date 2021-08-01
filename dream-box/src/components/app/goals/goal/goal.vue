@@ -1,6 +1,15 @@
 <template>
   <div class="wrapper-goal">
-    <form v-if="views.creating || views.isCreated" class="add-goal" @submit.prevent="() => {}">
+    <div v-if="goal.viewWindowGoal === 'close'" class="closed-goal">
+      <GoalIcon :type="goal.theme"></GoalIcon>
+      <GoalMenuButton />
+      <RollUpOrExpandGoal :value="goal.viewWindowGoal" @click="rollUpOrExpendGoal" />
+    </div>
+    <form
+      v-if="goal.viewWindowGoal === 'open' && (views.creating || views.isCreated)"
+      class="add-goal"
+      @submit.prevent="() => {}"
+    >
       <div class="goal-name">
         <ChooseTheme v-model:theme="goal.theme" :error="errors.theme" />
         <input
@@ -54,6 +63,7 @@ import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
 import BtnBlue from "@c/app/common/buttons/w-btn-blue";
 import GoalMenuButton from "@c/app/common/buttons/goal-menu";
 import RollUpOrExpandGoal from "@c/app/common/buttons/roll-up-or-expend-goal";
+import GoalIcon from "@c/app/common/goal-icon";
 import { mapGetters } from "vuex";
 
 import uid from "uniqid";
@@ -80,6 +90,7 @@ export default {
     BtnBlue,
     GoalMenuButton,
     RollUpOrExpandGoal,
+    GoalIcon,
   },
   data() {
     return {
@@ -155,7 +166,8 @@ export default {
       return weeks;
     },
     rollUpOrExpendGoal() {
-      this.goal.viewWindowGoal = this.goal.viewWindowGoal === "close" ? "open" : "close";
+      this.goal.viewWindowGoal = this.goal.viewWindowGoal.trim() === "close" ? "open" : "close";
+      console.log(this.goal.viewWindowGoal);
     },
   },
   mounted() {
@@ -167,6 +179,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.closed-goal {
+  display: flex;
+  width: 100%;
+  @include fc-c-c-b;
+  background-color: $color-base-gray;
+  padding: 12px 16px 18px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
 .add-goal {
   @include fc-c-c-b;
   background-color: $color-base-gray;

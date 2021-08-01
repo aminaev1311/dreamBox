@@ -2,9 +2,10 @@ const defaultGoal = () => [
   {
     id: 111,
     view: "is-created",
-    theme: "cereer",
+    theme: "career",
     ditails: "some text ....",
     name: "first Goal",
+    viewWindowGoal: "close",
     metrics: {
       quantity: "3",
       units: "hours",
@@ -36,6 +37,7 @@ const defaultGoal = () => [
     theme: "health",
     ditails: "some text ....",
     name: "first Goal",
+    viewWindowGoal: "close",
     metrics: {
       quantity: "3",
       units: "hours",
