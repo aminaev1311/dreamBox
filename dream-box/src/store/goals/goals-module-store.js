@@ -1,11 +1,10 @@
 const defaultGoal = () => [
   {
     id: 111,
-    view: "is-created",
     theme: "career",
     ditails: "some text ....",
-    name: "first Goal",
-    viewWindowGoal: "close",
+    name: "First goal",
+    status: "edit",
     metrics: {
       quantity: "3",
       units: "hours",
@@ -33,11 +32,10 @@ const defaultGoal = () => [
   },
   {
     id: 454545,
-    view: "is-created",
+    status: "edit",
     theme: "health",
     ditails: "some text ....",
-    name: "first Goal",
-    viewWindowGoal: "close",
+    name: "Second goal",
     metrics: {
       quantity: "3",
       units: "hours",

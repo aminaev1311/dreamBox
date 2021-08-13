@@ -18,7 +18,8 @@
 </template>
 
 <script>
-import themesList from "./themes-list";
+import goalsTypes from "@/config/goals-types";
+
 export default {
   DEFAULT_TEXT: "Choose theme",
   MAX_LENGTH: 12,
@@ -35,7 +36,7 @@ export default {
       type: String,
       default: "",
       validator: (value) => {
-        return value === "" || themesList.some((theme) => theme === value);
+        return value === "" || goalsTypes.some((theme) => theme === value);
       },
     },
   },
@@ -46,7 +47,7 @@ export default {
     return {
       isOpen: false,
       selectedTheme: "",
-      themes: themesList,
+      themes: goalsTypes,
     };
   },
   computed: {

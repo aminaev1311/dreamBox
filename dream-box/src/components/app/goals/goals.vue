@@ -3,9 +3,9 @@
     <WeekHeader />
     <h1>Start your first goal</h1>
     <div v-if="goals.length" class="wrapper-goals">
-      <Goal v-for="goal in goals" :key="goal.id" :goalProp="goal" />
+      <Goal v-for="goal in goals" :key="goal.id" :goal="goal" />
     </div>
-    <Goal />
+    <!-- <Goal /> -->
   </div>
 </template>
 
@@ -21,10 +21,7 @@ export default {
   computed: {
     ...mapGetters({ goals: "goals/getGoals" }),
   },
-  mounted() {
-    console.log(333);
-    console.log(this.goals);
-  },
+  mounted() {},
 };
 </script>
 

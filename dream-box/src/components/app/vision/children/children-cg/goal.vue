@@ -1,8 +1,10 @@
 <template>
   <div class="record-ec">
-    <GoalIcon :type="type"></GoalIcon>
-    <GoalMenu class="goal-menu" />
-    <h3>{{ title }}</h3>
+    <div class="header">
+      <GoalIcon :type="type" :goalNumber="goalNumber"></GoalIcon>
+      <GoalMenu class="goal-menu" />
+    </div>
+    <h3 class="title">{{ "Test title" }}</h3>
     <div class="score">
       <div class="score_text">
         <h3 class="score_h3">Goal score</h3>
@@ -28,9 +30,10 @@ export default {
     type: {
       type: String,
       required: true,
-      validator: (value) => {
-        return typeof value === "string";
-      },
+    },
+    goalNumber: {
+      type: Number,
+      default: "",
     },
   },
   components: { DoughnutChart, GoalIcon, GoalMenu },
@@ -68,6 +71,12 @@ h3 {
   margin: 0 22px 22px 0;
   padding: 15px;
   box-sizing: border-box;
+  & > .header {
+    display: flex;
+  }
+  & > .title {
+    margin: 15px 0;
+  }
 }
 .goal-menu {
   margin-left: auto;

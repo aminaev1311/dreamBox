@@ -1,19 +1,19 @@
 <template>
   <h3>Currents goals</h3>
   <div class="currents-goals">
-    <Goal v-for="item in g" :type="item.type" :key="item.type"> </Goal>
+    <Goal v-for="(type, i) in goals" :type="type" :goalNumber="i + 1" :key="type"> </Goal>
   </div>
 </template>
 
 <script>
-import { testGoal } from "@c/app/vision/children/test";
+import goalsTypes from "@/config/goals-types";
 import Goal from "@c/app/vision/children/children-cg/goal";
 export default {
   name: "Currents-Goals",
   components: { Goal },
   data() {
     return {
-      g: testGoal,
+      goals: goalsTypes,
     };
   },
 };
