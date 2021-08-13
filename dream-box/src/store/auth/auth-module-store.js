@@ -16,7 +16,7 @@ export default {
   getters: {
     user: (state) => state.user,
     isLoad: (state) => state.isLoad,
-    isChecked: (state) => isChecked(),
+    isChecked: () => isChecked(),
   },
   mutations: {
     SETISLOAD(state, val) {
@@ -84,6 +84,7 @@ export default {
       commit("SETISLOAD", false);
       return result;
     },
+
     async checkLogin({ dispatch }, login) {
       try {
         const { result } = await authApi.checkLogin(login);
@@ -146,8 +147,9 @@ export default {
       commit("SETISLOAD", false);
     },
     async checkUser({ commit, dispatch }) {
+      const TOKEN = localStorage.getItem("TOKEN") || "";
       try {
-        const { result, user } = await authApi.checkUser();
+        const { result, user } = await authApi.checkUser(TOKEN);
         if (result) {
           commit("SETUSER", user);
         } else {
@@ -262,6 +264,99 @@ export default {
         );
       }
       commit("SETISLOAD", false);
+    },
+
+    // send email for restore password
+    async sendEmailRestorePassword({ commit, dispatch }, email) {
+      try {
+        const { result } = await authApi.sendEmailRestorePassword(email);
+        return result;
+      } catch (e) {
+        console.log(e);
+        dispatch(
+          "alert/setAlert",
+          {
+            status: "error",
+            message: "Error on server!! Try later...",
+            daley: 3000,
+          },
+          { root: true }
+        );
+      }
+    },
+
+    async checkTokenRecoveryPassword({ dispatch }, token) {
+      try {
+        const { result, token: newToken } = await authApi.isToken(token);
+        if (!result) {
+          await router.push({ name: "auth" });
+          dispatch(
+            "alert/setAlert",
+            {
+              status: "error",
+              message: "Your token got old. So you need to repeat procedure recovery password",
+              daley: 10000,
+              buttonTitle: "X",
+            },
+            { root: true }
+          );
+        } else {
+          localStorage.setItem("RECOVERY_PASSWORD_TOKEN", newToken);
+        }
+      } catch (e) {
+        console.log(e);
+        dispatch(
+          "alert/setAlert",
+          {
+            status: "error",
+            message: "Error on server!! Reload this page or try later...",
+            daley: 10000,
+            buttonTitle: "X",
+          },
+          { root: true }
+        );
+      }
+    },
+    async changePassword({ dispatch }, password) {
+      try {
+        const token = localStorage.getItem("RECOVERY_PASSWORD_TOKEN") || "";
+        const { result } = await authApi.changePassword(token, password);
+        if (result) {
+          await router.push({ name: "auth" });
+          dispatch(
+            "alert/setAlert",
+            {
+              status: "success",
+              message: "Your password got changed.",
+              daley: 10000,
+              buttonTitle: "X",
+            },
+            { root: true }
+          );
+        } else {
+          dispatch(
+            "alert/setAlert",
+            {
+              status: "error",
+              message: "Your token got old. So you need to repeat procedure recovery password",
+              daley: 10000,
+              buttonTitle: "X",
+            },
+            { root: true }
+          );
+        }
+      } catch (e) {
+        console.log(e);
+        dispatch(
+          "alert/setAlert",
+          {
+            status: "error",
+            message: "Error on server!! Reload this page or try later...",
+            daley: 3000,
+          },
+          { root: true }
+        );
+      }
     },
   },
 };

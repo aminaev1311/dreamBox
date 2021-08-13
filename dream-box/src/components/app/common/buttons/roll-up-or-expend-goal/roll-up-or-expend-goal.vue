@@ -1,7 +1,7 @@
 <template>
   <button
-    class="menu"
-    :class="{ off: status }"
+    class="close"
+    :class="{ off: _status }"
     :disabled="disabled"
     @click="$emit('click')"
   ></button>
@@ -21,6 +21,11 @@ export default {
   },
   emits: {
     click: null,
+  },
+  computed: {
+    _status() {
+      return this.status;
+    },
   },
 };
 </script>

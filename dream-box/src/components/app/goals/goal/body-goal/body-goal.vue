@@ -1,45 +1,100 @@
 <template>
-  <div class="wrapper-goal">
-    <HeaderGoal v-if="_view" :goal="_goal" :status="_view" @click="_view = !_view" />
-    <BodyGoal v-else :goal="_goal" :status="_view" @click="_view = !_view" />
-  </div>
+  <form v-if="_goal?.name" class="goal" @submit.prevent="() => {}">
+    <div class="goal-name">
+      <ChooseTheme v-model:theme="goal.theme" />
+      <input type="text" name="goal-name" class="input-goal-name" v-model="_goal.name" />
+      <GoalMenuButton />
+      <OpenCloseGoal :status="status" @click="openClose" />
+    </div>
+    <div class="details">
+      <input type="text" name="datails" placeholder="Details" v-model="_goal.ditails" />
+      {{ _goal.details }}
+    </div>
+    <div class="metrics">
+      <span class="title">Metrics</span>
+      <MetricsQuantity
+        v-model:quantity="_goal.metrics.quantity"
+        :quantityProp="_goal.metrics.quantity"
+      />
+      <input
+        type="text"
+        class="units"
+        name="units"
+        placeholder="units"
+        v-model="_goal.metrics.units"
+      />
+    </div>
+    <div class="tactits-wrapper">
+      <span class="title">Tactics</span>
+      <div class="tactics">
+        <p v-for="(tactic, i) in _goal.tactics" :key="tactic.id">
+          {{ i + 1 }}. {{ tactic.name.toUpperCase() }}
+        </p>
+      </div>
+      <AddMore @add-tactic="addTactic($event)" :empty="!_goal.tactics.length" />
+    </div>
+  </form>
 </template>
 
 <script>
-import HeaderGoal from "@c/app/goals/goal/header-goal";
-import BodyGoal from "@c/app/goals/goal/body-goal";
+import ChooseTheme from "@c/app/goals/goal/choose-theme";
+import AddMore from "@c/app/goals/goal/add-more";
+import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
+import GoalMenuButton from "@c/app/common/buttons/goal-menu";
+import OpenCloseGoal from "@c/app/common/buttons/roll-up-or-expend-goal";
 
-import { mapGetters } from "vuex";
+import uid from "uniqid";
 
 export default {
   components: {
-    HeaderGoal,
-    BodyGoal,
+    ChooseTheme,
+    AddMore,
+    MetricsQuantity,
+    GoalMenuButton,
+    OpenCloseGoal,
   },
+
   data() {
     return {
       _goal: {},
-      _view: true,
     };
   },
+
   props: {
     goal: {
       type: Object,
-      required: true,
+      reqired: true,
     },
-    view: {
+    status: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+  },
+  emits: {
+    click: null,
+  },
+  computed: {},
+
+  methods: {
+    openClose() {
+      this.$emit("click");
+    },
+    addTactic(tactic) {
+      this.goal.tactics.push({ id: uid(), name: tactic, weeks: this.createWeeksForTactics() });
+    },
+    createWeeksForTactics() {
+      const weeks = [];
+      for (let number = 1; number < 13; number++) {
+        weeks.push({
+          weekNumber: number,
+          weeksValue: "default",
+        });
+      }
+      return weeks;
     },
   },
 
-  watch: {
-    view() {
-      this._view = this.view;
-    },
-  },
   mounted() {
-    this._view = this.view;
     if (this.goal) {
       this._goal = this.goal;
     }

@@ -48,6 +48,7 @@ export default {
       isChenged: false,
       fields: [],
       gender: {},
+      isLoad: false,
     };
   },
 
@@ -65,15 +66,16 @@ export default {
       this.gender.value = gender;
       this.gender.isValid = this.gender.valid(gender);
     },
-    update() {
+    async update() {
       const newUserInfo = new FormData();
 
       this.fields.forEach(({ name, value }) => {
         newUserInfo.append(name, value || "");
       });
       newUserInfo.append(this.gender.name, this.gender.value || "");
-
+      this.isLoad = true;
       this.$store.dispatch("auth/updateUserInfo", newUserInfo).then(() => this.init());
+      this.isLoad = false;
     },
     init() {
       let { USER_FIRST_NAME, USER_LAST_NAME, USER_BIRTHDAY, USER_GENDER } = this.$options;
@@ -124,7 +126,6 @@ export default {
   computed: {
     ...mapGetters({
       user: ["auth/user"],
-      isLoad: ["auth/isLoad"],
     }),
     logo() {
       return config.linkToImg(this.user?.logo).trim();

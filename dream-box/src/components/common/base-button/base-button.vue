@@ -4,6 +4,7 @@
     :class="[$style[color], $style['button-create']]"
     :disabled="isDisabled"
     @click="$emit('click')"
+    :style="`width: ${width}px;`"
   >
     <span v-if="!isLoad">
       <slot></slot>
@@ -30,6 +31,13 @@ export default {
     color: {
       type: String,
     },
+    width: {
+      type: Number,
+      default: 132,
+    },
+  },
+  emits: {
+    click: null,
   },
 };
 </script>
@@ -41,7 +49,6 @@ $info: rgb(59, 219, 72);
   cursor: pointer;
   outline: none;
   border: none;
-  width: 132px;
   min-height: 43px;
   background-color: $color-buttons;
   font-style: normal;

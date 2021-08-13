@@ -70,6 +70,14 @@ User.pre('save', function (next) {
   }
   next()
 })
+User.pre('findOneAndUpdate', async function (next) {
+  const password = this.findOneAndUpdate()._update['$set'].password;
+  if (password) {
+    const salt = bcryptjs.genSaltSync(SALT_ROUNDS)
+    this.findOneAndUpdate()._update['$set'].password = bcryptjs.hashSync(password, salt)
+  }
+  next()
+})
 
 User.method('validatePassword', function (password) {
   return bcryptjs.compareSync(password, this.password)
