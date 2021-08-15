@@ -9,6 +9,7 @@ import Weeks from "@p/App/Weeks.vue";
 import Goals from "@p/App/Goals.vue";
 import Vision from "@p/App/Vision.vue";
 import Archive from "@p/App/Archive.vue";
+import Test from "@p/Test.vue";
 
 const routes = [
   {
@@ -41,8 +42,9 @@ const routes = [
         name: "person-area",
         component: PersonArea,
       },
+      
     ],
-  },
+  }, 
   {
     path: "/auth",
     name: "auth",
@@ -53,6 +55,11 @@ const routes = [
     name: "registration",
     component: Registration,
   },
+    {
+      path: "/test",
+      name: "test",
+      component: Test,
+    },
 ];
 
 const router = createRouter({
