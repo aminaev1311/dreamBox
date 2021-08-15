@@ -19,7 +19,7 @@
 
 <script>
 import ButtonDream from "@ca/buttons/button-dream";
-import InputPassword from "@ca/input-password";
+import InputPassword from "@ca/input-password-person-area";
 export default {
   name: "PasswLk",
   components: { InputPassword, ButtonDream },

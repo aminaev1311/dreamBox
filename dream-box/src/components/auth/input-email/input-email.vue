@@ -1,48 +1,24 @@
 <template>
   <div class="wrapper-input-email">
-    <label v-if="title" :for="id">{{ title }}</label>
-    <div class="password">
+    <label for="emali">E-mail:</label>
+    <div class="email">
       <div class="before">
-        <img src="@i/auth/password-icon.png" alt="password-icon" />
+        <img src="@i/auth/user-icon.png" alt="password-icon" />
       </div>
-      <input
-        :type="isShowPassword ? 'text' : 'password'"
-        :id="id"
-        v-model="modelValue"
-        name="password"
-        current-password
-      />
-      <div class="cursor after">
-        <img
-          :src="
-            !isShowPassword ? require('@i/auth/eye-close.png') : require('@i/auth/eye-open.png')
-          "
-          alt="eye-close"
-          @click.prevent="isShowPassword = !isShowPassword"
-        />
-      </div>
+      <input v-model="email" id="email" name="email" />
     </div>
-    <div v-for="error in currentErrors" :key="error.message">
+
+    <div v-for="error in errors" :key="error.message">
       <small v-if="error.value">{{ error.message }}</small>
     </div>
   </div>
 </template>
 
 <script>
-import uniqid from "uniqid";
 export default {
-  data() {
-    return {
-      isShowPassword: false,
-      id: uniqid(),
-    };
-  },
   props: {
     errors: {
       type: Array,
-    },
-    title: {
-      type: String,
     },
     modelValue: {
       type: String,
@@ -53,25 +29,20 @@ export default {
   },
   methods: {
     init() {
-      this.password = this.modelValue || "";
+      this.email = this.modelValue || "";
     },
   },
   mounted() {
     this.init();
   },
   computed: {
-    password: {
+    email: {
       get() {
         return this.modelValue;
       },
       set(value) {
         this.$emit("update:modelValue", value);
       },
-    },
-    currentErrors() {
-      const newErrors = this.errors;
-      const index = this.errors.findIndex(({ value }) => value);
-      return index || index === 0 ? newErrors.errors.splice(index, 1) : [];
     },
   },
 
@@ -92,7 +63,7 @@ export default {
   margin-bottom: 20px;
   align-items: flex-start;
 }
-.wrapper-input-email > .password {
+.wrapper-input-email > .email {
   width: 100%;
   position: relative;
   display: flex;
@@ -127,7 +98,7 @@ export default {
   color: $color-font-dark;
 }
 
-.wrapper-input-email > .password > input {
+.wrapper-input-email > .email > input {
   width: 100%;
   border: none;
   outline: none;

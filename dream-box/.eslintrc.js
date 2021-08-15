@@ -18,6 +18,7 @@ module.exports = {
         semicolons: true,
       },
     ],
+    "vue/no-reserved-keys": "off",
     "promise/param-names": "off",
     "promise/catch-or-return": "off",
     "vue/html-self-closing": "off",
@@ -25,5 +26,6 @@ module.exports = {
     "vue/no-mutating-props": "off",
     "no-undef": "off",
     "no-unused-vars": "off",
+    "no-useless-escape": "off",
   },
 };
