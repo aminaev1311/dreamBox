@@ -33,7 +33,7 @@ export default {
     },
     goalNumber: {
       type: Number,
-      default: "",
+      default: null,
     },
   },
   components: { DoughnutChart, GoalIcon, GoalMenu },

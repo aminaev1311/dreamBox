@@ -24,14 +24,19 @@
         v-model="_goal.metrics.units"
       />
     </div>
-    <div class="tactits-wrapper">
-      <span class="title">Tactics</span>
-      <div class="tactics">
-        <p v-for="(tactic, i) in _goal.tactics" :key="tactic.id">
-          {{ i + 1 }}. {{ tactic.name.toUpperCase() }}
-        </p>
+    <div class="tactits-and-score">
+      <div class="tactics-wrapper">
+        <TacticsHeader />
+        <div class="tactics">
+          <div class="tactic" v-for="(tactic, i) in _goal.tactics" :key="tactic.id">
+            <p>{{ i + 1 }}. {{ tactic.name.toUpperCase() }}</p>
+            <div class="weeks">
+              <div class="week" v-for="week in tactic.weeks" :key="week.id"></div>
+            </div>
+          </div>
+        </div>
+        <AddMore @add-tactic="addTactic($event)" :empty="!_goal.tactics.length" />
       </div>
-      <AddMore @add-tactic="addTactic($event)" :empty="!_goal.tactics.length" />
     </div>
   </form>
 </template>
@@ -42,6 +47,7 @@ import AddMore from "@c/app/goals/goal/add-more";
 import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
 import GoalMenuButton from "@c/app/common/buttons/goal-menu";
 import OpenCloseGoal from "@c/app/common/buttons/roll-up-or-expend-goal";
+import TacticsHeader from "@c/app/common/taсtics-header";
 
 import uid from "uniqid";
 
@@ -52,6 +58,7 @@ export default {
     MetricsQuantity,
     GoalMenuButton,
     OpenCloseGoal,
+    TacticsHeader,
   },
 
   data() {
@@ -238,7 +245,7 @@ export default {
   }
 }
 
-.tactits-wrapper {
+.tactits-and-score {
   margin-top: 18px;
   width: 100%;
   min-height: 180px;
@@ -246,32 +253,49 @@ export default {
   @include fc-s-s-b;
   padding: 15px;
   border-radius: 8px;
-  & > .title {
-    font-family: $base-ff;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 20px;
-    letter-spacing: 0.1px;
-    color: #2d3446;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    margin: 0 0 13px;
-  }
-  & > .tactics {
-    @include fc-c-c-b;
-    align-items: flex-start !important;
-    & > p {
-      font-family: $base-ff;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      line-height: 20px;
-      letter-spacing: 0.1px;
-      text-transform: uppercase;
-      color: #a9acbf;
-      margin-bottom: 14px;
+  & > .tactics-wrapper {
+    display: flex;
+    max-width: 850px;
+    width: 100%;
+    flex-direction: column;
+    & > .tactics {
+      @include fc-c-c-b;
+      align-items: flex-start !important;
+      & > p {
+        font-family: $base-ff;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.1px;
+        text-transform: uppercase;
+        color: #a9acbf;
+        margin-bottom: 14px;
+      }
+      & > .tactic {
+        display: flex;
+        width: 100%;
+        margin: 2px 0;
+        justify-content: space-between;
+        & > .weeks {
+          display: flex;
+          max-width: 426px;
+          width: 100%;
+          box-sizing: border-box;
+          & > .week {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            margin: 0 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f3fc;
+            border-radius: 8px;
+            box-sizing: border-box;
+          }
+        }
+      }
     }
   }
 }
