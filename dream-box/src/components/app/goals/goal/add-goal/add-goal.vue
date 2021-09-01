@@ -1,8 +1,9 @@
 <template>
   <div class="wrapper-goal">
-    <HeaderGoal v-if="_view" :goal="goal" :status="_view" @click="_view = !_view" />
-
-    <form v-if="!_view" class="goal" @submit.prevent="() => {}">
+    <div v-if="!showFormCreateGoal" class="control-buttons">
+      <BtnBlue :title="titleForBautton" @click="showFormCreateGoal = true" />
+    </div>
+    <form v-else class="goal" @submit.prevent="() => {}">
       <div class="goal-name">
         <ChooseTheme v-model:theme="goal.theme" :error="errors.theme" />
         <input
@@ -13,8 +14,9 @@
           :placeholder="errors.name ? `This field can't be empty` : 'Name of the goal'"
           v-model="goal.name"
         />
-        <GoalMenuButton />
-        <RollUpOrExpandGoal :stasus="_view" @click="_view = !_view" />
+        <button class="close-create-goal-form" @click.prevent="showFormCreateGoal = false">
+          X
+        </button>
       </div>
       <div class="details">
         <input type="text" name="datails" placeholder="Details" v-model="goal.ditails" />
@@ -43,10 +45,8 @@
         </div>
         <AddMore @add-tactic="add($event)" :empty="errors.tactics" />
       </div>
+      <BtnBlue title="Create" :width="'150px'" :height="'50px'" class="create-goal-button" @click="createGoal"/>
     </form>
-    <!-- <div class="control-buttons">
-      <BtnBlue v-if="!views.isCreated" :title="titleForBautton" @click="createGoal" />
-    </div> -->
   </div>
 </template>
 
@@ -56,8 +56,6 @@ import ChooseTheme from "@c/app/goals/goal/choose-theme";
 import AddMore from "@c/app/goals/goal/add-more";
 import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
 import BtnBlue from "@c/app/common/buttons/w-btn-blue";
-import GoalMenuButton from "@c/app/common/buttons/goal-menu";
-import RollUpOrExpandGoal from "@c/app/common/buttons/roll-up-or-expend-goal";
 import GoalIcon from "@c/app/common/goal-icon";
 import { mapGetters } from "vuex";
 
@@ -83,13 +81,12 @@ export default {
     AddMore,
     MetricsQuantity,
     BtnBlue,
-    GoalMenuButton,
-    RollUpOrExpandGoal,
     GoalIcon,
   },
   data() {
     return {
       goal: defaultGoal(),
+      showFormCreateGoal: false,
       startCreateGoal: false,
       _view: true,
     };
@@ -131,20 +128,14 @@ export default {
   },
   methods: {
     createGoal() {
-      if (!this.initGoal()) return false;
       this.startCreateGoal = true;
       if (this.isValidGoalField) {
         this.goal.view = "is-created";
-        this.$store.commit("goals/ADD_GOAL", this.goal);
+        this.$store.dispatch("goals/addGoal", this.goal);
         this.goal = defaultGoal();
         this.startCreateGoal = false;
+        this.showFormCreateGoal = false;
       }
-    },
-    initGoal() {
-      if (this.goal.id) return true;
-      this.goal.id = uid();
-      this.goal.view = "creating";
-      return false;
     },
     setTheme(theme) {
       this.goal.theme = theme;
@@ -229,8 +220,8 @@ export default {
   }
 }
 
-.close {
-  display: block;
+.close-create-goal-form {
+  display: flex;
   background-color: #e6e9f8;
   width: 100%;
   width: 24px !important;
@@ -239,19 +230,17 @@ export default {
   margin-left: 10px;
   @include o-b-none;
   box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  color: rgba(128, 128, 128, 0.753);
 }
 
-.close {
-  background-image: url("~@/assets/images/goals/arrow-top-gray.png");
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-}
 .menu:hover,
-.close:hover {
+.close-create-goal-form:hover {
   background-color: lighten(#e6e9f8, 20%);
 }
 .menu:active,
-.close:active {
+.close-create-goal-form:active {
   background-color: lighten($color-base-blue, 40%);
 }
 
@@ -356,5 +345,8 @@ export default {
       margin-bottom: 14px;
     }
   }
+}
+.create-goal-button {
+  margin: 10px auto 10px 0;
 }
 </style>

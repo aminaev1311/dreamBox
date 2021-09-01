@@ -2,7 +2,7 @@
   <button
     class="close"
     :class="{ off: _status }"
-    :disabled="disabled"
+    :disabled="isDisabled"
     @click="$emit('click')"
   ></button>
 </template>
@@ -10,7 +10,7 @@
 <script>
 export default {
   props: {
-    disabled: {
+    isDisabled: {
       type: Boolean,
       default: false,
     },

@@ -3,8 +3,9 @@
     <GoalIcon :type="goal?.theme" :theme="true"></GoalIcon>
     <p class="goal-name-closed">{{ goal.name }}</p>
     <div class="control-buttons">
-      <GoalMenuButton />
-      <OpenCloseGoal :status="status" @click="openClose" />
+      {{isDisabled}}
+      <GoalMenuButton :isDisabled="isDisabled" />
+      <OpenCloseGoal :isDisabled="isDisabled" :status="status" @click="openClose" />
     </div>
   </div>
 </template>
@@ -20,6 +21,10 @@ export default {
     GoalIcon,
   },
   props: {
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
     goal: {
       type: Object,
       required: true,

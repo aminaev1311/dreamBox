@@ -1,9 +1,16 @@
 <template>
-  <button class="menu"></button>
+  <button class="menu" :disabled="isDisabled"></button>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -23,5 +30,10 @@ export default {};
   background-image: url("~@/assets/images/goals/three-dots.png");
   background-repeat: no-repeat;
   background-position: 50% 50%;
+}
+
+.menu:disabled {
+  cursor: not-allowed;
+  background-color: lighten(#e6e9f8, 30%);
 }
 </style>

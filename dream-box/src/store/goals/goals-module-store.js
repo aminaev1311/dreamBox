@@ -1,67 +1,7 @@
-const defaultGoal = () => [
-  {
-    id: 111,
-    theme: "career",
-    ditails: "some text ....",
-    name: "First goal",
-    status: "edit",
-    metrics: {
-      quantity: "3",
-      units: "hours",
-    },
-    tactics: [
-      {
-        id: "1krrtrtowctik",
-        name: "rfesrwe",
-        weeks: [
-          { weekNumber: 1, weeksValue: "default" },
-          { weekNumber: 2, weeksValue: "default" },
-          { weekNumber: 3, weeksValue: "default" },
-          { weekNumber: 4, weeksValue: "default" },
-          { weekNumber: 5, weeksValue: "default" },
-          { weekNumber: 6, weeksValue: "default" },
-          { weekNumber: 7, weeksValue: "default" },
-          { weekNumber: 8, weeksValue: "default" },
-          { weekNumber: 9, weeksValue: "default" },
-          { weekNumber: 10, weeksValue: "default" },
-          { weekNumber: 11, weeksValue: "default" },
-          { weekNumber: 12, weeksValue: "default" },
-        ],
-      },
-    ],
-  },
-  {
-    id: 454545,
-    status: "edit",
-    theme: "health",
-    ditails: "some text ....",
-    name: "Second goal",
-    metrics: {
-      quantity: "3",
-      units: "hours",
-    },
-    tactics: [
-      {
-        id: "1krowcdreetik",
-        name: "rfesrwe",
-        weeks: [
-          { weekNumber: 1, weeksValue: "default" },
-          { weekNumber: 2, weeksValue: "default" },
-          { weekNumber: 3, weeksValue: "default" },
-          { weekNumber: 4, weeksValue: "default" },
-          { weekNumber: 5, weeksValue: "default" },
-          { weekNumber: 6, weeksValue: "default" },
-          { weekNumber: 7, weeksValue: "default" },
-          { weekNumber: 8, weeksValue: "default" },
-          { weekNumber: 9, weeksValue: "default" },
-          { weekNumber: 10, weeksValue: "default" },
-          { weekNumber: 11, weeksValue: "default" },
-          { weekNumber: 12, weeksValue: "default" },
-        ],
-      },
-    ],
-  },
-];
+import * as authApi from "@api/goals";
+//import router from "@r";
+
+const defaultGoal = () => [];
 
 export default {
   namespaced: true,
@@ -79,7 +19,19 @@ export default {
     REMOVE_GOAL(state, goal) {
       state.goals.filter(({ id }) => goal.id.toString() === id.toSting());
     },
-    UPDATE_GOAL(state, goal) {},
+    UPDATE_GOAL(state, goal) { },
   },
-  actions: {},
+  actions: {
+    async addGoal({ commit, rootGetters }, goal) {
+      try {
+        const userId = rootGetters['auth/user']?._id
+        if (userId) {
+          goal.userId = userId
+          await authApi.addGoal(goal)
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  },
 };
