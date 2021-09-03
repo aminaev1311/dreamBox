@@ -4,6 +4,6 @@ module.exports = {
   secure: true,
   auth: {
     user: 'lotostoii@gmail.com',
-    pass: 'EUDaawww1'
+    pass: '9242521756w'
   }
 }

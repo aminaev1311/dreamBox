@@ -1,9 +1,8 @@
 <template>
-  <div class="closed-goal">
-    <GoalIcon :type="goal?.theme" :theme="true"></GoalIcon>
+  <div v-if="goal.theme" class="closed-goal">
+    <GoalIcon :type="goal.theme" :theme="true"></GoalIcon>
     <p class="goal-name-closed">{{ goal.name }}</p>
     <div class="control-buttons">
-      {{isDisabled}}
       <GoalMenuButton :isDisabled="isDisabled" />
       <OpenCloseGoal :isDisabled="isDisabled" :status="status" @click="openClose" />
     </div>

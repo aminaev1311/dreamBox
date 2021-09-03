@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper-goal">
+  <div v-if="goal.theme" class="wrapper-goal">
     <HeaderGoal v-if="_view" :goal="_goal" :status="_view" @click="_view = !_view" />
     <BodyGoal v-else :goal="_goal" :status="_view" @click="_view = !_view" />
   </div>
@@ -8,8 +8,6 @@
 <script>
 import HeaderGoal from "@c/app/goals/goal/header-goal";
 import BodyGoal from "@c/app/goals/goal/body-goal";
-
-import { mapGetters } from "vuex";
 
 export default {
   components: {

@@ -56,7 +56,6 @@ import ChooseTheme from "@c/app/goals/goal/choose-theme";
 import AddMore from "@c/app/goals/goal/add-more";
 import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
 import BtnBlue from "@c/app/common/buttons/w-btn-blue";
-import GoalIcon from "@c/app/common/goal-icon";
 import { mapGetters } from "vuex";
 
 import uid from "uniqid";
@@ -81,7 +80,6 @@ export default {
     AddMore,
     MetricsQuantity,
     BtnBlue,
-    GoalIcon,
   },
   data() {
     return {

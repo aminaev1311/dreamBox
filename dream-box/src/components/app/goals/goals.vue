@@ -2,8 +2,10 @@
   <div class="wrapper-goals">
     <WeekHeader />
     <h1>Start your first goal</h1>
+    <pre>
+    </pre>
     <div v-if="goals.length" class="wrapper-goals">
-      <Goal v-for="goal in goals" :key="goal.id" :goal="goal" />
+      <Goal v-for="goal in goals" :key="goal._id" :goal="goal" />
     </div>
     <AddGoal />
   </div>
@@ -23,7 +25,9 @@ export default {
   computed: {
     ...mapGetters({ goals: "goals/getGoals" }),
   },
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("goals/getGoalsByUser");
+  },
 };
 </script>
 

@@ -1,5 +1,10 @@
 import http from "@api/http";
 
+export const getGoalsByUser = async () => {
+  const headers = addToken();
+  const { data } = await http.get(`get-goals`, headers);
+  return data;
+};
 
 export const addGoal = async (goal) => {
   const headers = addToken();

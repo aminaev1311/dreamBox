@@ -42,7 +42,6 @@ export default {
       title: type,
       _class: `goal-${type.replace("\&", "-")}`,
     }));
-    console.log(this.goals);
   },
 };
 </script>
