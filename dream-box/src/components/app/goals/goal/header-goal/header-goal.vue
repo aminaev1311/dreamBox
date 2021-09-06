@@ -3,7 +3,12 @@
     <GoalIcon :type="goal.theme" :theme="true"></GoalIcon>
     <p class="goal-name-closed">{{ goal.name }}</p>
     <div class="control-buttons">
-      <GoalMenuButton :isDisabled="isDisabled" />
+      <GoalMenuButton
+        :isDisabled="isDisabled"
+        :menuList="[
+          { title: 'Delete goal', cb: () => $store.dispatch('goals/deleteGoalById', goal._id) },
+        ]"
+      />
       <OpenCloseGoal :isDisabled="isDisabled" :status="status" @click="openClose" />
     </div>
   </div>
@@ -40,6 +45,9 @@ export default {
   methods: {
     openClose() {
       this.$emit("click");
+    },
+    deleteGoal() {
+      console.log(111);
     },
   },
 };

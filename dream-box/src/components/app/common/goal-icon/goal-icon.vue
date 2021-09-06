@@ -40,7 +40,7 @@ export default {
   mounted() {
     this.goals = goalsTypes.map((type, index) => ({
       title: type,
-      _class: `goal-${type.replace("\&", "-")}`,
+      _class: `goal-${type.replace("&", "-")}`,
     }));
   },
 };

@@ -12,6 +12,19 @@ router.get("/api/get-goals", async (req, res) => {
     res.status(501).send({ result: false });
   }
 });
+router.delete("/api/delete-goal/:id", async (req, res) => {
+  try {
+    const goal = await Goal.deleteOne({ _id: req.params.id });
+    if (goal) {
+      res.status(200).send({ result: true });
+    } else {
+      res.status(501).send({ result: false });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(501).send({ result: false });
+  }
+});
 
 router.post("/api/add-goal", async (req, res) => {
   try {

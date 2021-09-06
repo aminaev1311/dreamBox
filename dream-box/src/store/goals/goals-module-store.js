@@ -14,22 +14,28 @@ export default {
   mutations: {
     SET_GOALS_BY_USER(state, goals) {
       state.goals = goals;
-      console.log(state.goals);
     },
     ADD_GOAL(state, goal) {
       state.goals.push(goal);
-      console.log(state.goals);
     },
-    REMOVE_GOAL(state, goal) {
-      state.goals.filter(({ id }) => goal.id.toString() === id.toSting());
+    REMOVE_GOAL(state, id) {
+      state.goals = state.goals.filter(({ _id }) => _id !== id);
     },
-    UPDATE_GOAL(state, goal) {},
+    UPDATE_GOAL(state, goal) { },
   },
   actions: {
     async getGoalsByUser({ commit, rootGetters }) {
       try {
         const goals = await authApi.getGoalsByUser();
         commit("SET_GOALS_BY_USER", goals);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async deleteGoalById({ commit }, id) {
+      try {
+        const goals = await authApi.deleteGoalById(id);
+        commit("REMOVE_GOAL", id);
       } catch (e) {
         console.log(e);
       }
