@@ -1,8 +1,8 @@
 <template>
   <button
-    class="menu"
-    :class="{ off: status }"
-    :disabled="disabled"
+    class="close"
+    :class="{ off: _status }"
+    :disabled="isDisabled"
     @click="$emit('click')"
   ></button>
 </template>
@@ -10,7 +10,7 @@
 <script>
 export default {
   props: {
-    disabled: {
+    isDisabled: {
       type: Boolean,
       default: false,
     },
@@ -21,6 +21,11 @@ export default {
   },
   emits: {
     click: null,
+  },
+  computed: {
+    _status() {
+      return this.status;
+    },
   },
 };
 </script>

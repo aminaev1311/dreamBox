@@ -1,164 +1,52 @@
 <template>
-  <div class="wrapper-goal">
-    <form v-if="views.creating || views.isCreated" class="add-goal" @submit.prevent="() => {}">
-      <div class="goal-name">
-        <ChooseTheme v-model:theme="goal.theme" :error="errors.theme" />
-        <input
-          type="text"
-          name="goal-name"
-          class="input-goal-name"
-          :class="{ error: errors.name }"
-          :placeholder="errors.name ? `This field can't be empty` : 'Name of the goal'"
-          v-model="goal.name"
-        />
-        <button class="menu"></button>
-        <button class="close"></button>
-      </div>
-      <div class="details">
-        <input type="text" name="datails" placeholder="Details" v-model="goal.details" />
-      </div>
-      <div class="metrics">
-        <span class="title">Metrics</span>
-        <MetricsQuantity
-          v-model:quantity="goal.metrics.quantity"
-          :quantityProp="goal.metrics.quantity"
-        />
-        <input
-          type="text"
-          class="units"
-          name="units"
-          placeholder="units"
-          v-model="goal.metrics.units"
-        />
-      </div>
-      <div class="tactits-wrapper">
-        <span class="title">Tactics</span>
-        <div class="tactics">
-          <p v-for="(tactic, i) in goal.tactics" :key="tactic.id">
-            {{ i + 1 }}. {{ tactic.name.toUpperCase() }}
-          </p>
-        </div>
-        <AddMore @add-tactic="add($event)" :empty="errors.tactics" />
-      </div>
-    </form>
-    <div class="buttons">
-      <BtnBlue v-if="!views.isCreated" :title="titleForBautton" @click="createGoal" />
-    </div>
+  <div v-if="goal.theme" class="wrapper-goal">
+    <HeaderGoal v-if="_view" :goal="_goal" :status="_view" @click="_view = !_view" />
+    <BodyGoal v-else :goal="_goal" :status="_view" @click="_view = !_view" />
   </div>
 </template>
 
 <script>
-import ChooseTheme from "@c/app/goals/goal/choose-theme";
-import AddMore from "@c/app/goals/goal/add-more";
-import uid from "uniqid";
-import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
-import BtnBlue from "@c/app/common/buttons/w-btn-blue";
-import { mapGetters } from "vuex";
-
-const defaultGoal = () => ({
-  id: null,
-  view: "null",
-  theme: "",
-  ditails: "",
-  name: "",
-  metrics: {
-    quantity: "",
-    units: "",
-  },
-  tactics: [],
-});
+import HeaderGoal from "@c/app/goals/goal/header-goal";
+import BodyGoal from "@c/app/goals/goal/body-goal";
 
 export default {
   components: {
-    ChooseTheme,
-    AddMore,
-    MetricsQuantity,
-    BtnBlue,
+    HeaderGoal,
+    BodyGoal,
   },
   data() {
     return {
-      goal: defaultGoal(),
-      startCreateGoal: false,
+      _goal: {},
+      _view: true,
     };
   },
   props: {
-    goalProp: {
+    goal: {
       type: Object,
+      required: true,
+    },
+    view: {
+      type: Boolean,
+      default: true,
     },
   },
-  computed: {
-    ...mapGetters({ goals: "goals/getGoals" }),
-    titleForBautton() {
-      return !this.goals.length && !this.goal.id ? "Start" : "Create a goal";
-    },
-    errors() {
-      return {
-        theme: this.startCreateGoal && this.goal.theme === "",
-        name: this.startCreateGoal && this.goal.name === "",
-        tactics: this.startCreateGoal && !this.goal.tactics.length,
-      };
-    },
-    // goal's fields are filled correctly/uncorrectly
-    isValidGoalField() {
-      return !Object.values(this.errors).some((v) => v);
-    },
-    views() {
-      const {
-        goal: { id, view },
-      } = this;
-      return {
-        creating: id && view === "creating",
-        isCreated: id && view === "is-created",
-      };
-    },
-  },
-  methods: {
-    createGoal() {
-      if (!this.initGoal()) return false;
-      this.startCreateGoal = true;
-      if (this.isValidGoalField) {
-        this.goal.view = "is-created";
-        this.$store.commit("goals/ADD_GOAL", this.goal);
-        this.goal = defaultGoal();
-        this.startCreateGoal = false;
-      }
-    },
-    initGoal() {
-      if (this.goal.id) return true;
-      this.goal.id = uid();
-      this.goal.view = "creating";
-      return false;
-    },
-    setTheme(theme) {
-      this.goal.theme = theme;
-    },
-    setMetricsQuantity(quantity) {
-      this.goal.metrics.quantity = quantity;
-    },
-    add(tactic) {
-      this.goal.tactics.push({ id: uid(), name: tactic, weeks: this.createWeeksForTactics() });
-    },
-    createWeeksForTactics() {
-      const weeks = [];
-      for (let number = 1; number < 13; number++) {
-        weeks.push({
-          weekNumber: number,
-          weeksValue: "default",
-        });
-      }
-      return weeks;
+
+  watch: {
+    view() {
+      this._view = this.view;
     },
   },
   mounted() {
-    if (this.goalProp) {
-      this.goal = this.goalProp;
+    this._view = this.view;
+    if (this.goal) {
+      this._goal = this.goal;
     }
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.add-goal {
+.goal {
   @include fc-c-c-b;
   background-color: $color-base-gray;
   padding: 12px 16px 18px;
@@ -202,7 +90,6 @@ export default {
   }
 }
 
-.menu,
 .close {
   display: block;
   background-color: #e6e9f8;
@@ -214,11 +101,7 @@ export default {
   @include o-b-none;
   box-sizing: border-box;
 }
-.menu {
-  background-image: url("~@/assets/images/goals/three-dots.png");
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-}
+
 .close {
   background-image: url("~@/assets/images/goals/arrow-top-gray.png");
   background-repeat: no-repeat;

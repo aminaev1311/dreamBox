@@ -14,6 +14,7 @@ const connectToMongoDb = require("./src/lib/connectDb");
 const configDb = require("./src/config/DB");
 
 const authRout = require("./src/routes/auth");
+const goalsRout = require("./src/routes/goals");
 
 const history = require("connect-history-api-fallback");
 
@@ -40,6 +41,8 @@ app.use("**", (req, res, next) => {
 });
 
 app.use("/", authRout);
+
+app.use("/", goalsRout);
 
 if (!isDevelopment) {
   app.use(history());

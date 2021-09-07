@@ -1,31 +1,19 @@
 <template>
   <h3>Currents goals</h3>
   <div class="currents-goals">
-    <Goal v-for="item in goals" :key="item.id" :item="item">
-      <!--      :color="item.color"-->
-      <!--      :goal_icon="item.goal_icon"-->
-      <!--      :title="item.title"-->
-    </Goal>
+    <Goal v-for="(type, i) in goals" :type="type" :goalNumber="i + 1" :key="type"> </Goal>
   </div>
 </template>
 
 <script>
+import goalsTypes from "@/config/goals-types";
 import Goal from "@c/app/vision/children/children-cg/goal";
 export default {
   name: "Currents-Goals",
   components: { Goal },
   data() {
     return {
-      goals: [
-        {
-          id: 1,
-          title: "Record personal efficiency video course",
-          color: "#62A1FF",
-          goal_icon: "pc.png",
-        },
-        { id: 2, title: "Second important goal", color: "#900093", goal_icon: "pc.png" },
-        { id: 3, title: "War and Peace reading", color: "#F9AA34", goal_icon: "athletics.png" },
-      ],
+      goals: goalsTypes,
     };
   },
 };
@@ -46,6 +34,7 @@ h3 {
 }
 .currents-goals {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
 }
 </style>

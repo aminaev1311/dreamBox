@@ -1,5 +1,9 @@
 <template>
-  <button @click="$emit('click')" :disabled="isDisabled" :style="`width: ${width}`">
+  <button
+    @click="$emit('click')"
+    :disabled="isDisabled"
+    :style="`width: ${width}; min-height: ${height};`"
+  >
     {{ title }}
   </button>
 </template>
@@ -10,6 +14,7 @@ export default {
     title: { type: String, required: true },
     isDisabled: { type: Boolean, default: false },
     width: { type: String, default: "250px" },
+    height: { type: String, default: "60px" },
   },
   emits: {
     click: null,
@@ -20,7 +25,6 @@ export default {
 <style lang="scss" scoped>
 button {
   cursor: pointer;
-  min-height: 60px;
   border-radius: 8px;
   border: none;
   outline: none;

@@ -54,7 +54,6 @@ export default {
 
   mounted() {
     this.init();
-    console.log(this.$store);
   },
 
   methods: {

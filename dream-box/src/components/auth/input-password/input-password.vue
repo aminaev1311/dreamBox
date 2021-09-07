@@ -69,8 +69,9 @@ export default {
       },
     },
     currentErrors() {
+      const newErrors = this.errors;
       const index = this.errors.findIndex(({ value }) => value);
-      return index || index === 0 ? this.errors.splice(index, 1) : [];
+      return index || index === 0 ? newErrors.errors.splice(index, 1) : [];
     },
   },
 
