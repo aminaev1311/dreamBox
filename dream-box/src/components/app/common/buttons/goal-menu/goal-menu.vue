@@ -2,8 +2,10 @@
   <div class="menu-wrapper">
     <button class="menu" :disabled="isDisabled" @click="showMenu"></button>
     <div v-if="menuList.length && show" class="goal-menu">
+      <i class="fa fa-times-circle" aria-hidden="true" @click="showMenu"></i>
       <p class="goal-menu-field" v-for="field in menuList" :key="field.title" @click="field.cb">
-        {{ field.title }}
+        <span>{{ field.title }}</span>
+        <i class="fa-li fa fa-spinner fa-spin"></i>
       </p>
     </div>
   </div>
@@ -29,7 +31,6 @@ export default {
   methods: {
     showMenu() {
       this.show = !this.show;
-      console.log(this.show);
     },
   },
 };
@@ -64,16 +65,36 @@ export default {
 }
 
 .goal-menu {
+  flex-direction: column;
   position: absolute;
   display: flex;
-  width: 300px;
-  border: 1px solid $color-buttons-lk;
-  padding: 10px;
+  width: 200px;
+  border: 1px solid #c8e2ff9b;
   z-index: 300;
-  right: 50px;
-  border-radius: 5px;
-  & > p {
+  right: 23px;
+  top: 24px;
+  padding: 10px 0 0;
+  background-color: white;
+  & > i {
+    color: $color-base-blue;
+    font-size: 1.5rem;
+    margin: 0 10px 10px auto;
     cursor: pointer;
+  }
+  & > i:hover {
+    color: darken($color-base-blue,20);
+  }
+  & > p {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  & > p:hover {
+    background-color: lighten($color-base-error, 30);
   }
 }
 </style>
