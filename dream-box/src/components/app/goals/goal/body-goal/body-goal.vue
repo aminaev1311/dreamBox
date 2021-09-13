@@ -3,7 +3,12 @@
     <div class="goal-name">
       <ChooseTheme v-model:theme="goal.theme" />
       <input type="text" name="goal-name" class="input-goal-name" v-model="_goal.name" />
-      <GoalMenuButton />
+      <GoalMenuButton
+        :isDisabled="isDisabled"
+        :menuList="[
+          { title: 'Delete goal', cb: () => $store.dispatch('goals/deleteGoalById', goal._id) },
+        ]"
+      />
       <OpenCloseGoal :status="status" @click="openClose" />
     </div>
     <div class="details">

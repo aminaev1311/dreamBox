@@ -36,6 +36,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.menu-wrapper {
+  display: flex;
+  position: relative;
+}
 .menu {
   cursor: pointer;
   display: block;
