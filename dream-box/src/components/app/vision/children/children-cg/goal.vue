@@ -1,7 +1,7 @@
 <template>
   <div class="record-ec">
     <div class="header">
-      <GoalIcon :type="career" :goalNumber="goalNumber"></GoalIcon>
+      <GoalIcon :type="type" :theme="true"></GoalIcon>
       <GoalMenu class="goal-menu" />
     </div>
     <h3 class="title">{{ "Test title" }}</h3>
