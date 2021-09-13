@@ -1,24 +1,40 @@
 <template>
   <div class="left-sidebar">
-    <div class="user-info">
+    <router-link to="/person-area" class="user-info">
       <div class="logo">
         <img :src="logo" alt="logo" />
       </div>
       <div class="description">
-        <router-link to="/person-area" class="name"
-          >{{ userName }}
-        </router-link>
+        <span class="name">{{ userName }} </span>
         <span class="role">{{ user && user.role ? user.role : "me" }}</span>
       </div>
-    </div>
+      <button class="user-menu" @click.prevent="showLogOut = !showLogOut" />
+    </router-link>
+    <button v-if="showLogOut" class="user-logout" @click="logOut">
+      <img src="@i/lsb/sing-out.svg" alt="icon-sing-out" />
+      <span>Sing Out</span>
+    </button>
+    <LsbNav />
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import config from "@config";
+import LsbNav from "./children/nav";
 
 export default {
+  data() {
+    return {
+      showLogOut: false,
+    };
+  },
+  components: { LsbNav },
+  methods: {
+    ...mapActions({
+      logOut: "auth/logOut",
+    }),
+  },
   computed: {
     ...mapGetters({
       user: ["auth/user"],
@@ -32,12 +48,11 @@ export default {
       return user && user.role ? user.role : "me";
     },
     logo() {
-      const img = config.linkToImg(this.user?.logo).trim()
+      const img = config.linkToImg(this.user?.logo).trim();
       return img;
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 
@@ -54,6 +69,7 @@ export default {
   padding: 12px 24px;
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 .logo {
   width: 56px;
@@ -85,6 +101,39 @@ export default {
     line-height: 20px;
     letter-spacing: 0.1px;
     color: $color-font-light;
+    text-decoration: none;
   }
+  & > a:hover .role {
+    color: darken($color-font-light, 20%);
+  }
+}
+.user-menu {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  @include o-b-none;
+  background-color: transparent;
+  background-image: url("~@/assets/images/lsb/three-dots.svg");
+  background-repeat: no-repeat;
+  background-position-x: center;
+}
+.user-menu:hover {
+  transform: scale(1.1);
+}
+.user-menu:active {
+  transform: scale(0.9);
+}
+.user-logout {
+  @include o-b-none;
+  @include fr-c-c-b;
+  background-color: $color-base-light;
+  width: 100%;
+  height: 80px;
+  & > img {
+    margin-right: 18px;
+  }
+}
+.user-logout:hover {
+  background-color: lighten($color-base-blue, 40);
 }
 </style>

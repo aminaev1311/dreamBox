@@ -3,7 +3,7 @@
     <LeftSideBar />
     <div class="start-pages">
       <AppHeader />
-      <router-view></router-view>
+      <router-view class="margin-top"></router-view>
     </div>
   </div>
 </template>
@@ -19,7 +19,30 @@ export default {
 };
 </script>
 
-<style lang ="scss">
+<style lang="scss">
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes leave {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+.margin-top {
+  margin-top: 24px;
+}
 .container {
   display: flex;
   width: 100%;

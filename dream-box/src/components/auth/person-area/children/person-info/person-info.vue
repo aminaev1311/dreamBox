@@ -11,13 +11,18 @@
       </div>
     </div>
 
-    <div class="contact_frame_lk">
-      <inputs-labels title="First name" :value="firstName"></inputs-labels>
-      <inputs-labels title="Last name" :value="lastName"></inputs-labels>
-      <inputs-labels title="Birthday" :value="birthday"></inputs-labels>
-      <radios-lk></radios-lk>
-      <button-dream></button-dream>
-    </div>
+    <form v-if="fields.length" class="contact_frame_lk" @submit.prevent="() => {}">
+      <inputs-labels
+        v-for="field in fields"
+        :key="field.name"
+        :title="field.title"
+        :value="field.value"
+        @input="valid(field, $event.target.value)"
+      />
+
+      <radios-lk @chengeGender="validGender($event)" :gender="gender.value"> </radios-lk>
+      <button-dream :isDisabled="!isDisabled || isLoad" @click="update"></button-dream>
+    </form>
   </div>
 </template>
 
@@ -31,36 +36,107 @@ import { mapGetters } from "vuex";
 import config from "@config";
 
 export default {
+  USER_FIRST_NAME: "",
+  USER_LAST_NAME: "",
+  USER_BIRTHDAY: "",
+  USER_GENDER: "",
+
   components: { ButtonDream, InputsLabels, RadiosLk, ChangeImage },
   data() {
     return {
       show: false,
+      isChenged: false,
+      fields: [],
+      gender: {},
+      isLoad: false,
     };
+  },
+
+  mounted() {
+    this.init();
+  },
+
+  methods: {
+    valid(field, newValue) {
+      field.value = newValue;
+      field.isValid = field.valid(newValue);
+    },
+    validGender(gender) {
+      this.gender.value = gender;
+      this.gender.isValid = this.gender.valid(gender);
+    },
+    async update() {
+      const newUserInfo = new FormData();
+
+      this.fields.forEach(({ name, value }) => {
+        newUserInfo.append(name, value || "");
+      });
+      newUserInfo.append(this.gender.name, this.gender.value || "");
+      this.isLoad = true;
+      this.$store.dispatch("auth/updateUserInfo", newUserInfo).then(() => this.init());
+      this.isLoad = false;
+    },
+    init() {
+      let { USER_FIRST_NAME, USER_LAST_NAME, USER_BIRTHDAY, USER_GENDER } = this.$options;
+
+      USER_FIRST_NAME = this.user?.name?.trim() || "";
+
+      USER_LAST_NAME = this.user?.surname ? this.user.surname : "";
+
+      USER_BIRTHDAY = this.user?.birthday ? this.user.birthday : "";
+
+      USER_GENDER = this.user?.gender ? this.user.gender : null;
+
+      this.fields = [
+        {
+          value: USER_FIRST_NAME,
+          name: "name",
+          title: "Name",
+          valid: (value) => value !== USER_FIRST_NAME,
+          isValid: false,
+          type: "field",
+        },
+        {
+          value: USER_LAST_NAME,
+          name: "surname",
+          title: "Surname",
+          valid: (value) => value !== USER_LAST_NAME,
+          isValid: false,
+          type: "field",
+        },
+        {
+          value: USER_BIRTHDAY,
+          name: "birthday",
+          title: "Day of Birth",
+          valid: (value) => value !== USER_BIRTHDAY,
+          isValid: false,
+          type: "field",
+        },
+      ];
+
+      this.gender = {
+        value: USER_GENDER,
+        name: "gender",
+        valid: (value) => value !== USER_GENDER,
+        isValid: false,
+      };
+    },
   },
   computed: {
     ...mapGetters({
       user: ["auth/user"],
-      isLoad: ["auth/isLoad"],
     }),
     logo() {
       return config.linkToImg(this.user?.logo).trim();
     },
-    firstName() {
-      return this.user?.name.split(" ")[0].trim();
-    },
-    lastName() {
-      return this.user?.name.split(" ")[1]
-        ? this.user.name.split(" ")[1]
-        : "No filled";
-    },
-    birthday() {
-      return this.user?.birthday ? this.user.birthday : "No filled";
+    isDisabled() {
+      return this.fields.some(({ isValid }) => isValid) || this.gender.isValid;
     },
   },
 };
 </script>
 
-<style  lang="scss"  scoped>
+<style lang="scss" scoped>
 .frame_lk {
   min-height: 100%;
   height: 432px;
@@ -72,6 +148,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  box-sizing: border-box;
 
   .photo_frame_lk {
     display: flex;
@@ -81,6 +158,7 @@ export default {
     border-radius: 8px;
 
     .h_frame_lk {
+      text-align: left;
       margin-bottom: 15px;
       font-family: $base-ff;
       font-style: normal;
@@ -129,11 +207,13 @@ export default {
 
   .contact_frame_lk {
     width: 100%;
+    height: 432px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding-left: 20%;
     padding-bottom: 30px;
+    box-sizing: border-box;
   }
 }
 </style>

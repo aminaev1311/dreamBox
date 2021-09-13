@@ -1,25 +1,25 @@
 export default {
   namespaced: true,
   state: {
-    alert: null
+    alert: null,
   },
   getters: {
-    alert: state => state.alert
+    alert: (state) => state.alert,
   },
   mutations: {
     setAlert(state, alert) {
-      state.alert = alert
+      state.alert = alert;
       if (alert && alert.daley) {
-        setTimeout(() => (state.alert = null), alert.daley)
+        setTimeout(() => (state.alert = null), alert.daley);
       }
-    }
+    },
   },
   actions: {
     setAlert({ commit }, alert) {
-      commit('setAlert', alert)
+      commit("setAlert", alert);
     },
     close({ commit }) {
-      commit('setAlert', null)
-    }
-  }
-}
+      commit("setAlert", null);
+    },
+  },
+};

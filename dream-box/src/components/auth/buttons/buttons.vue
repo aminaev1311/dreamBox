@@ -1,26 +1,17 @@
 <template>
   <div :class="$style.buttons">
-    <BaseButton :disabled="isDisabled" :isLoad="!isLoad">{{
-      titleMainButton
-    }}</BaseButton>
+    <BaseButton :disabled="isDisabled" :is-load="!isLoad">
+      {{ titleMainButton }}
+    </BaseButton>
     <span :class="$style.or">or</span>
     <div :class="$style['sosial-networks']">
-      <button
-        :class="$style['button-network']"
-        @click.prevent="$emit('event-google', $event)"
-      >
+      <button :class="$style['button-network']" @click.prevent="$emit('event-google', $event)">
         <img src="@i/auth/google.png" alt="icon" />
       </button>
-      <button
-        :class="$style['button-network']"
-        @click.prevent="$emit('event-vk', $event)"
-      >
+      <button :class="$style['button-network']" @click.prevent="$emit('event-vk', $event)">
         <img src="@i/auth/vk.png" alt="icon" />
       </button>
-      <button
-        :class="$style['button-network']"
-        @click.prevent="$emit('event-fb', $event)"
-      >
+      <button :class="$style['button-network']" @click.prevent="$emit('event-fb', $event)">
         <img src="@i/auth/fb.png" alt="icon" />
       </button>
     </div>

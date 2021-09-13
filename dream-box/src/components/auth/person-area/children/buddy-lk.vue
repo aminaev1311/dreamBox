@@ -5,8 +5,10 @@
       <p class="p_frame_lk">You don’t have personal buddy yet</p>
     </div>
     <div class="contact_frame_lk">
-      <inputs-labels></inputs-labels>
-      <button-dream></button-dream>
+      <InputsLabels value="" title="Email" />
+      <div class="position">
+        <button-dream></button-dream>
+      </div>
     </div>
   </div>
 </template>
@@ -15,7 +17,7 @@
 import ButtonDream from "@ca/buttons/button-dream";
 import InputsLabels from "@ca/person-area/children/inputs-labels";
 export default {
-  name: "buddy-lk",
+  name: "BuddyLk",
   components: { InputsLabels, ButtonDream },
 };
 </script>
@@ -33,14 +35,20 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  box-sizing: border-box;
 }
 .contact_frame_lk {
   width: 100%;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-left: 19%;
+  padding-left: 29%;
   padding-bottom: 30px;
+  .position {
+    margin-bottom: 19px;
+    margin-top: -19px;
+  }
 }
 .text_buddy_lk {
   width: 136px;
@@ -65,6 +73,7 @@ export default {
     line-height: 24px;
     letter-spacing: 0.1px;
     color: $color-link;
+    text-align: start;
   }
 }
 </style>

@@ -1,50 +1,39 @@
 <template>
   <div class="inputs_labels">
-    <input
-      class="input_dream-box"
-      :type="!isShow ? type : 'text'"
-      v-model="value"
-    /><label class="label_frame_lk">{{ title }}</label>
-    <div class="cursor after">
-      <img
-        v-if="type === 'password'"
-        :src="
-          !isShow
-            ? require('@i/auth/eye-close.png')
-            : require('@i/auth/eye-open.png')
-        "
-        alt="eye-close"
-        @click="isShow = !isShow"
-      />
-    </div>
+    <input class="input_dream-box" type="text" :value="value" @input="sendValue($event)" />
+    <label class="label_frame_lk">{{ title }}</label>
   </div>
 </template>
 
 <script>
+/* eslint-disable */ 
 export default {
   data() {
     return {
       isShow: false,
     };
   },
-  name: "inputs-labels",
   props: {
     title: {
       type: String,
     },
-    type: {
-      type: String,
-      default: "text",
-    },
     value: {
       type: String,
-      default: "No filled",
+      default: "",
+    },
+  },
+  methods: {
+    sendValue({ target }) {
+      this.$emit("update:value", target.value);
     },
   },
 };
 </script>
 
 <style lang="scss">
+.errorInp {
+  background-color: rgba(200, 3, 3, 0.1) !important;
+}
 .inputs_labels {
   position: relative;
   display: flex;
@@ -56,7 +45,7 @@ export default {
     border: none;
     border-radius: 8px;
     margin-bottom: 20px;
-    outline: none;;
+    outline: none;
     padding-left: 19px;
     padding-right: 19px;
     padding-top: 30px;
@@ -93,7 +82,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 0;
-  top: -5px;
+  right: 15px;
+  top: 15px;
 }
 </style>

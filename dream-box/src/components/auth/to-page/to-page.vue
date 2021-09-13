@@ -1,7 +1,9 @@
 <template>
   <p class="rout">
     {{ message }}
-    <router-link :to="rout">{{ nameLink }}</router-link>
+    <router-link :to="rout">
+      {{ nameLink }}
+    </router-link>
   </p>
 </template>
 

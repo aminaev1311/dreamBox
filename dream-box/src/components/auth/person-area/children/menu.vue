@@ -1,44 +1,34 @@
 <template>
-  <button class="menu" @click.self="show = !show">
-    <div v-if="show" class="menu-nav">
-      <ModelWin>Remove account</ModelWin>
-      <button class="menu-links" @click="logOut">Log out</button>
-      <router-link class="menu-links" to="/">Back to App</router-link>
-      <button class="menu-links" @click.self="show = !show">Close</button>
+  <ModelWin :show="show" @closeWindow="show = !show" />
+  <button class="menu">
+    <div class="menu-nav">
+      <span class="menu-links" @click.stop="show = !show">Delete account</span>
     </div>
   </button>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import ModelWin from "@ca/person-area/children/model-win";
 export default {
+  components: {
+    ModelWin,
+  },
   data() {
     return {
       show: false,
     };
-  },
-  components: {
-    ModelWin,
-  },
-  methods: {
-    ...mapActions({
-      logOut: "auth/logOut",
-    }),
   },
   computed: {
     ...mapGetters({
       user: ["auth/user"],
       isLoad: ["auth/isLoad"],
     }),
-    logo() {
-      return require("@i/auth/" + this.user?.logo);
-    },
   },
 };
 </script>
 
-<style lang= "scss" scoped>
+<style lang="scss" scoped>
 .menu {
   cursor: pointer;
   width: 20px;
@@ -53,13 +43,13 @@ export default {
 .menu-nav {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: $color-base-gray;
-  border: 1px solid darken($color-base-gray, 20%);
+  padding: 10px 20px;
+  background-color: $color-base-light;
   position: absolute;
-  left: -150px;
+  left: -130px;
   z-index: 500;
+  transform: scale(0);
+  transition: transform 0.3s;
   & > .menu-links {
     cursor: pointer;
     margin: 5px 0;
@@ -76,5 +66,8 @@ export default {
   & > a:active {
     color: darken($color-link, 20%);
   }
+}
+.menu:hover .menu-nav {
+  transform: scale(1);
 }
 </style>

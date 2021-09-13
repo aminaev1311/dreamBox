@@ -21,8 +21,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wrapper-info-password {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
 }
 </style>
