@@ -5,7 +5,6 @@
       <i class="fa fa-times-circle" aria-hidden="true" @click="showMenu"></i>
       <p class="goal-menu-field" v-for="field in menuList" :key="field.title" @click="field.cb">
         <span>{{ field.title }}</span>
-        <i class="fa-li fa fa-spinner fa-spin"></i>
       </p>
     </div>
   </div>
@@ -82,7 +81,7 @@ export default {
     cursor: pointer;
   }
   & > i:hover {
-    color: darken($color-base-blue,20);
+    color: darken($color-base-blue, 20);
   }
   & > p {
     display: flex;

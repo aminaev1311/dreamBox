@@ -1,5 +1,5 @@
 import * as authApi from "@api/goals";
-//import router from "@r";
+// import router from "@r";
 
 const defaultGoal = () => [];
 
@@ -21,7 +21,7 @@ export default {
     REMOVE_GOAL(state, id) {
       state.goals = state.goals.filter(({ _id }) => _id !== id);
     },
-    UPDATE_GOAL(state, goal) { },
+    UPDATE_GOAL(state, goal) {},
   },
   actions: {
     async getGoalsByUser({ commit, rootGetters }) {
