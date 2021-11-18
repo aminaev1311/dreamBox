@@ -38,14 +38,22 @@
       </div>
       <div class="tactits-wrapper">
         <span class="title">Tactics</span>
-        <div class="tactics">
-          <p v-for="(tactic, i) in goal.tactics" :key="tactic.id">
-            {{ i + 1 }}. {{ tactic.name.toUpperCase() }}
-          </p>
+        <TacticsHeader />
+        <div class="tactics" v-for="(tactic, i) in goal.tactics" :key="tactic.id">
+          <p>{{ i + 1 }}. {{ tactic.name.toUpperCase() }}</p>
+          <div class="weeks">
+            <div class="week" v-for="week in tactic.weeks" :key="week.id"></div>
+          </div>
         </div>
         <AddMore @add-tactic="add($event)" :empty="errors.tactics" />
       </div>
-      <BtnBlue title="Create" :width="'150px'" :height="'50px'" class="create-goal-button" @click="createGoal"/>
+      <BtnBlue
+        title="Create"
+        :width="'150px'"
+        :height="'50px'"
+        class="create-goal-button"
+        @click="createGoal"
+      />
     </form>
   </div>
 </template>
@@ -56,6 +64,7 @@ import ChooseTheme from "@c/app/goals/goal/choose-theme";
 import AddMore from "@c/app/goals/goal/add-more";
 import MetricsQuantity from "@c/app/goals/goal/metrics-quantity";
 import BtnBlue from "@c/app/common/buttons/w-btn-blue";
+import TacticsHeader from "@c/app/common/taсtics-header";
 import { mapGetters } from "vuex";
 
 import uid from "uniqid";
@@ -80,6 +89,7 @@ export default {
     AddMore,
     MetricsQuantity,
     BtnBlue,
+    TacticsHeader,
   },
   data() {
     return {
@@ -331,6 +341,9 @@ export default {
   & > .tactics {
     @include fc-c-c-b;
     align-items: flex-start !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    width: 100%;
     & > p {
       font-family: $base-ff;
       font-style: normal;
@@ -341,6 +354,24 @@ export default {
       text-transform: uppercase;
       color: #a9acbf;
       margin-bottom: 14px;
+    }
+    & > .weeks {
+      display: flex;
+      max-width: 426px;
+      width: 100%;
+      box-sizing: border-box;
+      & > .week {
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        margin: 0 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f0f3fc;
+        border-radius: 8px;
+        box-sizing: border-box;
+      }
     }
   }
 }

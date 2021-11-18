@@ -2,8 +2,7 @@
   <div class="wrapper-goals">
     <WeekHeader />
     <h1>Start your first goal</h1>
-    <pre>
-    </pre>
+    <pre></pre>
     <div v-if="goals.length" class="wrapper-goals">
       <Goal v-for="goal in goals" :key="goal._id" :goal="goal" />
     </div>

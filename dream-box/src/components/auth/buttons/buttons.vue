@@ -3,8 +3,8 @@
     <BaseButton :disabled="isDisabled" :is-load="!isLoad">
       {{ titleMainButton }}
     </BaseButton>
-    <span :class="$style.or">or</span>
-    <div :class="$style['sosial-networks']">
+    <!-- <span :class="$style.or">or</span> -->
+    <!-- <div :class="$style['sosial-networks']">
       <button :class="$style['button-network']" @click.prevent="$emit('event-google', $event)">
         <img src="@i/auth/google.png" alt="icon" />
       </button>
@@ -14,7 +14,7 @@
       <button :class="$style['button-network']" @click.prevent="$emit('event-fb', $event)">
         <img src="@i/auth/fb.png" alt="icon" />
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 
