@@ -42,7 +42,8 @@
         <div class="tactics" v-for="(tactic, i) in goal.tactics" :key="tactic.id">
           <p>{{ i + 1 }}. {{ tactic.name.toUpperCase() }}</p>
           <div class="weeks">
-            <div class="week" v-for="week in tactic.weeks" :key="week.id"></div>
+            <CustomCheckBox status="checked" v-for="week in tactic.weeks" :key="week.id" />
+            <!--    <div class="week" v-for="week in tactic.weeks" :key="week.id"></div> -->
           </div>
         </div>
         <AddMore @add-tactic="add($event)" :empty="errors.tactics" />
@@ -59,6 +60,7 @@
 </template>
 
 <script>
+import CustomCheckBox from "@c/app/common/custom-check-box";
 import HeaderGoal from "@c/app/goals/goal/header-goal";
 import ChooseTheme from "@c/app/goals/goal/choose-theme";
 import AddMore from "@c/app/goals/goal/add-more";
@@ -90,6 +92,7 @@ export default {
     MetricsQuantity,
     BtnBlue,
     TacticsHeader,
+    CustomCheckBox
   },
   data() {
     return {
